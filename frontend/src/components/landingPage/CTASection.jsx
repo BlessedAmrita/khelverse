@@ -25,7 +25,7 @@ const CTASection = () => {
               
               <div className="md:flex items-center justify-between gap-12">
                 <div className="mb-8 md:mb-0">
-                  <h2 className="text-3xl md:text-3xl font-bold mb-4 text-white font-thuast">
+                  <h2 className="text-3xl md:text-3xl font-bold mb-4 text-white font-sprintura">
                     Ready to <span className="text-gradient pr-1">Transform</span> Athlete Management?
                   </h2>
                   <p className="text-white/70 text-lg">
