@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, Clock, Check, DollarSign } from 'lucide-react';
 
@@ -6,29 +5,30 @@ const Sponsorships = () => {
   const sponsorships = [
     {
       id: 1,
-      sponsor: 'TechFuture Foundation',
-      amount: '$25,000',
-      field: 'Computer Science, AI',
+      sponsor: 'Khelo India Athlete Fund',
+      amount: '₹20,00,000',
+      field: 'Track & Field, Endurance Sports',
       deadline: '30 days remaining',
-      eligibility: ['Undergraduates', 'GPA: 3.5+', 'AI project required'],
+      eligibility: ['National & State-level Athletes', 'Recognized by SAI', 'Training plan required'],
     },
     {
       id: 2,
-      sponsor: 'SportsTech Initiative',
-      amount: '$15,000',
-      field: 'Sports Technology, Analytics',
+      sponsor: 'Reliance Youth Sports Grant',
+      amount: '₹12,00,000',
+      field: 'Sports Science, Performance Analytics',
       deadline: '45 days remaining',
-      eligibility: ['Undergraduate/Graduate', 'Sports background', 'Innovative idea'],
+      eligibility: ['U-21 Athletes', 'Competitive sports background', 'Performance improvement plan'],
     },
     {
       id: 3,
-      sponsor: 'Global Arts Council',
-      amount: '$10,000',
-      field: 'Design, Creative Arts',
+      sponsor: 'JSW Sports Excellence Scholarship',
+      amount: '₹8,00,000',
+      field: 'Olympic & Paralympic Sports',
       deadline: '20 days remaining',
-      eligibility: ['Any student level', 'Portfolio required', 'Original concept'],
+      eligibility: ['Athletes across all levels', 'Proven potential', 'Coach recommendation required'],
     },
-  ];
+];
+
 
   return (
     <div className="animate-slide-in-up animation-delay-400">
@@ -50,7 +50,6 @@ const Sponsorships = () => {
                   <p className="text-sm text-muted-foreground">{sponsorship.field}</p>
                 </div>
                 <div className="flex items-center text-amber-500 font-medium">
-                  <DollarSign className="h-4 w-4" />
                   <span>{sponsorship.amount}</span>
                 </div>
               </div>
@@ -75,7 +74,7 @@ const Sponsorships = () => {
                   <span>{sponsorship.deadline}</span>
                 </div>
                 
-                <button className="text-sm font-medium text-primary flex items-center hover:text-primary/80 transition-colors">
+                <button className="text-sm text-purple hover:text-green-900 font-medium text-primary flex items-center hover:text-primary/80 transition-colors">
                   <span>Apply</span>
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </button>

@@ -6,40 +6,41 @@ import { MapPin, Clock, DollarSign, Filter, Bookmark, Briefcase } from 'lucide-r
 const jobs = [
   {
     id: 1,
-    title: 'Senior UX Designer',
-    company: 'Design Innovate',
-    location: 'San Francisco, CA',
-    salary: '$120K - $150K',
+    title: 'Sports Physiotherapist',
+    company: 'Sports Authority of India (SAI)',
+    location: 'New Delhi, India',
+    salary: '₹8L - ₹12L per annum',
     type: 'Full-time',
-    logo: '🎨',
+    logo: '🩺',
     posted: '2 days ago',
   },
   {
     id: 2,
-    title: 'Frontend Developer',
-    company: 'Tech Solutions Inc.',
-    location: 'Remote',
-    salary: '$95K - $120K',
+    title: 'Strength & Conditioning Coach',
+    company: 'Reliance Foundation Sports',
+    location: 'Mumbai, India',
+    salary: '₹10L - ₹15L per annum',
     type: 'Full-time',
-    logo: '💻',
+    logo: '🏋️',
     posted: '1 week ago',
   },
   {
     id: 3,
-    title: 'Product Manager',
-    company: 'InnovateTech',
-    location: 'New York, NY',
-    salary: '$130K - $160K',
+    title: 'Sports Data Analyst',
+    company: 'JSW Sports',
+    location: 'Bangalore, India',
+    salary: '₹9L - ₹14L per annum',
     type: 'Full-time',
-    logo: '📱',
+    logo: '📊',
     posted: '3 days ago',
   },
 ];
 
+
 const JobListings = () => {
   return (
     <div className="animate-slide-in-up animation-delay-200">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-2">
         <h2 className="section-heading">Job Listings</h2>
         <button className="button-outline flex items-center space-x-2">
           <Filter className="h-4 w-4" />
@@ -85,7 +86,7 @@ const JobListings = () => {
               </div>
               
               <div className="flex gap-2 w-full md:w-auto">
-                <button className="button-primary flex-1 md:flex-none">
+                <button className="button-primary bg-lavender hover:bg-black text-black hover:text-lavender flex-1 md:flex-none">
                   Apply Now
                 </button>
                 
@@ -99,7 +100,7 @@ const JobListings = () => {
       </div>
       
       <div className="mt-6 flex justify-center">
-        <button className="button-outline">
+        <button className="button-outline  border-black border-[1px] hover:bg-black text-black hover:text-lavender">
           View More Jobs
         </button>
       </div>

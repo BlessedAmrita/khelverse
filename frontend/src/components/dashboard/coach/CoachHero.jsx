@@ -14,7 +14,7 @@ function CoachHero() {
   console.log('User State in CoachHero:', user);
 
   const profileImage = user?.photoURL || 'https://via.placeholder.com/60';
-  const userName = user?.name || 'Coach';
+  const userName = user?.firstName || 'Coach';
 
   return (
     <div
@@ -27,9 +27,11 @@ function CoachHero() {
       <h1 className='text-xl font-semibold font-sprintura tracking-widest'>Hey {userName}!</h1>
       <div className='flex gap-[20px] items-center'>
         <p className='text-md font-semibold font-poppins tracking-wider'>{today}</p>
-        <div
-          className='w-[60px] h-[60px] rounded-full bg-white bg-cover bg-center bg-no-repeat'
-          style={{ backgroundImage: `url('${profileImage}')` }}
+        <img
+          src={profileImage}
+          alt="Profile"
+          className='w-[60px] h-[60px] rounded-full bg-white object-cover'
+          onError={(e) => { e.target.src = 'https://via.placeholder.com/60'; }}
         />
       </div>
     </div>

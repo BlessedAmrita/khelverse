@@ -33,7 +33,8 @@ export const signInWithGoogle = async (dispatch) => {
         email: user.email,
         photoURL: user.photoURL,
         role: '', // ⚠️ Role not set yet (filled in onboarding)
-        isAuthenticated: false, // 🚨 User hasn't completed onboarding SHOULDNT THIS BE ISONBOARDED:FALSE ?
+        isOnboarded: false,
+        isAuthenticated: false, // 🚨 User hasn't completed onboarding
       };
 
       await setDoc(userRef, newUser); // Save in Firestore
@@ -46,6 +47,17 @@ export const signInWithGoogle = async (dispatch) => {
     return { user: null, isNewUser: null }; // Return error state
   }
 };
+
+// **🔥 Logout Function**
+export const logout = async (dispatch) => {
+  try {
+    await signOut(auth);
+    dispatch(logoutUser());
+  } catch (error) {
+    console.error('🔥 Error logging out:', error);
+  }
+};
+
 
 // **💡 Listen to Auth State Changes & Sync with Redux**
 export const monitorAuthState = () => {
@@ -66,8 +78,3 @@ export const monitorAuthState = () => {
   });
 };
 
-// **🔥 Logout Function**
-export const logout = async () => {
-  await signOut(auth);
-  store.dispatch(logoutUser());
-};

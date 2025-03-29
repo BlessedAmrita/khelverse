@@ -16,7 +16,7 @@ export default function InjuryAssessment() {
     setResponseData(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/injury/analyze_injury/", {
+      const response = await fetch("https://satyam075-chatbot-ai.hf.space/injury/analyze_injury/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -34,7 +34,7 @@ export default function InjuryAssessment() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6 flex flex-col items-center">
+    <div className="max-w-4xl mx-auto p-6 space-y-6 flex flex-col items-center">
       {/* Injury Form */}
       <InjuryAssessmentForm onSubmit={handleSubmit} />
 

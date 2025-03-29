@@ -15,7 +15,7 @@ export default function DietPlan() {
     setResponseData(null);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/generate_diet/', {
+      const response = await fetch('https://satyam075-chatbot-ai.hf.space/api/generate_diet/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -33,7 +33,7 @@ export default function DietPlan() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6 flex flex-col items-center">
+    <div className="max-w-4xl mx-auto p-6 space-y-6 flex flex-col items-center">
       {/* Diet Plan Form */}
       <DietPlanForm onSubmit={handleSubmit} />
 

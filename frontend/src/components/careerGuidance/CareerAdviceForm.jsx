@@ -4,9 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -34,148 +31,80 @@ const CareerAdviceForm = ({ onSubmit }) => {
   });
 
   return (
-    <div className="animate-slide-in-up">
-      <div className="mb-6">
-        <span className="inline-block text-xs font-medium px-3 py-1 bg-accent/20 text-accent-foreground rounded-full mb-2">
-          AI Powered
-        </span>
-        <h2 className="section-heading">Your Career Path Advisor</h2>
-      </div>
-
+    <div className="animate-slide-in-up w-full max-w-3xl">
       <Card className="shadow-card">
-        <CardHeader className="bg-gradient-to-r from-violet to-lavender text-white">
+        {/* <CardHeader className="bg-gradient-to-r from-violet to-lavender text-white">
           <CardTitle className="text-xl font-display flex items-center gap-2">
-            <Sparkles className="h-5 w-5" />
             Sports Career Questionnaire
           </CardTitle>
           <CardDescription className="text-white/80">
             Answer these questions and our AI will recommend optimal career paths for you.
           </CardDescription>
-        </CardHeader>
+        </CardHeader> */}
 
         <CardContent className="p-6">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* Sport & Experience */}
-              <div className="space-y-4">
-                <h3 className="font-medium text-lg">Sport & Experience</h3>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Sport & Experience */}
+            <div className="space-y-4">
+              <h3 className="font-medium text-lg">Sport & Experience</h3>
 
-                <FormField
-                  control={form.control}
-                  name="sport"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>What sport do you play?</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. Basketball, Swimming, Tennis" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="level"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>What is your current competition level?</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select your competition level" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="1">State</SelectItem>
-                          <SelectItem value="2">National</SelectItem>
-                          <SelectItem value="3">International</SelectItem>
-                          <SelectItem value="0">Recreational</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="experience"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>How many years have you been in this sport?</FormLabel>
-                      <FormControl>
-                        <Input type="number" min="0" max="50" placeholder="e.g. 5" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div>
+                <label className="block font-medium">What sport do you play?</label>
+                <Input {...form.register("sport")} placeholder="e.g. Basketball, Swimming, Tennis" />
               </div>
 
-              {/* Career Goals */}
-              <div className="space-y-4">
-                <h3 className="font-medium text-lg">Career Goals</h3>
-
-                <FormField
-                  control={form.control}
-                  name="goal"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>What do you want to do next?</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. Become a professional athlete, Coach, etc." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div>
+                <label className="block font-medium">What is your current competition level?</label>
+                <Select onValueChange={(value) => form.setValue("level", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your competition level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="state">State</SelectItem>
+                    <SelectItem value="national">National</SelectItem>
+                    <SelectItem value="international">International</SelectItem>
+                    <SelectItem value="recreational">Recreational</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
-              {/* Education Interest */}
-              <div className="space-y-4">
-                <h3 className="font-medium text-lg">Education Interest</h3>
-
-                <FormField
-                  control={form.control}
-                  name="education_interest"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>What area of education interests you?</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. B.Tech in Sports Science, MBA in Sports Management" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div>
+                <label className="block font-medium">How many years have you been in this sport?</label>
+                <Input type="number" {...form.register("experience")} placeholder="e.g. 5" />
               </div>
+            </div>
 
-              {/* Skills */}
-              <div className="space-y-4">
-                <h3 className="font-medium text-lg">Skills</h3>
-
-                <FormField
-                  control={form.control}
-                  name="skills"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Do you have any certifications or skills related to sports?</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. Judo, Yoga Certification, Personal Training, etc." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            {/* Career Goals */}
+            <div className="space-y-4">
+              <h3 className="font-medium text-lg">Career Goals</h3>
+              <div>
+                <label className="block font-medium">What do you want to achieve?</label>
+                <Input {...form.register("goal")} placeholder="e.g. Become a coach, expert, sports analyst, etc." />
               </div>
+            </div>
 
-              <Button type="submit" className="w-full bg-lavender text-black hover:bg-black hover:text-lavender transition-all duration-500">
-                Generate Career Advice
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </form>
-          </Form>
+            {/* Education Interest */}
+            <div className="space-y-4">
+              <h3 className="font-medium text-lg">Education Interest</h3>
+              <div>
+                <label className="block font-medium">What area of education interests you?</label>
+                <Input {...form.register("education_interest")} placeholder="e.g. B.Tech in Sports Science, MBA in Sports Management" />
+              </div>
+            </div>
+
+            {/* Skills */}
+            <div className="space-y-4">
+              <h3 className="font-medium text-lg">Skills</h3>
+              <div>
+                <label className="block font-medium">Do you have any certifications or skills related to sports?</label>
+                <Input {...form.register("skills")} placeholder="e.g. Judo, Yoga Certification, Personal Training, etc." />
+              </div>
+            </div>
+
+            <Button type="submit" className="w-full bg-lavender text-black hover:bg-black hover:text-lavender transition-all duration-500">
+              Generate Career Advice
+            </Button>
+          </form>
         </CardContent>
       </Card>
     </div>

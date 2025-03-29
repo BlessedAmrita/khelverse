@@ -26,7 +26,15 @@ const userSlice = createSlice({
     setRole: (state, action) => {
       state.role = action.payload;
     },
-    logoutUser: () => initialState,
+    logoutUser: () => ({
+      uid: null,
+      name: null,
+      email: null,
+      photoURL: null,
+      isAuthenticated: false,
+      isOnboarded: false,
+      role: 'guest',
+    }),
   },
 });
 

@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 const initialState = {
-  tasks: {},  // Date-wise task completion
+  tasks: {}, 
 };
-
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
@@ -17,6 +15,5 @@ const tasksSlice = createSlice({
     },
   },
 });
-
 export const { setTasks, updateTask } = tasksSlice.actions;
 export default tasksSlice.reducer;
