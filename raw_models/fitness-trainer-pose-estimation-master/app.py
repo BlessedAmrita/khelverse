@@ -281,7 +281,7 @@ def stop_exercise():
             reps=exercise_goal,
             duration_seconds=duration
         )
-    
+    release_camera()
     exercise_running = False
     return jsonify({'success': True})
 

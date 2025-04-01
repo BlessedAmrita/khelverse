@@ -1,39 +1,59 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Award, CheckCircle, Circle } from "lucide-react";
+import { goalData } from "@/content/mockData";
 
-export default function GoalTracker({ goals }) {
+const GoalTracker = () => {
+  console.log("Goal Data:", goalData); // Debugging line to check the data structure
   return (
-    <>
-      {goals.monthly && (
-        <Card className="p-4">
-          <CardContent>
-            <strong>📅 Monthly Goal:</strong> {goals.monthly} km
-            <div className="w-full bg-gray-200 rounded-lg overflow-hidden mt-2">
-              <div
-                className="bg-green-500 text-white text-center py-1"
-                style={{ width: `${goals.monthlyProgress}%` }}
-              >
-                {goals.monthlyProgress}%
+    <Card className="glass-card border-lavender/20">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Goals & Milestones</CardTitle>
+        <Award className="h-5 w-5 text-lavender" />
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {goalData.map((goal, index) => {
+            const progress = (goal.current / goal.target) * 100;
+            const isComplete = goal.target <= goal.current;
+            const progressReversed = goal.unit === "min" || goal.unit === "sec" || goal.unit === "%";
+            
+            const calculatedProgress = progressReversed 
+              ? (goal.target >= goal.current ? 100 : (goal.target / goal.current) * 100)
+              : (goal.current / goal.target) * 100;
+            
+            const formattedProgress = Math.min(100, calculatedProgress).toFixed(0);
+            
+            return (
+              <div key={index} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    {parseInt(formattedProgress) >= 100 ? (
+                      <CheckCircle className="h-4 w-4 text-performance-improved" />
+                    ) : (
+                      <Circle className="h-4 w-4 text-lavender" />
+                    )}
+                    <span className="font-medium">{goal.name}</span>
+                  </div>
+                  <span className="text-sm text-gray-400">
+                    {formattedProgress}% complete
+                  </span>
+                </div>
+                <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
+                  <div 
+                    className="bg-gradient-to-r from-lavender to-lavender-light h-full rounded-full"
+                    style={{ width: `${formattedProgress}%` }}
+                  />
+                </div>
+                <div className="text-xs text-gray-400">
+                  {goal.description}: {goal.current}{goal.unit} / {goal.target}{goal.unit}
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {goals.weekly && (
-        <Card className="p-4">
-          <CardContent>
-            <strong>🗓️ Weekly Goal:</strong> {goals.weekly} km
-            <div className="w-full bg-gray-200 rounded-lg overflow-hidden mt-2">
-              <div
-                className="bg-blue-500 text-white text-center py-1"
-                style={{ width: `${goals.weeklyProgress}%` }}
-              >
-                {goals.weeklyProgress}%
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-    </>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
   );
-}
+};
+
+export default GoalTracker;
