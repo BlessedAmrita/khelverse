@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import DietPlanForm from './DietPlanForm';
 import { Loader2 } from 'lucide-react';
@@ -15,7 +14,7 @@ export default function DietPlan() {
     setResponseData(null);
 
     try {
-      const response = await fetch('https://satyam075-chatbot-ai.hf.space/api/generate_diet/', {
+      const response = await fetch('http://127.0.0.1:8000/api/generate_diet/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

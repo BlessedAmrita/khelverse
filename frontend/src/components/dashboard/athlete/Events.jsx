@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 function Events() {
   const router = useRouter();
   const handleClick = () => {
-    router.push('/events');
+    router.push('/dashboard/athlete/events');
   };
   return (
     <div

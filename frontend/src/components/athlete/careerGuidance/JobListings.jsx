@@ -1,4 +1,4 @@
-
+'use client';
 import React from 'react';
 import { MapPin, Clock, DollarSign, Filter, Bookmark, Briefcase } from 'lucide-react';
 

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import FeatureHero from '../shared/FeatureHero';
+import FeatureHero from '../../shared/FeatureHero';
 import JobListings from './JobListings';
 import Sponsorships from './Sponsorships';
 

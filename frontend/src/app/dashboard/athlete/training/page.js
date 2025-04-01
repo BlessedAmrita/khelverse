@@ -1,4 +1,5 @@
-import TrainingMain from '@/components/training/TrainingMain';
+'use client';
+import TrainingMain from '@/components/athlete/training/TrainingMain';
 import React from 'react';
 
 function page() {

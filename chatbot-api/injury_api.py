@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import google.generativeai as genai
 from dotenv import load_dotenv
-import re  # Added to extract JSON safely
+import re
 
 # Load environment variables
 load_dotenv()
@@ -35,6 +35,7 @@ class InjuryDetails(BaseModel):
     mobility: int  # 1 to 3
     pressure: int  # 1 to 3
     weight_bearing: int  # 1 to 3
+    language: str  # Added language field for translation
 
 # Function to extract JSON from AI response
 def extract_json(response_text: str) -> dict:
@@ -49,6 +50,35 @@ def extract_json(response_text: str) -> dict:
     except Exception as e:
         logging.error(f"⚠️ Error parsing AI JSON response: {e}")
         return {"error": "AI response did not return valid JSON."}
+
+def translate_text(json_content: dict, target_language: str) -> dict:
+    """Use Gemini to translate only the values in JSON content while keeping the keys and structure intact."""
+    if target_language.lower() == "en":
+        return json_content  # No translation needed
+
+    try:
+        translation_prompt = f"""
+        Translate the values in the following JSON into **{target_language}**. 
+        Keep the JSON structure and keys unchanged.
+
+        JSON:
+        
+json
+        {json.dumps(json_content, ensure_ascii=False)}
+
+        Return only valid JSON without extra text.
+        """
+
+        response = model.generate_content(translation_prompt)
+
+        if not response or not response.text:
+            raise ValueError("Empty translation response.")
+
+        return extract_json(response.text.strip())
+
+    except Exception as e:
+        logging.error(f"⚠️ Translation error: {str(e)}")
+        return json_content  # Fallback to original if translation fails
 
 # AI-based Injury Analysis Function
 def generate_recovery_plan(injury_details: InjuryDetails) -> dict:
@@ -143,7 +173,14 @@ def generate_recovery_plan(injury_details: InjuryDetails) -> dict:
             raise ValueError("AI response is empty.")
 
         response_text = response.text.strip()
-        return extract_json(response_text)  # Extract only valid JSON
+        recovery_plan = extract_json(response_text)  # Extract only valid JSON
+
+        # Translate values if language is not English
+        if injury_details.language.lower() != 'en':
+            recovery_plan = translate_text(recovery_plan, injury_details.language)
+
+        return recovery_plan
+
     except Exception as e:
         logging.error(f"❌ Error in AI response: {str(e)}")
         return {"error": "Failed to generate recovery plan."}

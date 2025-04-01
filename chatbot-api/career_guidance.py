@@ -34,12 +34,13 @@ class CareerQuery(BaseModel):
     goal: str  # Example: "Become a coach"
     education_interest: str  # Example: "Yes" or "No"
     skills: str  # Example: "Certified in sports nutrition, Basic physiotherapy knowledge"
+    language: str  # Add language field for translation
 
 # Function to extract JSON from AI response
 def extract_json(response_text: str) -> dict:
     """Extract JSON from the AI response safely."""
     try:
-        json_match = re.search(r"\{.*\}", response_text, re.DOTALL)
+        json_match = re.search(r"\{[\s\S]*\}", response_text.strip())  # Capture only JSON structure
         if json_match:
             json_str = json_match.group(0)
             return json.loads(json_str)
@@ -49,8 +50,34 @@ def extract_json(response_text: str) -> dict:
         logging.error(f"⚠️ Error parsing AI JSON response: {e}")
         return {"error": "AI response did not return valid JSON."}
 
-# AI-based Career Advice Generation
-# AI-based Career Advice Generation
+def translate_text(json_content: dict, target_language: str) -> dict:
+    """Use Gemini to translate only the values in JSON content while keeping the keys and structure intact."""
+    if target_language.lower() == "en":
+        return json_content  # No translation needed
+
+    try:
+        translation_prompt = f"""
+        Translate the values in the following JSON into **{target_language}**. 
+        Keep the JSON structure and keys unchanged.
+
+        JSON:
+        ```json
+        {json.dumps(json_content, ensure_ascii=False)}
+        ```
+        Return only valid JSON without extra text.
+        """
+
+        response = model.generate_content(translation_prompt)
+
+        if not response or not response.text:
+            raise ValueError("Empty translation response.")
+
+        return extract_json(response.text.strip())
+
+    except Exception as e:
+        logging.error(f"⚠️ Translation error: {str(e)}")
+        return json_content  # Fallback to original if translation fails
+
 def generate_career_advice(career_query: CareerQuery) -> dict:
     try:
         prompt = f"""
@@ -67,7 +94,7 @@ def generate_career_advice(career_query: CareerQuery) -> dict:
         2. **Why it fits the athlete** (specific to India)
         3. **Step-by-step roadmap** to achieve this career (including relevant Indian organizations, courses, and funding options)
 
-        **Response Format (JSON):**
+        **Response Format (JSON Only):**
         ```json
         {{
           "career_guidance": [
@@ -95,9 +122,8 @@ def generate_career_advice(career_query: CareerQuery) -> dict:
           ]
         }}
         ```
-        - Each step should be **short but actionable**.
-        - Advice must remain **practical and relevant** for athletes in **India**.
-        - Return only **valid JSON**.
+
+        Return only valid JSON with no extra text.
         """
 
         response = model.generate_content(prompt)
@@ -106,11 +132,17 @@ def generate_career_advice(career_query: CareerQuery) -> dict:
             raise ValueError("AI response is empty.")
 
         response_text = response.text.strip()
-        return extract_json(response_text)  # Extract only valid JSON
+        career_advice = extract_json(response_text)  # Extract only valid JSON
+
+        # Translate values if language is not English
+        if career_query.language.lower() != 'en':
+            career_advice = translate_text(career_advice, career_query.language)
+
+        return career_advice
+
     except Exception as e:
         logging.error(f"❌ Error in AI response: {str(e)}")
         return {"error": "Failed to generate career advice."}
-
 
 # Career Advice Endpoint
 @router.post("/generate_career_advice/")
@@ -122,4 +154,3 @@ async def generate_career(career_query: CareerQuery):
     except Exception as e:
         logging.error(f"❌ Error Processing Request: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
-      

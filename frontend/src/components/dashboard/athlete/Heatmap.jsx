@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import { Tooltip } from 'react-tooltip';
-import { format, subDays, eachDayOfInterval, isToday } from 'date-fns';
-import { setTasks } from '@/config/slices/taskSlice';
+import { format, subDays, eachDayOfInterval } from 'date-fns';
+import { fetchTasks } from '@/config/slices/taskSlice'; // Redux action to fetch tasks
+import { db } from '@/firebase/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 // Set date range (last 365 days)
 const today = new Date();
@@ -13,29 +15,43 @@ const startDate = subDays(today, 365);
 
 const Heatmap = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const tasks = useSelector((state) => state.tasks.tasks); // Get tasks from Redux
   const [taskData, setTaskData] = useState([]);
 
   useEffect(() => {
-    // Generate dummy data for past months (excluding today)
-    const generatedData = eachDayOfInterval({ start: startDate, end: today }).map((date) => {
-      const formattedDate = format(date, 'yyyy-MM-dd');
-      
-      // Ensure today's task count is NOT randomized
-      return {
-        date: formattedDate,
-        count: isToday(date) ? tasks[formattedDate] ?? 0 : (Math.random() > 0.7 ? Math.floor(Math.random() * 5) + 1 : 0),
-      };
-    });
+    const fetchHeatmapTasks = async () => {
+      if (!user?.uid) return;
 
-    setTaskData(generatedData);
-  }, [dispatch, tasks]); // Depend on tasks to ensure updates persist
+      try {
+        const tasksRef = collection(db, 'users', user.uid, 'tasks');
+        const snapshot = await getDocs(tasksRef);
+        const taskMap = {};
 
-  // Merge with Firebase data (if available)
-  const finalData = taskData.map((entry) => ({
-    date: entry.date,
-    count: tasks[entry.date] !== undefined ? tasks[entry.date] : entry.count, // Use Redux task count if available
-  }));
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const date = doc.id; // Assuming Firestore uses date as doc ID
+          const completedCount = data.tasks?.filter((task) => task.completed).length || 0;
+          taskMap[date] = completedCount;
+        });
+
+        dispatch(fetchTasks(user.uid)); // Ensure Redux updates
+        setTaskData(
+          eachDayOfInterval({ start: startDate, end: today }).map((date) => {
+            const formattedDate = format(date, 'yyyy-MM-dd');
+            return {
+              date: formattedDate,
+              count: taskMap[formattedDate] || 0, // Use only Firebase task data
+            };
+          })
+        );
+      } catch (error) {
+        console.error('Error fetching heatmap tasks:', error);
+      }
+    };
+
+    fetchHeatmapTasks();
+  }, [dispatch, user?.uid]);
 
   // Assign CSS classes based on task count
   const classForValue = (value) => {
@@ -49,7 +65,7 @@ const Heatmap = () => {
         <CalendarHeatmap
           startDate={startDate}
           endDate={today}
-          values={finalData}
+          values={taskData}
           classForValue={classForValue}
           tooltipDataAttrs={(value) => ({
             'data-tooltip-id': 'task-tooltip',

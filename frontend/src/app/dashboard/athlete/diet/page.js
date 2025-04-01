@@ -1,4 +1,5 @@
-import DietMain from '@/components/diet_plan/DietMain';
+'use client';
+import DietMain from '@/components/athlete/diet_plan/DietMain';
 import React from 'react';
 
 function page() {

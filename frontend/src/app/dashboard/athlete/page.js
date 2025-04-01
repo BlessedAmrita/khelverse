@@ -1,3 +1,4 @@
+'use client';
 import AthleteMain from '@/components/dashboard/athlete/AthleteMain';
 import React from 'react';
 

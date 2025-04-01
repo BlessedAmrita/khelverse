@@ -1,6 +1,6 @@
 import React from 'react'
 import TodaysTarget from './TodaysTarget.jsx'
-import FeatureHero from '../shared/FeatureHero.jsx'
+import FeatureHero from '../../shared/FeatureHero.jsx'
 import IncompleteTasks from './IncompleteTask.jsx'
 
 function TodaysTargetsMain() {

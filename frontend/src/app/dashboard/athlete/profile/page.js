@@ -1,4 +1,5 @@
-import ProfileMain from '@/components/profile/ProfileMain';
+'use client';
+import ProfileMain from '@/components/athlete/profile/ProfileMain';
 import { mockAthlete } from "@/content/exerciseData";
 import React from 'react';
 

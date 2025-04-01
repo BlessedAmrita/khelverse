@@ -1,3 +1,4 @@
+'use client';
 import CoachMain from '@/components/dashboard/coach/CoachMain';
 import React from 'react';
 

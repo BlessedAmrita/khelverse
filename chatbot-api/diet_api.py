@@ -34,6 +34,7 @@ class PlayerProfile(BaseModel):
     weight: float
     height: float
     goal: str
+    language: str  # Add language field for translation
 
 # Function to extract JSON from AI response
 def extract_json(response_text: str) -> dict:
@@ -48,6 +49,36 @@ def extract_json(response_text: str) -> dict:
     except Exception as e:
         logging.error(f"⚠️ Error parsing AI JSON response: {e}")
         return {"error": "AI response did not return valid JSON."}
+
+# Function to translate JSON values while keeping the structure intact
+def translate_text(json_content: dict, target_language: str) -> dict:
+    """Use Gemini to translate only the values in JSON content while keeping the keys and structure intact."""
+    if target_language.lower() == "en":
+        return json_content  # No translation needed
+
+    try:
+        translation_prompt = f"""
+        Translate the values in the following JSON into **{target_language}**. 
+        Keep the JSON structure and keys unchanged.
+
+        JSON:
+        ```json
+        {json.dumps(json_content, ensure_ascii=False)}
+        ```
+
+        Return only valid JSON without extra text.
+        """
+
+        response = model.generate_content(translation_prompt)
+
+        if not response or not response.text:
+            raise ValueError("Empty translation response.")
+
+        return extract_json(response.text.strip())
+
+    except Exception as e:
+        logging.error(f"⚠️ Translation error: {str(e)}")
+        return json_content  # Fallback to original if translation fails
 
 # AI-based Diet Plan Generation
 def generate_diet_plan(player_profile: PlayerProfile) -> dict:
@@ -94,6 +125,7 @@ def generate_diet_plan(player_profile: PlayerProfile) -> dict:
           }}
         }}
         ```
+
         Return only **valid JSON**.
         """
 
@@ -103,7 +135,14 @@ def generate_diet_plan(player_profile: PlayerProfile) -> dict:
             raise ValueError("AI response is empty.")
 
         response_text = response.text.strip()
-        return extract_json(response_text)  # Extract only valid JSON
+        diet_plan = extract_json(response_text)  # Extract only valid JSON
+
+        # Translate values if language is not English
+        if player_profile.language.lower() != 'en':
+            diet_plan = translate_text(diet_plan, player_profile.language)
+
+        return diet_plan
+
     except Exception as e:
         logging.error(f"❌ Error in AI response: {str(e)}")
         return {"error": "Failed to generate diet plan."}

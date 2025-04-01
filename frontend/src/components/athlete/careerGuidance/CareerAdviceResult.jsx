@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import CareerAdviceForm from './CareerAdviceForm';
-import FeatureHero from '../shared/FeatureHero';
+import FeatureHero from '../../shared/FeatureHero';
 
 export default function CareerAdviceResult() {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,8 @@ export default function CareerAdviceResult() {
     setResponseData(null);
 
     try {
-      const response = await fetch('https://satyam075-chatbot-ai.hf.space/career/generate_career_advice/', {
+      // const response = await fetch('https://satyam075-chatbot-ai.hf.space/career/generate_career_advice/', {
+        const response = await fetch('http://127.0.0.1:8000/career/generate_career_advice/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

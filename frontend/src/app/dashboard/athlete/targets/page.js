@@ -1,4 +1,5 @@
-import TodaysTargetsMain from '@/components/todaysTargets/TodaysTargetsMain';
+'use client';
+import TodaysTargetsMain from '@/components/athlete/todaysTargets/TodaysTargetsMain';
 import React from 'react';
 
 function page() {

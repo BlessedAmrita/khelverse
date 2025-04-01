@@ -1,4 +1,5 @@
-import InjuryMain from '@/components/injury/InjuryMain';
+'use client';
+import InjuryMain from '@/components/athlete/injury/InjuryMain';
 import React from 'react';
 
 function page() {

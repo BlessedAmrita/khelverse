@@ -14,6 +14,7 @@ import {
   ChartColumnIncreasing,
   CircleHelp,
   LayoutDashboard,
+  Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -26,7 +27,7 @@ const Sidebar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = {
     guest: [{ name: 'Home', path: '/', icon: Home }],
@@ -38,13 +39,14 @@ const Sidebar = () => {
       { name: 'Injury', path: '/dashboard/athlete/injury', icon: HeartPulse },
       { name: 'Training', path: '/dashboard/athlete/training', icon: Dumbbell },
       { name: 'Tracking', path: '/dashboard/athlete/performance_evaluation', icon: ChartColumnIncreasing },
-      { name: 'Events', path: '/events', icon: Calendar },
+      { name: 'Events', path: '/dashboard/athlete/events', icon: Calendar },
       { name: 'Career Guidance', path: '/dashboard/athlete/careerGuidance', icon: CircleHelp },
     ],
     coach: [
       { name: 'Dashboard', path: '/dashboard/coach', icon: LayoutDashboard },
       { name: 'Athlete Profiles', path: '/dashboard/coach/athlete_profiles', icon: User },
-      { name: 'Events', path: '/events', icon: Calendar },
+      { name: 'Sessions', path: '/dashboard/coach/sessions', icon: Users },
+      { name: 'Events', path: '/dashboard/coach/events', icon: Calendar },
     ],
     organization: [
       { name: 'Dashboard', path: '/dashboard/organization', icon: LayoutDashboard },
@@ -53,13 +55,13 @@ const Sidebar = () => {
     ],
   };
 
-  const activeNav = user?.role ? navItems[user.role] || [] : navItems.guest;
+  const activeNav = user?.isOnboarded ? (navItems[user.role] || []) : navItems.guest;
 
   const handleGetStarted = async () => {
     const { user, isNewUser } = await signInWithGoogle(dispatch);
 
-    if (user) {
-      console.log('User Logged In:', user);
+    if (user.isOnboarded) {
+      console.log('User Onboarded:', user);
 
       // 🔥 Redirect to onboarding if new or role not set
       if (isNewUser || !user.role) {
@@ -79,7 +81,7 @@ const Sidebar = () => {
 
   return (
     <div className='h-min-screen bg-[#e8e7e7]'>
-      <aside className={`sticky top-0 left-0 h-auto pb-[50px] ${isOpen ? 'w-64' : 'w-16'} transition-all bg-[#e8e7e7] text-black pt-[20px] pl-[20px] border-r-[2px] border-white`}>
+      <aside className={`sticky top-0 left-0 h-auto pb-[50px] ${isOpen ? 'w-64' : 'w-16'} transition-all bg-[#e8e7e7] text-black pt-[20px] pl-[20px]`}>
         {/* Sidebar Toggle */}
         <div className='flex gap-[5px] items-center justify-between mb-[20px]'>
           {isOpen && <h2 className='text-2xl font-sprintura'>APTS</h2>}

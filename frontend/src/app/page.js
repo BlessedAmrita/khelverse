@@ -1,3 +1,4 @@
+'use client';
 import Features from '@/components/landingPage/Features';
 import HeroSection from '@/components/landingPage/HeroSection';
 import Testimonials from '@/components/landingPage/Testimonials';

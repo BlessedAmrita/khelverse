@@ -1,4 +1,5 @@
-import CareerGuidanceMain from '@/components/careerGuidance/CareerGuidanceMain'
+'use client';
+import CareerGuidanceMain from '@/components/athlete/careerGuidance/CareerGuidanceMain'
 import React from 'react'
 
 function page() {

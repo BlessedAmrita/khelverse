@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import FeatureHero from '../shared/FeatureHero';
 import {
@@ -146,7 +147,7 @@ const events3 = [
   },
 ];
 
-function EventsMain() {
+function AthleteEventsMain() {
   return (
     <div className='w-full'>
       <FeatureHero
@@ -262,4 +263,4 @@ function EventsMain() {
   );
 }
 
-export default EventsMain;
+export default AthleteEventsMain;

@@ -1,3 +1,4 @@
+'use client';
 import OrganizationMain from '@/components/dashboard/organization/OrganizationMain';
 import React from 'react';
 

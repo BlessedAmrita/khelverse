@@ -1,4 +1,5 @@
-import EvaluationMain from '@/components/performance_evaluation/EvaluationMain';
+'use client';
+import EvaluationMain from '@/components/athlete/performance_evaluation/EvaluationMain';
 import React from 'react';
 
 function page() {

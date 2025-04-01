@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import FeatureHero from '../shared/FeatureHero';
+import FeatureHero from '../../shared/FeatureHero';
 import DietPlan from './DietPlan';
 
 function DietMain() {
