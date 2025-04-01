@@ -1,5 +1,4 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import AthleteHero from './AthleteHero';
 import AthleteBody from './AthleteBody';
 
