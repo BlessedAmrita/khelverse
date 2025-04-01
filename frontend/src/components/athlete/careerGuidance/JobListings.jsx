@@ -41,16 +41,16 @@ const JobListings = () => {
   return (
     <div className="animate-slide-in-up animation-delay-200">
       <div className="flex justify-between items-center mb-2">
-        <h2 className="section-heading">Job Listings</h2>
+        <h2 className="section-heading text-white">Job Listings</h2>
         <button className="button-outline flex items-center space-x-2">
-          <Filter className="h-4 w-4" />
-          <span>Filters</span>
+          <Filter className="h-4 w-4 text-white" />
+          <span className='text-white'>Filters</span>
         </button>
       </div>
       
       <div className="space-y-4">
         {jobs.map((job) => (
-          <div key={job.id} className="job-card animate-scale-in" style={{ animationDelay: `${job.id * 100}ms` }}>
+          <div key={job.id} className="job-card animate-scale-in bg-gray-200" style={{ animationDelay: `${job.id * 100}ms` }}>
             <div className="flex items-start md:items-center justify-between gap-4 flex-col md:flex-row">
               <div className="flex gap-4 items-start md:items-center flex-1">
                 <div className="w-12 h-12 rounded-md bg-accent/10 flex items-center justify-center text-xl">
@@ -86,7 +86,7 @@ const JobListings = () => {
               </div>
               
               <div className="flex gap-2 w-full md:w-auto">
-                <button className="button-primary bg-lavender hover:bg-black text-black hover:text-lavender flex-1 md:flex-none">
+                <button className="button-primary bg-purple-dark text-lavender-100  hover:bg-black hover:text-lavender flex-1 md:flex-none">
                   Apply Now
                 </button>
                 

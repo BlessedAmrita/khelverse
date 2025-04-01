@@ -63,7 +63,7 @@ const UpcomingSessionsCard = () => {
           </motion.div>
         ))}
       </div>
-
+      
       <Button asChild className="w-full apts-button mt-5 bg-purple-light text-apt-dark hover:bg-lavender pulse-btn">
         <Link href="/dashboard/coach/sessions/new">
           <Plus className="mr-2 h-4 w-4" /> Schedule New Session

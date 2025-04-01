@@ -80,12 +80,17 @@ const Sidebar = () => {
   };
 
   return (
-    <div className='h-min-screen bg-[#e8e7e7]'>
-      <aside className={`sticky top-0 left-0 h-auto pb-[50px] ${isOpen ? 'w-64' : 'w-16'} transition-all bg-[#e8e7e7] text-black pt-[20px] pl-[20px]`}>
+    <div className='h-min-screen bg-apts-dark'>
+      <aside className={`sticky top-0 left-0 h-auto pb-[50px] ${isOpen ? 'w-64' : 'w-16'} transition-all bg-[#e8e7e7] text-black pt-[20px] pl-[20px] border-r-[2px] border-white`}>
         {/* Sidebar Toggle */}
         <div className='flex gap-[5px] items-center justify-between mb-[20px]'>
-          {isOpen && <h2 className='text-2xl font-sprintura'>APTS</h2>}
-          <button onClick={() => setIsOpen(!isOpen)} className='p-4'>
+          {isOpen && <h1 
+        className={`font-samarkan select-none`}
+        style={{ fontFamily: 'Samarkan, fantasy' }} // Adding inline style as fallback
+       >
+        <span className="khelverse-gradient text-4xl">Khelverse</span>
+       </h1>}
+          <button onClick={() => setIsOpen(!isOpen)} className={`${isOpen ? 'p-2' : 'mr-2'}`}>
             <Menu size={24} />
           </button>
         </div>

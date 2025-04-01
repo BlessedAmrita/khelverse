@@ -57,7 +57,7 @@ const CareerAdviceForm = ({ onSubmit }) => {
   });
 
   return (
-    <div className="animate-slide-in-up w-full max-w-3xl">
+    <div className="animate-slide-in-up w-full max-w-3xl bg-gray-200">
       <Card className="shadow-card">
         <CardContent className="p-6">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

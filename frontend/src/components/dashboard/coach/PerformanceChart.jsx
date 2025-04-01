@@ -64,7 +64,7 @@ const PerformanceChart = () => {
             <Tooltip content={<CustomTooltip />} />
             <Bar 
               dataKey="value" 
-              fill="#9b87f5" 
+              fill="#7653B8" 
               radius={[4, 4, 0, 0]} 
               barSize={30} 
               animationDuration={1500}

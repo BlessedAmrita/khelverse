@@ -75,7 +75,7 @@ export default function RootLayout({ children }) {
           <div className='min-h-screen flex flex-col'>
             <div className='flex min-h-screen relative'>
               <Sidebar />
-              <main className='flex-grow transition-all'>{children}</main>
+              <main className='flex-grow transition-all bg-black'>{children}</main>
             </div>
           </div>
           <Footer />

@@ -39,7 +39,7 @@ export default function CareerAdviceResult() {
         bg_url={
           'https://res.cloudinary.com/dpmlrxlzr/image/upload/v1741329876/MacBook_Pro_16__-_1_3_rdftkl.svg'
         }
-        title={'Diet Plan'}
+        title={'Career Advice Form'}
       />
       <div className="w-full mx-auto p-6 space-y-6 flex flex-col items-center">
         {/* Career Advice Form */}

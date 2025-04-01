@@ -34,14 +34,14 @@ const Sponsorships = () => {
   return (
     <div className="animate-slide-in-up animation-delay-400">
       <div className="mb-6">
-        <h2 className="section-heading">Sponsorships</h2>
+        <h2 className="section-heading text-white">Sponsorships</h2>
       </div>
       
       <div className="grid md:grid-cols-3 gap-6">
         {sponsorships.map((sponsorship) => (
           <div 
             key={sponsorship.id} 
-            className="rounded-2xl overflow-hidden border border-border bg-white shadow-subtle animate-scale-in card-hover"
+            className="rounded-2xl overflow-hidden border border-border bg-gray-200 shadow-subtle animate-scale-in card-hover"
             style={{ animationDelay: `${sponsorship.id * 100}ms` }}
           >
             <div className="p-5 border-b border-border bg-muted/30">

@@ -31,7 +31,7 @@ import {
                   Let's <span className="text-gradient">Connect</span>
                 </h2>
                 <p className="text-white/70 mb-8">
-                  Interested in learning more about how APTS can elevate your athletic journey or sports organization?
+                  Interested in learning more about how Khelverse can elevate your athletic journey or sports organization?
                   Reach out to our team of experts.
                 </p>
                 
@@ -42,7 +42,7 @@ import {
                     </div>
                     <div>
                       <h3 className="font-medium text-white">Email Us</h3>
-                      <p className="text-white/60">contact@apts.in</p>
+                      <p className="text-white/60">contact@khelverse.in</p>
                     </div>
                   </div>
 
@@ -122,7 +122,7 @@ import {
                     
                     <button
                       type="submit"
-                      className="w-full h-12 inline-flex items-center justify-center rounded-md bg-lavender-600 px-6 text-base font-medium text-white transition-all hover:bg-lavender-700 hover-lift"
+                      className="w-full h-12 inline-flex items-center justify-center rounded-md bg-purple-dark text-lavender-100 px-6 text-base font-medium transition-all hover:bg-lavender-700 hover-lift"
                     >
                       Send Message
                     </button>

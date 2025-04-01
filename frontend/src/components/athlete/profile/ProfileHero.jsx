@@ -8,7 +8,7 @@ const ProfileHero = ({ athlete }) => {
   const user = auth.currentUser;
 
   return (
-    <div className="relative w-full  animate-fade-in">
+    <div className="relative w-full glass-dark animate-fade-in">
       <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-10 blur-3xl -z-10 rounded-3xl"></div>
       <div className="glass rounded-3xl p-8 md:p-12 overflow-hidden">
         <div className="flex flex-col md:flex-row items-center gap-8">

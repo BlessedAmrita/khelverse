@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import FeatureHero from '../shared/FeatureHero';
 import {
   FaTrophy,
@@ -108,48 +108,65 @@ const events3 = [
     date: 'May 10, 2025',
     location: 'Patiala',
     daysLeft: 48,
-    icon: <FaCalendarCheck />,
+    icon: <FaCalendarAlt />,
   },
   {
     title: 'Indian Masters Athletics Championship',
     date: 'May 25, 2025',
     location: 'Hyderabad',
     daysLeft: 63,
-    icon: <FaCalendarCheck />,
+    icon: <FaCalendarAlt />,
   },
   {
     title: 'South Asian Games Trial',
     date: 'August 5, 2025',
     location: 'Mumbai',
     daysLeft: 135,
-    icon: <FaCalendarCheck />,
+    icon: <FaCalendarAlt />,
   },
   {
     title: 'All India Inter-University Athletics Meet',
     date: 'December 1, 2025',
     location: 'Delhi',
     daysLeft: 253,
-    icon: <FaCalendarCheck />,
+    icon: <FaCalendarAlt />,
   },
   {
     title: 'West Zone Athletics Championship',
     date: 'October 10, 2025',
     location: 'Pune',
     daysLeft: 201,
-    icon: <FaCalendarCheck />,
+    icon: <FaCalendarAlt />,
   },
   {
     title: 'North East Games Athletics Event',
     date: 'November 25, 2025',
     location: 'Guwahati',
     daysLeft: 247,
-    icon: <FaCalendarCheck />,
+    icon: <FaCalendarAlt />,
   },
 ];
 
 function AthleteEventsMain() {
+  //loader
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+  if (isLoading) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-apts-black">
+        <div className="text-center">
+          <div className="w-16 h-16 border-t-4 border-apts-purple rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-apts-white text-lg font-sprintura">TRACK. TRAIN. TRIUMPH</p>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className='w-full'>
+    <div className='w-full bg-black text-white'>
       <FeatureHero
         bg_url={
           'https://res.cloudinary.com/dpmlrxlzr/image/upload/v1741330564/MacBook_Pro_16__-_1_4_zwatot.svg'
@@ -159,9 +176,9 @@ function AthleteEventsMain() {
       {/* Top Section */}
       <div className='w-full h-[70vh] sm:h-[50vh] flex flex-col sm:flex-row gap-y-3'>
         {/* Left side - Scrollable List */}
-        <div className='w-full sm:w-[60%] h-full overflow-y-auto p-4 pt-0 bg-gray-50 shadow-lg'>
-          <div className='sticky top-0 bg-gray-50 py-2'>
-            <h2 className='text-xl font-bold text-center m-3 bg-gray-200 py-3 rounded-lg'>
+        <div className='w-full sm:w-[60%] h-full overflow-y-auto p-4 pt-0 bg-black shadow-lg'>
+          <div className='sticky top-0 bg-black py-2'>
+            <h2 className='text-xl font-bold text-center m-3 glass-card py-1 rounded-lg'>
               REGISTERED EVENTS
             </h2>
           </div>
@@ -169,18 +186,18 @@ function AthleteEventsMain() {
             {events1.map((event, index) => (
               <li
                 key={index}
-                className='flex items-center justify-between p-4 mb-4 bg-white rounded-lg shadow-md'
+                className='flex items-center justify-between p-2 mb-2 bg-white/5 rounded-lg shadow-md'
               >
                 <div className='flex items-center'>
-                  <div className='p-4 bg-gray-200 rounded-lg'>{event.icon}</div>
+                  <div className='p-4 bg-gray-800 rounded-lg'>{event.icon}</div>
                   <div className='ml-4'>
-                    <h3 className='text-lg font-semibold'>{event.title}</h3>
-                    <p className='text-gray-500'>
+                    <h3 className='text-md font-semibold'>{event.title}</h3>
+                    <p className='text-gray-400'>
                       {event.date} • {event.location}
                     </p>
                   </div>
                 </div>
-                <div className='bg-lavender text-black font-bold text-sm px-4 py-2 rounded-full'>
+                <div className='bg-purple-dark text-lavender-100  font-bold text-sm px-4 py-1 rounded-full'>
                   {event.daysLeft} DAYS
                 </div>
               </li>
@@ -189,37 +206,37 @@ function AthleteEventsMain() {
         </div>
 
         {/* Right Calendar Section */}
-        <div className='w-[full] sm:w-[40%] h-full bg-gray-50 '>
-          <h2 className='text-xl font-bold text-center p-4 '>CALENDER</h2>
+        <div className='w-full sm:w-[40%] h-full bg-black'>
+          <h2 className='text-xl font-bold text-center p-4'>CALENDAR</h2>
           <iframe
             src='https://calendar.google.com/calendar/embed?src=tanyavardhan2005%40gmail.com&ctz=UTC'
             style={{ border: 0 }}
             width='100%'
             height='90%'
-            className='px-3 pb-2 '
+            className='px-3 pb-2'
           ></iframe>
         </div>
       </div>
 
       {/* Bottom Section */}
       <div className='w-full h-[70vh] sm:h-[50vh] flex flex-col sm:flex-row justify-between mt-3 mb-5 gap-y-3'>
-        <div className='w-[full] sm:w-[43%] h-full overflow-y-auto p-4 pt-0 bg-gray-50 shadow-lg'>
-          <div className='sticky top-0 bg-gray-50 py-2'>
-            <h2 className='text-xl font-bold text-center mb-1 bg-gray-200 py-3 rounded-lg'>
+        <div className='w-full sm:w-[43%] h-full overflow-y-auto p-4 pt-0 bg-black shadow-lg'>
+          <div className='sticky top-0 bg-black py-2'>
+            <h2 className='text-xl font-bold text-center mb-1 glass-card py-1 rounded-lg'>
               PAST EVENTS
             </h2>
           </div>
-          <ul className=''>
+          <ul>
             {events2.map((event, index) => (
               <li
                 key={index}
-                className='flex items-center justify-between p-4 mb-4 bg-white rounded-lg shadow-md'
+                className='flex items-center justify-between p-2 mb-2 bg-white/5 rounded-lg shadow-md'
               >
                 <div className='flex items-center'>
-                  <div className='p-4 bg-gray-200 rounded-lg'>{event.icon}</div>
+                  <div className='p-4 bg-gray-800 rounded-lg'>{event.icon}</div>
                   <div className='ml-4'>
-                    <h3 className='text-lg font-semibold'>{event.title}</h3>
-                    <p className='text-gray-500'>
+                    <h3 className='text-md font-semibold'>{event.title}</h3>
+                    <p className='text-gray-400'>
                       {event.date} • {event.location}
                     </p>
                   </div>
@@ -229,10 +246,9 @@ function AthleteEventsMain() {
           </ul>
         </div>
 
-        <div className='w-[full] sm:w-[55%] h-full overflow-y-auto p-4 pt-0 bg-gray-50 shadow-lg'>
-          <div className='sticky top-0 bg-gray-50 py-2'>
-            <h2 className='text-xl font-bold text-center mb-1 bg-gray-200 py-3 rounded-lg'>
-              {' '}
+        <div className='w-full sm:w-[55%] h-full overflow-y-auto p-4 pt-0 bg-black shadow-lg'>
+          <div className='sticky top-0 bg-black py-2'>
+            <h2 className='text-xl font-bold text-center mb-1 glass-card py-1 rounded-lg'>
               OTHER UPCOMING EVENTS
             </h2>
           </div>
@@ -240,18 +256,18 @@ function AthleteEventsMain() {
             {events3.map((event, index) => (
               <li
                 key={index}
-                className='flex items-center justify-between p-4 mb-4 bg-white rounded-lg shadow-md'
+                className='flex items-center justify-between p-2 mb-2 bg-white/5 rounded-lg shadow-md'
               >
                 <div className='flex items-center'>
-                  <div className='p-4 bg-gray-200 rounded-lg'>{event.icon}</div>
+                  <div className='p-4 bg-gray-800 rounded-lg'>{event.icon}</div>
                   <div className='ml-4'>
-                    <h3 className='text-lg font-semibold'>{event.title}</h3>
-                    <p className='text-gray-500'>
+                    <h3 className='text-md font-semibold'>{event.title}</h3>
+                    <p className='text-gray-400'>
                       {event.date} • {event.location}
                     </p>
                   </div>
                 </div>
-                <div className='bg-lavender text-black font-bold text-sm px-4 py-2 rounded-full'>
+                <div className='bg-purple-dark text-lavender-100  font-bold text-sm px-4 py-1 rounded-full'>
                   {event.daysLeft} DAYS
                 </div>
               </li>

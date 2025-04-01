@@ -32,7 +32,8 @@ const config = {
 				'scale-in': 'scale-in 0.3s ease-out',
 				'slide-in': 'slide-in 0.3s ease-out',
 				'pulse-soft': 'pulse-soft 3s infinite ease-in-out',
-				'float': 'float 3s infinite ease-in-out'
+				'float': 'float 3s infinite ease-in-out',
+        'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
       },
       keyframes: {
         shimmer: {
@@ -119,11 +120,11 @@ const config = {
         
 				'pulse-glow': {
 					'0%, 100%': {
-						opacity: '1'
+						filter: 'drop-shadow(0 0 0.75rem #9b87f5)',
 					},
 					'50%': {
-						opacity: '0.7'
-					}
+						filter: 'drop-shadow(0 0 1.5rem #D6BCFA)',
+					},
 				}
       },
       colors: {
@@ -132,7 +133,18 @@ const config = {
         purple: {
 					DEFAULT: '#8E47FF',
 					light: '#9b87f5',
-					dark: '#4A3D70'
+          middle:'#7653B8',
+					dark: '#4A3D70',
+          darker: '#1E1233',
+				},
+
+        khelverse: {
+					purple: '#9b87f5',
+					'deep-purple': '#7E69AB',
+					'dark-purple': '#1A1F2C',
+					'light-purple': '#D6BCFA',
+					black: '#0F0F10',
+					white: '#FFFFFF',
 				},
 
         lavender: {
@@ -154,8 +166,15 @@ const config = {
 					darker: '#0a0a0a',
 					light: '#f8f8f8',
 					lavender: '#9d8df1',
-          purple: '#9b87f5',
 					'dark-purple': '#1A1F2C',
+          purple: {
+						light: '#9b87f5', 
+						DEFAULT: '#9b87f5',
+						dark: '#513B8B'
+					},
+          green: '#4CD964',
+					orange: '#FF9500',
+					blue: '#5AC8FA',
 					black: '#000000',
 					white: '#FFFFFF',
 				},
@@ -216,7 +235,10 @@ const config = {
         onfarming: 'var(--font-onfarming)',
         sans: ['Inter', 'sans-serif'],
         display: ['SPINTURA', 'Inter', 'sans-serif'],
+        'hindi': ['Poppins', 'sans-serif'],
+        'samarkan': ['Samarkan', 'sans-serif'],
       },
+      
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',

@@ -8,13 +8,18 @@ const Footer = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 rounded-md bg-lavender-600 flex items-center justify-center">
+            <div className="flex items-center space-x-2 mb-2">
+              {/* <div className="w-8 h-8 rounded-md bg-lavender-600 flex items-center justify-center">
                 <span className="font-bold text-white">A</span>
-              </div>
-              <span className="text-white font-bold text-xl font-sprintura">APTS</span>
+              </div> */}
+              <h1 
+        className={`font-samarkan select-none`}
+        style={{ fontFamily: 'Samarkan, fantasy' }} // Adding inline style as fallback
+       >
+        <span className="khelverse-gradient text-4xl">Khelverse</span>
+       </h1>
             </div>
-            <p className="text-white/60 mb-6 font-thuast">
+            <p className="text-white/60 mb-6 font-sprintura">
               TRACK. TRAIN. TRIUMPH.
             </p>
             <div className="flex space-x-4">

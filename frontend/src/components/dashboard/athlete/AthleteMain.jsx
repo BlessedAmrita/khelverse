@@ -3,7 +3,8 @@ import AthleteHero from './AthleteHero';
 import AthleteBody from './AthleteBody';
 
 function AthleteMain() {
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  
+  //loader
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

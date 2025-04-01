@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-xl mx-auto text-center mb-16">
             <motion.h2 
-              className="text-3xl md:text-4xl font-bold mb-4 text-white font-thuast"
+              className="text-3xl md:text-4xl font-bold mb-4 text-white font-sprintura"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -34,7 +34,7 @@ import { motion } from 'framer-motion';
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                quote: "APTS has revolutionized how we track our athletes' development. The data insights are invaluable for making coaching decisions.",
+                quote: "Khelverse has revolutionized how we track our athletes' development. The data insights are invaluable for making coaching decisions.",
                 name: "Pullela Gopichand",
                 role: "Chief National Coach, Badminton"
             },
@@ -44,7 +44,7 @@ import { motion } from 'framer-motion';
               role: "Olympic Shooter"
             },
             {
-              quote: "Managing an entire academy's performance data has never been easier. APTS gives us a comprehensive picture of all our athletes.",
+              quote: "Managing an entire academy's performance data has never been easier. Khelverse gives us a comprehensive picture of all our athletes.",
               name: "Dr. Rajat Singh",
               role: "Director, Sports Science Institute"
             }

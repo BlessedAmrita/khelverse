@@ -1,8 +1,12 @@
 'use client';
-import React from "react";
+import React, { useState } from "react";
 import { Award } from "lucide-react";
 
 const AchievementTimeline = ({ achievements }) => {
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleAchievements = showAll ? achievements : achievements.slice(0, 3);
+
   return (
     <div className="glass rounded-xl p-6 mt-6 animate-slide-up-delay-2">
       <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -11,12 +15,12 @@ const AchievementTimeline = ({ achievements }) => {
       </h2>
 
       <div className="space-y-6 mt-6">
-        {achievements.map((achievement, index) => (
+        {visibleAchievements.map((achievement) => (
           <div 
             key={achievement.id} 
             className="relative pl-6 pb-6 border-l border-muted-foreground/20 last:border-0 last:pb-0"
           >
-            <div className="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-purple"></div>
+            <div className="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-apts-purple"></div>
             <div className="space-y-1">
               <div className="text-sm text-muted-foreground">
                 {new Date(achievement.date).toLocaleDateString('en-US', {
@@ -31,6 +35,15 @@ const AchievementTimeline = ({ achievements }) => {
           </div>
         ))}
       </div>
+
+      {achievements.length > 3 && (
+        <button 
+          onClick={() => setShowAll(!showAll)} 
+          className="mt-4 text-apts-purple font-medium hover:underline"
+        >
+          {showAll ? 'Show Less' : 'Show More'}
+        </button>
+      )}
     </div>
   );
 };

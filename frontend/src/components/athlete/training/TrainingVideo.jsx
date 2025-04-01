@@ -81,12 +81,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-black p-6">
-      <p className="text-gray-500">AI-powered exercise tracking and feedback</p>
+      <p className="text-gray-300">AI-powered exercise tracking and feedback</p>
 
-      <div className="mt-6 flex flex-wrap gap-6">
+      <div className="mt-6 flex flex-wrap gap-6 justify-center">
         {/* Left Side: Video Feed */}
-        <div className="bg-white rounded-lg shadow-lg p-4 w-[700px]">
-          <div className="bg-gray-200 h-[500px] rounded-md flex items-center justify-center">
+        <div className="bg-gray-100 rounded-lg shadow-lg p-4 w-[700px]">
+          <div className="bg-gray-300 h-[500px] rounded-md flex items-center justify-center">
             <img
               src="http://127.0.0.1:5000/video_feed"
               alt="Live Workout Feed"
@@ -96,7 +96,7 @@ export default function Home() {
         </div>
 
         {/* Right Side: Controls */}
-        <div className="bg-white rounded-lg shadow-lg p-6 w-[420px]">
+        <div className="bg-gray-100 rounded-lg shadow-lg p-6 w-[420px]">
           {/* Select Exercise */}
           <div>
             <h3 className="font-semibold text-lg mb-2">Select Exercise</h3>

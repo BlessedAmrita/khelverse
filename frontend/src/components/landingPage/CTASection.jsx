@@ -57,7 +57,7 @@ const CTASection = () => {
                 <div className="flex flex-col space-y-4">
                   <button
                     onClick={handleGetStarted}
-                    className="inline-flex h-12 items-center justify-center rounded-lg bg-lavender-600 px-6 text-base font-medium text-white transition-all hover:bg-lavender-700 hover-lift"
+                    className="inline-flex h-12 items-center justify-center rounded-lg bg-purple-dark text-lavender-100 px-6 text-base font-medium  transition-all hover:bg-lavender-700 hover-lift"
                   >
                     Get Started
                     <ArrowRight size={18} className="ml-2" />
