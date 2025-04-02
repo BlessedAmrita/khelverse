@@ -90,7 +90,7 @@ html {
 
 @layer base {
   * {
-    @apply border-border selection:bg-lavender-500/20 selection:text-lavender-100;
+    @apply border-border selection:bg-lavender-500/60 selection:text-black;
   }
   body {
     @apply bg-background text-foreground antialiased overflow-x-hidden;

@@ -14,7 +14,7 @@ export default function DietPlan() {
     setResponseData(null);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/generate_diet/', {
+      const response = await fetch('https://prajjwal1729-chatbot-api.hf.space/api/generate_diet/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

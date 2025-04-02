@@ -15,8 +15,7 @@ export default function CareerAdviceResult() {
     setResponseData(null);
 
     try {
-      // const response = await fetch('https://satyam075-chatbot-ai.hf.space/career/generate_career_advice/', {
-        const response = await fetch('http://127.0.0.1:8000/career/generate_career_advice/', {
+        const response = await fetch('https://prajjwal1729-chatbot-api.hf.space/career/generate_career_advice/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
