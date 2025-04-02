@@ -56,7 +56,7 @@ export default function DietPlan() {
           </div>
 
           {/* Meal Plan */}
-          <div className="p-6 bg-white rounded-lg shadow-md">
+          <div className="p-6 bg-gray-100 rounded-lg shadow-md">
             <h3 className="text-lg font-semibold text-gray-800">🍴 Meal Plan</h3>
             {Object.entries(responseData.meal_plan).map(([meal, items]) => (
               <div key={meal} className="mt-3">

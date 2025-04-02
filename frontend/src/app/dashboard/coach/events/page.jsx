@@ -1,8 +1,11 @@
 import React from 'react'
+import Events from '@/components/coachEvent/EventsMain'
 
 function page() {
   return (
-    <div>coach events page</div>
+    <div>
+     <Events/>
+    </div>
   )
 }
 

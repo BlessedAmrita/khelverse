@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, {useState, useEffect} from 'react';
 import AthleteHero from './AthleteHero';
 import AthleteBody from './AthleteBody';
 

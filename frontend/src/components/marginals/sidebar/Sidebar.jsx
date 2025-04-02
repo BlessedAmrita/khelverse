@@ -81,7 +81,7 @@ const Sidebar = () => {
 
   return (
     <div className='h-min-screen bg-apts-dark'>
-      <aside className={`sticky top-0 left-0 h-auto pb-[50px] ${isOpen ? 'w-64' : 'w-16'} transition-all bg-[#e8e7e7] text-black pt-[20px] pl-[20px] border-r-[2px] border-white`}>
+      <aside className={`sticky top-0 left-0 h-auto pb-[50px] ${isOpen ? 'w-64' : 'w-16'} transition-all bg-apts-dark text-white pt-[20px] pl-[20px] border-r-[2px] border-white`}>
         {/* Sidebar Toggle */}
         <div className='flex gap-[5px] items-center justify-between mb-[20px]'>
           {isOpen && <h1 

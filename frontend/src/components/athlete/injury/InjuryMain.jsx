@@ -1,6 +1,6 @@
 'use client';
 import React, {useState, useEffect} from 'react';
-import FeatureHero from '../shared/FeatureHero';
+import FeatureHero from '../../shared/FeatureHero';
 import InjuryAssessment from './InjuryAssessment';
 
 function InjuryMain() {

@@ -42,7 +42,7 @@ export default function DietPlanForm({ onSubmit }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 p-6 border rounded-lg shadow-md w-full max-w-2xl bg-white"
+        className="space-y-4 p-6 border rounded-lg shadow-md w-full max-w-2xl bg-gray-100"
       >
         {/* Sport */}
         <FormField control={form.control} name="sport" render={({ field }) => (
@@ -133,7 +133,7 @@ export default function DietPlanForm({ onSubmit }) {
         )} />
 
         {/* Submit Button */}
-        <Button type="submit" className="w-full bg-lavender text-black rounded-lg shadow-md hover:bg-black hover:text-lavender transition-colors duration-500">
+        <Button type="submit" className="w-full bg-purple-dark text-lavender-100 rounded-lg shadow-md hover:bg-black hover:text-lavender transition-colors duration-500">
           Generate Diet Plan
         </Button>
       </form>
