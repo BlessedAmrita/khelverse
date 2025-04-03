@@ -4,13 +4,8 @@ import FeatureHero from '../shared/FeatureHero';
 import EventsCalendar from '../coachEvent/EventCalendar';
 import {
   FaTrophy,
-  FaCheck,
-  FaClipboardList,
   FaCalendarCheck,
-  FaHistory,
-  FaClock,
   FaCalendarAlt,
-  FaArrowCircleRight,
 } from 'react-icons/fa';
 
 const events1 = [

@@ -4,7 +4,7 @@ import Link from 'next/link';  // Import Link from Next.js instead of react-rout
 import { Search, Calendar, Filter, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import SessionCard from './SessionCard';
 
 // Mock data for sessions

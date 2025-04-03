@@ -1,12 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Activity, 
-  BarChart, 
-  Shield, 
-  Zap, 
-  LineChart,
+import {
   Users,
   Mail
 } from 'lucide-react';

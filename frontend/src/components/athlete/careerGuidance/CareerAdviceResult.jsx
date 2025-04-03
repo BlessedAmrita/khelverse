@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowRight, Loader2 } from 'lucide-react';
 import CareerAdviceForm from './CareerAdviceForm';
 import FeatureHero from '../../shared/FeatureHero';
 

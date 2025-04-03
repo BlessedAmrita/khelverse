@@ -2,7 +2,7 @@
 import React from 'react';
 import { ButtonsCard } from '@/components/ui/ButtonsCard';
 
-function AthleteCard({ bg_url, title, text, buttonText, icon_url, onClick }) {
+function AthleteCard({ bg_url, title, text, buttonText,onClick }) {
   return (
     <div className='backdrop-blur-2xl bg-transparent flex justify-center transition-all hover:scale-105 duration-500 ease-in-out rounded-xl overflow-clip relative group'>
       {/* Background Image */}

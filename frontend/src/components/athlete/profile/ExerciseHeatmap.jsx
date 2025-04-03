@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import { Tooltip } from 'react-tooltip';
-import { format, subDays, eachDayOfInterval, isToday } from 'date-fns';
+import { format, subDays, eachDayOfInterval} from 'date-fns';
 import { fetchTasks } from '@/config/slices/taskSlice'; // Redux action to fetch tasks
 import { db } from '@/firebase/firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { setTasks } from '@/config/slices/taskSlice';
-import { BarChart, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 // Set date range (last 365 days)
 const today = new Date();

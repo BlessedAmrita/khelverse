@@ -1,4 +1,3 @@
-import DashboardHeader from "./DashboardHeader";
 import ProgressSummary from "./ProgressSummary";
 import PerformanceCharts from "./PerformanceCharts";
 import PerformanceInsights from "./PerformanceInsights";

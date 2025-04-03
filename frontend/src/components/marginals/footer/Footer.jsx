@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Twitter, Instagram, Linkedin, Mail, Github } from 'lucide-react';
+import { Twitter, Instagram, Linkedin,Github } from 'lucide-react';
 
 const Footer = () => {
   return (

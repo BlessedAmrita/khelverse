@@ -1,15 +1,12 @@
 'use client';
-import Link from 'next/link';
 import localFont from 'next/font/local';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Montserrat, Inter, Poppins } from 'next/font/google';
 import '@/styles/globals.css';
-import Navbar from '@/components/marginals/navbar/Navbar';
 import Footer from '@/components/marginals/footer/Footer';
 import { Provider } from 'react-redux';
 import { store } from '@/config/store';
 import { monitorAuthState } from '@/firebase/auth';
-import AuthGuard from '@/components/shared/AuthGuard';
 import Sidebar from '@/components/marginals/sidebar/Sidebar';
 
 const geistSans = Geist({

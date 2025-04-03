@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
 
 const FeatureCard = ({ icon: Icon, title, description, delay = 0 }) => {
   return (

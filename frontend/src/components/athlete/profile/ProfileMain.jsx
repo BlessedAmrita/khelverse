@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect } from "react";
-import { Athlete } from "@/content/exerciseData";
 import ProfileHero from "./ProfileHero";
 import StatCard from "./StatCard";
 import AchievementTimeline from "./AchievementTimeline";
