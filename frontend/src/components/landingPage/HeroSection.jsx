@@ -119,10 +119,11 @@ function HeroSection() {
 
 <button
   onClick={handleGetStarted}
-  className="relative font-extrabold font-sprintura w-auto text-xl mt-9 px-[20px] py-[10px] rounded-2xl bg-apts-purple-light text-black shadow-[0_0_15px_5px_rgba(138,43,226,0.6)] hover:shadow-[0_0_25px_10px_rgba(138,43,226,0.8)] transition-all duration-300"
+  className="relative font-extrabold font-sprintura w-auto text-xl mt-9 px-[30px] py-[10px] rounded-full bg-apts-purple-light text-black hover:bg-purple-dark hover:text-lavender-200"
 >
   GET STARTED
 </button>
+
 
       </motion.div>
     </div>

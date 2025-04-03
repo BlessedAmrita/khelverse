@@ -177,7 +177,7 @@ function AthleteEventsMain() {
       {/* Top Section */}
       <div className='w-full h-[70vh] sm:h-[50vh] flex flex-col sm:flex-row gap-y-3'>
         {/* Left side - Scrollable List */}
-        <div className='w-full sm:w-[60%] h-full overflow-y-auto p-4 pt-0 bg-black shadow-lg '>
+        <div className='w-full sm:w-[60%] h-full overflow-y-auto p-4 pt-0 bg-black shadow-lg'>
           <div className='sticky top-0 bg-black py-2'>
             <h2 className='text-xl font-bold text-center m-3 glass-card py-1 rounded-lg'>
               REGISTERED EVENTS
@@ -264,8 +264,14 @@ function AthleteEventsMain() {
                     </p>
                   </div>
                 </div>
+                <div className='flex gap-3'>
                 <div className='bg-purple-dark text-lavender-100  font-bold text-sm px-4 py-1 rounded-full'>
                   {event.daysLeft} DAYS
+                </div>
+                <div className='bg-purple-light text-black  font-bold text-sm px-4 py-1 rounded-full'>
+                  Register
+                </div>
+
                 </div>
               </li>
             ))}

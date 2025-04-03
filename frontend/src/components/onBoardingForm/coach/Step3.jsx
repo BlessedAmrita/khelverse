@@ -10,21 +10,25 @@ import { Input } from '@/components/ui/input';
 export default function Step3({ formData, setFormData }) {
   return (
     <div>
-      <h2 className='text-xl font-bold mb-4'>Coaching Preferences</h2>
+      <h2 className='text-2xl font-sprintura text-lavender-200 font-bold mb-4'>Coaching Preferences</h2>
 
+      <div className='my-3'>
       <label>Sport</label>
       <Input
         placeholder='Enter your sport'
         value={formData.sport}
         onChange={(e) => setFormData({ ...formData, sport: e.target.value })}
+        className="border border-white/20 bg-transparent text-white mt-1"
       />
+      </div>
 
+      <div className='my-3'>
       <label>Coaching Level</label>
       <Select
         value={formData.level}
         onValueChange={(value) => setFormData({ ...formData, level: value })}
       >
-        <SelectTrigger className='w-full'>
+        <SelectTrigger className='w-full border p-2 border-white/20 bg-transparent text-white mt-1'>
           <SelectValue placeholder='Select Level' />
         </SelectTrigger>
         <SelectContent>
@@ -33,13 +37,14 @@ export default function Step3({ formData, setFormData }) {
           <SelectItem value='Pro'>Pro</SelectItem>
         </SelectContent>
       </Select>
+      </div>
 
       <label>Preferred Training Mode</label>
       <Select
         value={formData.trainingMode}
         onValueChange={(value) => setFormData({ ...formData, trainingMode: value })}
       >
-        <SelectTrigger className='w-full'>
+        <SelectTrigger className='w-full border p-2   border-white/20 bg-transparent text-white mt-1'>
           <SelectValue placeholder='Select Training Mode' />
         </SelectTrigger>
         <SelectContent>

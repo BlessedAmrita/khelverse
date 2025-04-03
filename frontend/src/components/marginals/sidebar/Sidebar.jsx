@@ -88,7 +88,12 @@ const Sidebar = () => {
         className={`font-samarkan select-none`}
         style={{ fontFamily: 'Samarkan, fantasy' }} // Adding inline style as fallback
        >
-        <span className="khelverse-gradient text-4xl">Khelverse</span>
+        <div className='flex gap-2 items-center'>
+        <img src='https://res.cloudinary.com/dgj1gzq0l/image/upload/v1743663818/Group_2280_1_tyylqw.svg'
+                width={40}
+              />
+        <span className="khelverse-gradient text-3xl">Khelverse </span>
+        </div>
        </h1>}
           <button onClick={() => setIsOpen(!isOpen)} className={`${isOpen ? 'p-2' : 'mr-2'}`}>
             <Menu size={24} />

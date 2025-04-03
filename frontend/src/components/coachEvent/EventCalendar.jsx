@@ -19,7 +19,7 @@ const EventCalendar = ({ events, onSelectDate }) => {
     setSelectedDate(day);
     onSelectDate(day);
   };
-
+ 
   const hasEventOnDay = (day) => {
     return events.some((event) => isSameDay(new Date(event.date), day));
   };
