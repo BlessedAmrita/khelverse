@@ -4,7 +4,7 @@ import { Twitter, Instagram, Linkedin,Github } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-apts-darker pt-16 pb-8 relative z-10">
+    <footer className="bg-apts-darker pt-16 pb-8 relative z-10 w-full">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-1">
