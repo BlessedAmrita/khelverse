@@ -48,11 +48,11 @@ export default function OrganizationOnboarding() {
       {step === 3 && <Step3 formData={formData} setFormData={setFormData} />}
 
       <div className='flex justify-between mt-4'>
-        {step > 1 && <Button onClick={prevStep}>Back</Button>}
+        {step > 1 && <Button onClick={prevStep} className=' bg-purple-dark text-lavender-100 px-8'>Back</Button>}
         {step < 3 ? (
-          <Button onClick={nextStep}>Next</Button>
+          <Button onClick={nextStep} className=' bg-purple-dark text-lavender-100 px-8'>Next</Button>
         ) : (
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} className=' bg-purple-dark text-lavender-100 px-8'>Submit</Button>
         )}
       </div>
     </div>

@@ -44,18 +44,18 @@ export default function AthleteOnboarding() {
   };
 
   return (
-    <div className='max-w-lg mx-auto p-6'>
+    <div className='max-w-lg mx-auto p-6 bg-apts-dark'>
       {step === 1 && <Step1 formData={formData} setFormData={setFormData} />}
       {step === 2 && <Step2 formData={formData} setFormData={setFormData} />}
       {step === 3 && <Step3 formData={formData} setFormData={setFormData} />}
       {step === 4 && <Step4 formData={formData} setFormData={setFormData} />}
 
       <div className='flex justify-between mt-4'>
-        {step > 1 && <Button onClick={prevStep}>Back</Button>}
+        {step > 1 && <Button onClick={prevStep} className=' bg-purple-dark text-lavender-100'>Back</Button>}
         {step < 4 ? (
-          <Button onClick={nextStep}>Next</Button>
+          <Button onClick={nextStep} className=' bg-purple-dark text-lavender-100 px-8'>Next</Button>
         ) : (
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} className=' bg-purple-dark text-lavender-100'>Submit</Button>
         )}
       </div>
     </div>

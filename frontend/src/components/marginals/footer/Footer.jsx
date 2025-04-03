@@ -16,7 +16,12 @@ const Footer = () => {
         className={`font-samarkan select-none`}
         style={{ fontFamily: 'Samarkan, fantasy' }} // Adding inline style as fallback
        >
-        <span className="khelverse-gradient text-4xl">Khelverse</span>
+        <div className='flex gap-3 items-center'>
+        <img src='https://res.cloudinary.com/dgj1gzq0l/image/upload/v1743663818/Group_2280_1_tyylqw.svg'
+                width={50}
+              />
+        <span className="khelverse-gradient text-4xl">Khelverse </span>
+        </div>
        </h1>
             </div>
             <p className="text-white/60 mb-6 font-sprintura">
