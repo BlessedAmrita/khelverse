@@ -19,7 +19,7 @@ const Heatmap = () => {
   const tasks = useSelector((state) => state.tasks.tasks); // Get tasks from Redux
   const [taskData, setTaskData] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchHeatmapTasks = async () => {
       if (!user?.uid) return;
 

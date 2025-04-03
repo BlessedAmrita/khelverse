@@ -34,17 +34,17 @@ const Sponsorships = () => {
   return (
     <div className="animate-slide-in-up animation-delay-400">
       <div className="mb-6">
-        <h2 className="section-heading">Sponsorships</h2>
+        <h2 className="section-heading text-lavender-300">Sponsorships</h2>
       </div>
       
       <div className="grid md:grid-cols-3 gap-6">
         {sponsorships.map((sponsorship) => (
           <div 
             key={sponsorship.id} 
-            className="rounded-2xl overflow-hidden border border-border bg-white shadow-subtle animate-scale-in card-hover"
+            className="rounded-2xl overflow-hidden border border-border bg-apts-dark text-white shadow-subtle animate-scale-in card-hover"
             style={{ animationDelay: `${sponsorship.id * 100}ms` }}
           >
-            <div className="p-5 border-b border-border bg-muted/30">
+            <div className="p-5 border-b border-border bg-apts-lightdark">
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-medium text-lg">{sponsorship.sponsor}</h3>
@@ -75,7 +75,7 @@ const Sponsorships = () => {
                   <span>{sponsorship.deadline}</span>
                 </div>
                 
-                <button className="text-sm text-purple hover:text-green-900 font-medium text-primary flex items-center hover:text-primary/80 transition-colors">
+                <button className="text-sm text-purple hover:text-lavender-200 font-medium text-primary flex items-center hover:text-primary/80 transition-colors">
                   <span>Apply</span>
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </button>

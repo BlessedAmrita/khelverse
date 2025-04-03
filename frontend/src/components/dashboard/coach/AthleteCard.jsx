@@ -66,7 +66,7 @@ const AthleteCard = ({ athlete, index }) => {
           </div>
         </div>
         
-        <button className="w-full apts-button mt-5">View Details</button>
+        <button className="w-full bg-purple-dark text-lavender-100 apts-button mt-5">View Details</button>
       </div>
     </motion.div>
   );

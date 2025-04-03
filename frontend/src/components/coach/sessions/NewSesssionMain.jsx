@@ -57,7 +57,7 @@ const NewSessionMain = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-black py-8 px-4 text-lavender-100/90">
-      <h1 className="text-3xl font-bold mb-4">Create New Session</h1>
+      <h1 className="text-3xl font-bold mb-4 text-lavender-200">Create New Session</h1>
       <form onSubmit={handleSubmit} className="space-y-4 max-w-5xl mx-auto">
         <Input
           label="Session Title"
@@ -95,7 +95,7 @@ const NewSessionMain = () => {
           onChange={(e) => setCoach(e.target.value)}
           required
         />
-        <Button type="submit" className="bg-purple-light hover:bg-lavender" disabled={loading}>
+        <Button type="submit" className="bg-purple-dark text-lavender-200 hover:bg-lavender hover:text-black" disabled={loading}>
           {loading ? 'Creating...' : 'Create Session'}
         </Button>
       </form>

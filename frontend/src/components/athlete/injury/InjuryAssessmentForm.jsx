@@ -72,7 +72,7 @@ export default function InjuryAssessmentForm({ onSubmit }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-4 p-6 border rounded-lg shadow-md w-full max-w-2xl bg-white'
+        className='space-y-4 p-6 border border-white/20 rounded-lg shadow-md w-full max-w-2xl bg-apts-dark text-white'
       >
         {/* Age */}
         <FormField
@@ -82,7 +82,7 @@ export default function InjuryAssessmentForm({ onSubmit }) {
             <FormItem>
               <FormLabel>Age</FormLabel>
               <FormControl>
-                <Input type='number' placeholder='Enter age' {...field} />
+                <Input type='number' placeholder='Enter age' {...field} className="border border-white/20 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,7 +97,7 @@ export default function InjuryAssessmentForm({ onSubmit }) {
             <FormItem>
               <FormLabel>Sport Played</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Enter your sport' {...field} />
+                <Input type='text' placeholder='Enter your sport' {...field} className="border border-white/20 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -112,7 +112,7 @@ export default function InjuryAssessmentForm({ onSubmit }) {
             <FormItem>
               <FormLabel>Injury Type</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Describe the injury' {...field} />
+                <Input type='text' placeholder='Describe the injury' {...field} className="border border-white/20 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -127,7 +127,7 @@ export default function InjuryAssessmentForm({ onSubmit }) {
             <FormItem>
               <FormLabel>Past Injuries (Optional)</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Previous injuries' {...field} />
+                <Input type='text' placeholder='Previous injuries' {...field} className="border border-white/20 bg-transparent text-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -233,7 +233,7 @@ export default function InjuryAssessmentForm({ onSubmit }) {
               <FormLabel>Select Language</FormLabel>
               <FormControl>
                 <Select onValueChange={(value) => form.setValue('language', value)} {...field}>
-                  <SelectTrigger>
+                <SelectTrigger className="border border-white/20 bg-transparent text-white">
                     <SelectValue placeholder='Select language' />
                   </SelectTrigger>
                   <SelectContent>
@@ -253,7 +253,7 @@ export default function InjuryAssessmentForm({ onSubmit }) {
         {/* Submit Button */}
         <Button
           type='submit'
-          className='w-full  bg-lavender text-black rounded-lg shadow-md hover:bg-black hover:text-lavender transition-colors duration-500'
+          className='w-full  bg-purple-dark text-lavender-100 rounded-lg shadow-md hover:bg-black hover:text-lavender transition-colors duration-500'
         >
           Get Recovery Plan
         </Button>

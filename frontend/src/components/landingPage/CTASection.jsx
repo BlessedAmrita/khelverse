@@ -45,7 +45,7 @@ const CTASection = () => {
 
               <div className="md:flex items-center justify-between gap-12">
                 <div className="mb-8 md:mb-0">
-                  <h2 className="text-3xl md:text-3xl font-bold mb-4 text-white font-thuast">
+                  <h2 className="text-3xl md:text-3xl font-bold mb-4 text-white font-sprintura">
                     Ready to <span className="text-gradient pr-1">Transform</span> Athlete Management?
                   </h2>
                   <p className="text-white/70 text-lg">
@@ -57,7 +57,7 @@ const CTASection = () => {
                 <div className="flex flex-col space-y-4">
                   <button
                     onClick={handleGetStarted}
-                    className="inline-flex h-12 items-center justify-center rounded-lg bg-lavender-600 px-6 text-base font-medium text-white transition-all hover:bg-lavender-700 hover-lift"
+                    className="inline-flex h-12 items-center justify-center rounded-lg bg-purple-dark text-lavender-100 px-6 text-base font-medium  transition-all hover:bg-lavender-700 hover-lift"
                   >
                     Get Started
                     <ArrowRight size={18} className="ml-2" />

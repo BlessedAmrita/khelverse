@@ -30,7 +30,7 @@ const notifications = [
 
 export function Notification({ className, ...props }) {
   return (
-    <Card className={cn('w-[30%] overflow-y-scroll', className)} {...props}>
+    <Card className={cn('w-[30%] overflow-y-scroll bg-gray-50', className)} {...props}>
       <CardHeader>
         <CardTitle>Notifications</CardTitle>
         <CardDescription>You have 3 unread messages.</CardDescription>

@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.cdnfonts.com/css/samarkan');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -91,7 +95,7 @@ html {
   body {
     @apply bg-background text-foreground antialiased overflow-x-hidden;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
-  }`
+  }
    /* Custom scrollbar */
    ::-webkit-scrollbar {
     width: 6px;
@@ -107,6 +111,29 @@ html {
   
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-apts-purple/80;
+  }
+  .apts-card {
+    @apply bg-[#1A1F2C] rounded-xl p-6 border-none;
+  }
+
+  .performance-bar {
+    @apply h-2 rounded-full bg-gradient-to-r from-apts-purple to-apts-purple-light;
+  }
+
+  .badge-elite {
+    @apply bg-apts-purple/25 text-apts-purple-light px-2 py-1 rounded-md text-xs font-medium;
+  }
+
+  .badge-pro {
+    @apply bg-apts-blue/25 text-apts-blue px-2 py-1 rounded-md text-xs font-medium;
+  }
+
+  .badge-advanced {
+    @apply bg-apts-orange/25 text-apts-orange px-2 py-1 rounded-md text-xs font-medium;
+  }
+
+  .today-badge {
+    @apply bg-apts-purple/25 text-apts-purple-light px-2 py-1 rounded-md text-xs font-medium;
   }
 }
 
@@ -143,7 +170,7 @@ html {
   }
 
   .job-card {
-    @apply relative overflow-hidden rounded-2xl bg-white border border-border p-5 shadow-subtle
+    @apply relative overflow-hidden rounded-2xl bg-white  border-[0.4px] border-border p-5 shadow-subtle
     transition-all duration-300 hover:shadow-card;
   }
   .button-primary {
@@ -172,6 +199,21 @@ html {
   }
   .gradient-bg {
     @apply bg-gradient-to-tr from-lavender to-lavender/80;
+  }
+  .athlete-card {
+    @apply relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-athletePurple-light/20;
+  }
+  
+  .athlete-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .athlete-card-highlight {
+    @apply absolute inset-0 bg-gradient-to-br from-athletePurple-light/20 to-transparent opacity-0 transition-opacity duration-300;
+  }
+  
+  .athlete-card:hover .athlete-card-highlight {
+    @apply opacity-100;
   }
 }
 
@@ -202,5 +244,12 @@ html {
 
   .text-gradient {
     @apply bg-gradient-to-r from-lavender-300 via-lavender-400 to-lavender-500 bg-clip-text text-transparent;
+  }
+  .khelverse-gradient {
+    @apply bg-gradient-to-r from-khelverse-purple to-khelverse-light-purple bg-clip-text text-transparent;
+  }
+  
+  .khelverse-glow {
+    @apply drop-shadow-[0_0_8px_rgba(155,135,245,0.7)];
   }
 }

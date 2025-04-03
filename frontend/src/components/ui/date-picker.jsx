@@ -32,11 +32,11 @@ export function DatePickerDemo({ date, setDate, time, setTime }) {
         slots.push(`${hourFormatted}:30 ${period}`);
       }
     }
-    return slots;
+    return slots; 
   }, []);
 
   return (
-    <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+    <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 text-white">
       {/* Date Picker */}
       <Popover>
         <PopoverTrigger asChild>
@@ -57,7 +57,7 @@ export function DatePickerDemo({ date, setDate, time, setTime }) {
             selected={date}
             onSelect={setDate}
             initialFocus
-            className="bg-transparent pointer-events-auto"
+            className="bg-transparent pointer-events-auto text-white"
           />
         </PopoverContent>
       </Popover>
@@ -67,7 +67,7 @@ export function DatePickerDemo({ date, setDate, time, setTime }) {
         <SelectTrigger className="w-full sm:w-[180px] bg-black/40 border-white/10">
           <SelectValue placeholder="Select time" />
         </SelectTrigger>
-        <SelectContent className="bg-black/90 border border-white/10">
+        <SelectContent className="bg-black/90 border border-white/10 text-white">
           {timeSlots.map((slot) => (
             <SelectItem key={slot} value={slot}>
               {slot}
@@ -80,7 +80,7 @@ export function DatePickerDemo({ date, setDate, time, setTime }) {
 }
 
 // PropTypes for validation
-DateTimePicker.propTypes = {
+DatePickerDemo.propTypes = {
   date: PropTypes.instanceOf(Date),
   setDate: PropTypes.func.isRequired,
   time: PropTypes.string.isRequired,
