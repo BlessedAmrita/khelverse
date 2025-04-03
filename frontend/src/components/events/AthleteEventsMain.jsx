@@ -1,6 +1,7 @@
 'use client';
 import React, {useState, useEffect} from 'react';
 import FeatureHero from '../shared/FeatureHero';
+import EventsCalendar from '../coachEvent/EventCalendar';
 import {
   FaTrophy,
   FaCheck,
@@ -176,7 +177,7 @@ function AthleteEventsMain() {
       {/* Top Section */}
       <div className='w-full h-[70vh] sm:h-[50vh] flex flex-col sm:flex-row gap-y-3'>
         {/* Left side - Scrollable List */}
-        <div className='w-full sm:w-[60%] h-full overflow-y-auto p-4 pt-0 bg-black shadow-lg'>
+        <div className='w-full sm:w-[60%] h-full overflow-y-auto p-4 pt-0 bg-black shadow-lg '>
           <div className='sticky top-0 bg-black py-2'>
             <h2 className='text-xl font-bold text-center m-3 glass-card py-1 rounded-lg'>
               REGISTERED EVENTS
@@ -206,16 +207,12 @@ function AthleteEventsMain() {
         </div>
 
         {/* Right Calendar Section */}
-        <div className='w-full sm:w-[40%] h-full bg-black'>
-          <h2 className='text-xl font-bold text-center p-4'>CALENDAR</h2>
-          <iframe
-            src='https://calendar.google.com/calendar/embed?src=tanyavardhan2005%40gmail.com&ctz=UTC'
-            style={{ border: 0 }}
-            width='100%'
-            height='90%'
-            className='px-3 pb-2'
-          ></iframe>
+        <div className='w-full sm:w-[40%] h-full bg-black flex items-center justify-center'>
+           <div className='w-[90%]'>
+             <EventsCalendar events={[...events1, ...events2, ...events3]} />
+          </div>
         </div>
+
       </div>
 
       {/* Bottom Section */}

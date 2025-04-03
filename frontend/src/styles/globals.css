@@ -170,7 +170,7 @@ html {
   }
 
   .job-card {
-    @apply relative overflow-hidden rounded-2xl bg-white border border-border p-5 shadow-subtle
+    @apply relative overflow-hidden rounded-2xl bg-white  border-[0.4px] border-border p-5 shadow-subtle
     transition-all duration-300 hover:shadow-card;
   }
   .button-primary {
@@ -199,6 +199,21 @@ html {
   }
   .gradient-bg {
     @apply bg-gradient-to-tr from-lavender to-lavender/80;
+  }
+  .athlete-card {
+    @apply relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-athletePurple-light/20;
+  }
+  
+  .athlete-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .athlete-card-highlight {
+    @apply absolute inset-0 bg-gradient-to-br from-athletePurple-light/20 to-transparent opacity-0 transition-opacity duration-300;
+  }
+  
+  .athlete-card:hover .athlete-card-highlight {
+    @apply opacity-100;
   }
 }
 

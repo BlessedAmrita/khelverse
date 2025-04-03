@@ -42,14 +42,14 @@ export default function DietPlanForm({ onSubmit }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 p-6 border rounded-lg shadow-md w-full max-w-2xl bg-gray-100"
+        className="space-y-4 p-6 border border-white/20 rounded-lg shadow-md w-full max-w-2xl bg-apts-dark text-white"
       >
         {/* Sport */}
         <FormField control={form.control} name="sport" render={({ field }) => (
           <FormItem>
             <FormLabel>Sport Played</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="Enter your sport" {...field} />
+              <Input type="text" placeholder="Enter your sport" {...field} className="border border-white/20 bg-transparent text-white"/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -60,7 +60,7 @@ export default function DietPlanForm({ onSubmit }) {
           <FormItem>
             <FormLabel>Position (Optional)</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="Enter your position" {...field} />
+              <Input type="text" placeholder="Enter your position" {...field} className="border border-white/20 bg-transparent text-white"/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -71,7 +71,7 @@ export default function DietPlanForm({ onSubmit }) {
           <FormItem>
             <FormLabel>Age</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="Enter age" {...field} />
+              <Input type="number" placeholder="Enter age" {...field} className="border border-white/20 bg-transparent text-white"/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -82,7 +82,7 @@ export default function DietPlanForm({ onSubmit }) {
           <FormItem>
             <FormLabel>Weight (kg)</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="Enter weight in kg" {...field} />
+              <Input type="number" placeholder="Enter weight in kg" {...field} className="border border-white/20 bg-transparent text-white"/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -93,7 +93,7 @@ export default function DietPlanForm({ onSubmit }) {
           <FormItem>
             <FormLabel>Height (cm)</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="Enter height in cm" {...field} />
+              <Input type="number" placeholder="Enter height in cm" {...field} className="border border-white/20 bg-transparent text-white"/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -104,7 +104,7 @@ export default function DietPlanForm({ onSubmit }) {
           <FormItem>
             <FormLabel>Training Goal</FormLabel>
             <FormControl>
-              <Input type="text" placeholder="Enter your training goal" {...field} />
+              <Input type="text" placeholder="Enter your training goal" {...field} className="border border-white/20 bg-transparent text-white"/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -116,7 +116,7 @@ export default function DietPlanForm({ onSubmit }) {
             <FormLabel>Select Language</FormLabel>
             <FormControl>
               <Select onValueChange={(value) => form.setValue("language", value)} {...field}>
-                <SelectTrigger>
+                <SelectTrigger className="border border-white/20 bg-transparent text-white">
                   <SelectValue placeholder="Select language" />
                 </SelectTrigger>
                 <SelectContent>

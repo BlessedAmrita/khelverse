@@ -41,7 +41,7 @@ const JobListings = () => {
   return (
     <div className="animate-slide-in-up animation-delay-200">
       <div className="flex justify-between items-center mb-2">
-        <h2 className="section-heading text-white">Job Listings</h2>
+        <h2 className="section-heading text-lavender-300">Job Listings</h2>
         <button className="button-outline flex items-center space-x-2">
           <Filter className="h-4 w-4 text-white" />
           <span className='text-white'>Filters</span>
@@ -50,7 +50,7 @@ const JobListings = () => {
       
       <div className="space-y-4">
         {jobs.map((job) => (
-          <div key={job.id} className="job-card animate-scale-in bg-gray-200" style={{ animationDelay: `${job.id * 100}ms` }}>
+          <div key={job.id} className="job-card animate-scale-in bg-apts-dark text-white" style={{ animationDelay: `${job.id * 100}ms` }}>
             <div className="flex items-start md:items-center justify-between gap-4 flex-col md:flex-row">
               <div className="flex gap-4 items-start md:items-center flex-1">
                 <div className="w-12 h-12 rounded-md bg-accent/10 flex items-center justify-center text-xl">
@@ -58,26 +58,26 @@ const JobListings = () => {
                 </div>
                 
                 <div>
-                  <h3 className="font-medium text-lg">{job.title}</h3>
-                  <p className="text-muted-foreground">{job.company}</p>
+                  <h3 className="font-medium text-lg text-lavender-200">{job.title}</h3>
+                  <p className="text-gray-300">{job.company}</p>
                   
                   <div className="flex flex-wrap gap-3 mt-2">
-                    <div className="flex items-center text-xs text-muted-foreground">
+                    <div className="flex items-center text-xs text-gray-400">
                       <MapPin className="h-3 w-3 mr-1" />
                       <span>{job.location}</span>
                     </div>
                     
-                    <div className="flex items-center text-xs text-muted-foreground">
+                    <div className="flex items-center text-xs text-gray-400">
                       <DollarSign className="h-3 w-3 mr-1" />
                       <span>{job.salary}</span>
                     </div>
                     
-                    <div className="flex items-center text-xs text-muted-foreground">
+                    <div className="flex items-center text-xs text-gray-400">
                       <Briefcase className="h-3 w-3 mr-1" />
                       <span>{job.type}</span>
                     </div>
                     
-                    <div className="flex items-center text-xs text-muted-foreground">
+                    <div className="flex items-center text-xs text-gray-400">
                       <Clock className="h-3 w-3 mr-1" />
                       <span>Posted {job.posted}</span>
                     </div>

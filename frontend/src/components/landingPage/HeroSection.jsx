@@ -117,12 +117,13 @@ function HeroSection() {
         </p>
         <span className='text-xl font-bold'>One platform, endless possibilities.</span> */}
 
-        <button
-          onClick={handleGetStarted}
-          className='font-bold font-sprintura w-auto mt-9 px-[20px] py-[5px] rounded-2xl bg-purple-dark text-lavender-100 shadow-none hover:text-white hover:bg-purple hover:shadow-2xl transition-all'
-        >
-          GET STARTED
-        </button>
+<button
+  onClick={handleGetStarted}
+  className="relative font-extrabold font-sprintura w-auto text-xl mt-9 px-[20px] py-[10px] rounded-2xl bg-apts-purple-light text-black shadow-[0_0_15px_5px_rgba(138,43,226,0.6)] hover:shadow-[0_0_25px_10px_rgba(138,43,226,0.8)] transition-all duration-300"
+>
+  GET STARTED
+</button>
+
       </motion.div>
     </div>
   );

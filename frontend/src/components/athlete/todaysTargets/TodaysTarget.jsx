@@ -115,7 +115,11 @@ const TodaysTarget = () => {
           {tasks.map((task) => (
             <li key={task.taskId} className="flex items-center justify-between text-white py-4 px-7 rounded-lg bg-lavender/20">
               <div className="flex items-center space-x-3">
-                <Checkbox checked={task.completed} onCheckedChange={() => handleToggleTask(task.taskId)} />
+              <Checkbox
+               checked={task.completed}
+              onCheckedChange={() => handleToggleTask(task.taskId)}
+              className="w-5 h-5 rounded-md border border-gray-300"
+              />
                 <span className={task.completed ? 'line-through text-gray-400' : ''}>{task.taskId}</span>
               </div>
 

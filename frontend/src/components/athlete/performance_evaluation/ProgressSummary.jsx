@@ -1,3 +1,4 @@
+'use Client';
 import React from "react";
 import MetricCard from "@/components/ui/MetricCard"; // Adjust the import path for your component
 import { metricCards } from "@/content/mockData"; // Adjust the import path for your mock data

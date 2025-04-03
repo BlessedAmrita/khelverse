@@ -7,7 +7,7 @@ import { insightsList } from "@/content/mockData";
 
 const PerformanceInsights = () => {
   return (
-    <Card className="glass-card border-lavender/20">
+    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Performance Insights</CardTitle>
         <Lightbulb className="h-5 w-5 text-lavender" />
@@ -21,10 +21,10 @@ const PerformanceInsights = () => {
             
             if (insight.includes("improved") || insight.includes("impressive") || insight.includes("upward")) {
               Icon = TrendingUp;
-              iconColor = "green";
+              iconColor = "text-green-500";
             } else if (insight.includes("declined") || insight.includes("decreasing")) {
               Icon = TrendingDown;
-              iconColor = "red";
+              iconColor = "text-red-500";
             } else if (insight.includes("maintain")) {
               Icon = ThumbsUp;
               iconColor = "text-lavender";
@@ -33,7 +33,7 @@ const PerformanceInsights = () => {
             return (
               <div 
                 key={index} 
-                className="flex gap-3 p-3 rounded-lg bg-secondary/50 animate-slide-in"
+                className="flex gap-3 p-3 rounded-lg bg-[#222222] animate-slide-in"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className={`mt-0.5 ${iconColor}`}>

@@ -85,10 +85,10 @@ const Sessions = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold">Sessions</h1>
-            <p className="text-gray-400 mt-1">Manage your scheduled and past sessions</p>
+            <p className="text-gray-300 mt-1">Manage your scheduled and past sessions</p>
           </div>
           
-          <Button asChild className="bg-purple-light text-apt-dark hover:bg-lavender pulse-btn">
+          <Button asChild className="bg-purple-dark text-lavender-200 hover:bg-lavender hover:text-black pulse-btn">
             <Link href="/dashboard/coach/sessions/new">
               <Plus className="mr-2 h-4 w-4" /> Create New Session
             </Link>
@@ -100,7 +100,7 @@ const Sessions = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
               placeholder="Search sessions by title..."
-              className="pl-10 bg-black/40 border-white/10"
+              className="pl-10 bg-black/40 border-white/40"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />

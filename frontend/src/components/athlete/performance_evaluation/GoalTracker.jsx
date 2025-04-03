@@ -5,7 +5,7 @@ import { goalData } from "@/content/mockData";
 const GoalTracker = () => {
   console.log("Goal Data:", goalData); // Debugging line to check the data structure
   return (
-    <Card className="glass-card border-lavender/20">
+    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Goals & Milestones</CardTitle>
         <Award className="h-5 w-5 text-lavender" />
@@ -40,7 +40,7 @@ const GoalTracker = () => {
                 </div>
                 <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
                   <div 
-                    className="bg-gradient-to-r from-lavender to-lavender-light h-full rounded-full"
+                    className="bg-gradient-to-r from-purple-dark to-purple-middle h-full rounded-full"
                     style={{ width: `${formattedProgress}%` }}
                   />
                 </div>

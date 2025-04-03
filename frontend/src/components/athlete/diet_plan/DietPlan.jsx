@@ -37,31 +37,42 @@ export default function DietPlan() {
       <DietPlanForm onSubmit={handleSubmit} />
 
       {/* Loading & Error Handling */}
-      {loading && <p className="text-center mt-4 text-blue-500">🔄 Generating Diet Plan...</p>}
+      {loading && (
+  <div className="flex items-center justify-center mt-4 text-white space-x-2">
+    <Loader2 className="animate-spin w-6 h-6" />
+    <p>Generating Diet Plan...</p>
+  </div>
+)}
       {error && <p className="text-center mt-4 text-red-500">❌ {error}</p>}
 
       {responseData && (
         <div className="space-y-6">
           {/* Overview */}
-          <div className="p-6 bg-gray-100 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-800">🏀 Athlete Overview</h2>
-            <p className="mt-2 text-gray-600">
-              <strong>Sport:</strong> {responseData.overview.sport} <br />
-              <strong>Position:</strong> {responseData.overview.position} <br />
-              <strong>Age:</strong> {responseData.overview.age} <br />
-              <strong>Weight:</strong> {responseData.overview.weight} kg <br />
-              <strong>Height:</strong> {responseData.overview.height} cm <br />
-              <strong>Goal:</strong> {responseData.overview.goal}
-            </p>
-          </div>
+           <div className="relative glass-dark animate-fade-in rounded-lg shadow border border-lavender/60">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-10 blur-3xl -z-10 rounded-lg"></div>
+          <div className='glass rounded-lg p-8 md:p-12 overflow-hidden'> 
+          <h2 className="text-xl font-semibold text-lavender-300">🏀 Athlete Overview</h2>
+          <p className="mt-2 text-white">
+           <strong className='text-lavender-200'>Sport:</strong> {responseData.overview.sport} <br />
+           <strong className='text-lavender-200'>Position:</strong> {responseData.overview.position} <br />
+          <strong className='text-lavender-200'>Age:</strong> {responseData.overview.age} <br />
+          <strong className='text-lavender-200'>Weight:</strong> {responseData.overview.weight} kg <br />
+          <strong className='text-lavender-200'>Height:</strong> {responseData.overview.height} cm <br />
+          <strong className='text-lavender-200'>Goal:</strong> {responseData.overview.goal}
+          </p>
+        </div>
+        </div>
+
 
           {/* Meal Plan */}
-          <div className="p-6 bg-gray-100 rounded-lg shadow-md">
-            <h3 className="text-lg font-semibold text-gray-800">🍴 Meal Plan</h3>
+          <div className="relative glass-dark animate-fade-in rounded-lg shadow border border-lavender/60">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-10 blur-3xl -z-10 rounded-lg"></div>
+          <div className='glass rounded-lg p-8 md:p-12 overflow-hidden'> 
+           <h3 className="text-lg font-semibold text-lavender-300">🍴 Meal Plan</h3>
             {Object.entries(responseData.meal_plan).map(([meal, items]) => (
               <div key={meal} className="mt-3">
-                <h4 className="text-md font-semibold text-gray-700 capitalize">{meal}</h4>
-                <ul className="list-disc pl-5 text-gray-600">
+                <h4 className="text-md font-semibold text-lavender-200 capitalize">{meal}</h4>
+                <ul className="list-disc pl-5 text-white">
                   {items.map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
@@ -69,16 +80,20 @@ export default function DietPlan() {
               </div>
             ))}
           </div>
+          </div>
 
           {/* Macronutrient Breakdown */}
-          <div className="p-6 bg-green-100 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-green-900">💪 Macronutrients</h2>
-            <p className="mt-2 text-green-700">
+          <div className="relative glass-dark animate-fade-in rounded-lg shadow border border-[#72FF72]/60">
+  <div className="absolute inset-0 bg-gradient-to-r from-[#1F3B08] via-[#72FF72] to-[#D4A5FF] opacity-10 blur-3xl -z-10 rounded-lg"></div>
+  <div className='glass rounded-lg p-8 md:p-12 overflow-hidden'>
+           <h2 className="text-xl font-semibold text-lavender-300 ">💪 Macronutrients</h2>
+            <p className="mt-2 text-lavender-100">
               <strong>Protein:</strong> {responseData.macronutrients.protein} <br />
               <strong>Carbs:</strong> {responseData.macronutrients.carbs} <br />
               <strong>Fats:</strong> {responseData.macronutrients.fats}
             </p>
           </div>
+        </div>
         </div>
       )}
     </div>

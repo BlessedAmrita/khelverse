@@ -66,7 +66,7 @@ const PerformanceCharts = () => {
         return (
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#555" />
               <XAxis dataKey="date" stroke="#888" fontSize={12} tickFormatter={(date) => new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} />
               <YAxis stroke="#888" fontSize={12} />
               <Tooltip contentStyle={{ backgroundColor: '#1f1f1f', borderColor: '#333' }} labelStyle={{ color: '#eee' }} />
@@ -114,20 +114,33 @@ const PerformanceCharts = () => {
   };
 
   return (
-    <Card className="glass-card border-lavender/20">
+    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Performance Metrics</CardTitle>
         <div className="flex flex-col sm:flex-row gap-2">
           <ToggleGroup type="single" value={timePeriod} onValueChange={setTimePeriod} className="justify-start">
-            <ToggleGroupItem value={TimePeriod.Week} aria-label="Weekly view">Week</ToggleGroupItem>
-            <ToggleGroupItem value={TimePeriod.Month} aria-label="Monthly view">Month</ToggleGroupItem>
-            <ToggleGroupItem value={TimePeriod.Year} aria-label="Yearly view">Year</ToggleGroupItem>
-          </ToggleGroup>
+          <ToggleGroupItem value={TimePeriod.Week} aria-label="Weekly view" className="data-[state=off]:bg-apts-dark data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100">
+          Week
+          </ToggleGroupItem>
+<ToggleGroupItem 
+  value={TimePeriod.Month} 
+  aria-label="Monthly view"  
+  className="data-[state=off]:bg-apts-dark data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100"
+>
+  Month
+</ToggleGroupItem>
+<ToggleGroupItem 
+  value={TimePeriod.Year} 
+  aria-label="Yearly view"  
+  className="data-[state=off]:bg-apts-dark data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100"
+>
+  Year
+</ToggleGroupItem></ToggleGroup>
           
           <ToggleGroup type="single" value={chartType} onValueChange={setChartType} className="justify-start">
-            <ToggleGroupItem value={ChartType.Line} aria-label="Line chart">Line</ToggleGroupItem>
-            <ToggleGroupItem value={ChartType.Bar} aria-label="Bar chart">Bar</ToggleGroupItem>
-            <ToggleGroupItem value={ChartType.Radar} aria-label="Radar chart">Radar</ToggleGroupItem>
+            <ToggleGroupItem value={ChartType.Line} aria-label="Line chart" className="data-[state=off]:bg-apts-dark data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100">Line</ToggleGroupItem>
+            <ToggleGroupItem value={ChartType.Bar} aria-label="Bar chart" className="data-[state=off]:bg-apts-dark data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100">Bar</ToggleGroupItem>
+            <ToggleGroupItem value={ChartType.Radar} aria-label="Radar chart" className="data-[state=off]:bg-apts-dark data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100">Radar</ToggleGroupItem>
           </ToggleGroup>
         </div>
       </CardHeader>

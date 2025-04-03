@@ -44,6 +44,9 @@ const config = {
           from: { backgroundPosition: '50% 50%, 50% 50%' },
           to: { backgroundPosition: '350% 50%, 350% 50%' },
         },
+        backgroundImage: {
+          'gradient-athlete': 'linear-gradient(to bottom right, #1A1F2C, #322A46)',
+        },
         scroll: {
           to: { transform: 'translate(calc(-50% - 0.5rem))' },
         },
@@ -138,6 +141,12 @@ const config = {
           darker: '#1E1233',
 				},
 
+        athletePurple: {
+          DEFAULT: '#6E59A5',
+          light: '#9b87f5',
+          dark: '#1A1F2C',
+      },
+
         khelverse: {
 					purple: '#9b87f5',
 					'deep-purple': '#7E69AB',
@@ -145,7 +154,7 @@ const config = {
 					'light-purple': '#D6BCFA',
 					black: '#0F0F10',
 					white: '#FFFFFF',
-				},
+				}, 
 
         lavender: {
           DEFAULT:'#C2C3FB',
@@ -162,6 +171,7 @@ const config = {
 				},
 
         apts: {
+          lightdark:'#222222',
 					dark: '#121212',
 					darker: '#0a0a0a',
 					light: '#f8f8f8',

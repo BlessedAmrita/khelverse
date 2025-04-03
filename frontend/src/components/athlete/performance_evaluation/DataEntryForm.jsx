@@ -5,7 +5,7 @@ import { Plus, Save } from "lucide-react";
 
 const DataEntryForm = () => {
   return (
-    <Card className="glass-card border-lavender/20">
+    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Add Performance Data</CardTitle>
         <Plus className="h-5 w-5 text-lavender" />
@@ -20,7 +20,7 @@ const DataEntryForm = () => {
               <Input
                 id="date"
                 type="date"
-                className="bg-secondary/50 border-lavender/30 focus:border-lavender"
+                className="bg-[#0F0F0F] border-lavender/30 focus:border-lavender"
                 defaultValue={new Date().toISOString().split("T")[0]}
               />
             </div>
@@ -30,7 +30,7 @@ const DataEntryForm = () => {
               </label>
               <select
                 id="activity"
-                className="flex h-10 w-full rounded-md border border-lavender/30 bg-secondary/50 px-3 py-2 text-sm focus:border-lavender focus:outline-none"
+                className="flex h-10 w-full rounded-md border border-lavender/30 bg-[#0F0F0F] px-3 py-2 text-sm focus:border-lavender focus:outline-none"
               >
                 <option value="running">Running</option>
                 <option value="weightlifting">Weightlifting</option>
@@ -53,7 +53,7 @@ const DataEntryForm = () => {
                     type="number"
                     min="1"
                     max="100"
-                    className="bg-secondary/50 border-lavender/30 focus:border-lavender"
+                    className="bg-[#0F0F0F] border-lavender/30 focus:border-lavender"
                   />
                 </div>
               )
@@ -65,13 +65,13 @@ const DataEntryForm = () => {
               <Input
                 id="notes"
                 type="text"
-                className="bg-secondary/50 border-lavender/30 focus:border-lavender"
+                className="bg-[#0F0F0F] border-lavender/30 focus:border-lavender"
                 placeholder="Optional notes"
               />
             </div>
           </div>
 
-          <Button className="w-full bg-lavender-300 hover:bg-lavender-500 text-white">
+          <Button className="w-full bg-purple-dark hover:bg-lavender-500 text-lavender-100">
             <Save className="mr-2 h-4 w-4" />
             Save Performance Data
           </Button>

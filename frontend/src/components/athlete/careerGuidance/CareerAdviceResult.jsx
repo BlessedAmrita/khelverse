@@ -45,25 +45,33 @@ export default function CareerAdviceResult() {
         <CareerAdviceForm onSubmit={handleSubmit} />
 
         {/* Loading & Error Handling */}
-        {loading && <p className="text-center mt-4 text-blue-500">🔄 Generating Career Plan...</p>}
+        {loading && (
+  <div className="flex items-center justify-center mt-4 text-white space-x-2">
+    <Loader2 className="animate-spin w-6 h-6" />
+    <p>Generating Career Plan...</p>
+  </div>
+)}
         {error && <p className="text-center mt-4 text-red-500">❌ {error}</p>}
 
         {responseData && (
           <div className="space-y-6 w-full">
             {/* Display Career Paths */}
             {responseData.map((advice, index) => (
-              <div key={index} className="p-6 bg-white rounded-lg shadow-md mb-6">
-                <h3 className="text-2xl font-semibold text-black">{advice.career_path}</h3>
-                <p className="mt-2 text-gray-600">{advice.why_fits}</p>
+              <div key={index} className="p-6 bg-apts-lightdark text-white rounded-lg shadow-md mb-6">
+                <h3 className="text-2xl font-semibold text-lavender-400">{advice.career_path}</h3>
+                <p className="mt-2 text-lavender-100">{advice.why_fits}</p>
 
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   {advice.roadmap.map((step, i) => (
                     <div
                       key={i}
-                      className="p-4 bg-lavender text-white rounded-lg shadow hover:bg-black hover:text-lavender transition-all duration-500"
+                      className=" relative glass-dark animate-fade-in rounded-lg shadow border border-lavender/60"
                     >
-                      <h4 className="font-semibold text-lg">{step.title}</h4>
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-10 blur-3xl -z-10 rounded-lg"></div>
+                          <div className='glass rounded-lg p-8 md:p-12 overflow-hidden h-full'>
+                      <h4 className="font-semibold text-lg text-lavender-200">{step.title}</h4>
                       <p className="mt-2">{step.description}</p>
+                    </div>
                     </div>
                   ))}
                 </div>

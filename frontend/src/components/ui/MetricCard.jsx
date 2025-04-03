@@ -33,7 +33,7 @@ const MetricCard = ({
 
   return (
     <Card className={cn(
-      "glass-card overflow-hidden animate-slide-in border-lavender/20 hover:border-lavender/50 transition-all duration-300", 
+      "glass-card bg-apts-dark text-white overflow-hidden animate-slide-in border-lavender/20 hover:border-lavender/100 transition-all duration-300", 
       className
     )}>
       <CardContent className="p-4">
@@ -48,13 +48,13 @@ const MetricCard = ({
           <div className={cn(
             "flex items-center text-xs font-medium px-2 py-1 rounded-full",
             improved 
-              ? "bg-performance-improved/20 text-performance-improved" 
-              : "bg-performance-declined/20 text-performance-declined"
+              ? "bg-performance-improved/20 text-performance-improved bg-[#4ade8020]" 
+              : "bg-performance-declined/20 text-performance-declined bg-[#F8717133]"
           )}>
             {improved ? (
-              <TrendingUp className="mr-1 h-3 w-3" />
+              <TrendingUp className="mr-1 h-3 w-3 text-green-500" />
             ) : (
-              <TrendingDown className="mr-1 h-3 w-3" />
+              <TrendingDown className="mr-1 h-3 w-3 text-red-500" />
             )}
             {Math.abs(change).toFixed(1)}%
           </div>

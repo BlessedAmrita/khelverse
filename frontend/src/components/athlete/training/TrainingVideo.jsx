@@ -85,8 +85,8 @@ export default function Home() {
 
       <div className="mt-6 flex flex-wrap gap-6 justify-center">
         {/* Left Side: Video Feed */}
-        <div className="bg-gray-100 rounded-lg shadow-lg p-4 w-[700px]">
-          <div className="bg-gray-300 h-[500px] rounded-md flex items-center justify-center">
+        <div className="bg-apts-dark rounded-lg shadow-lg p-4 w-[700px]">
+          <div className="bg-gray-400 h-[500px] rounded-md flex items-center justify-center">
             <img
               src="http://127.0.0.1:5000/video_feed"
               alt="Live Workout Feed"
@@ -96,7 +96,7 @@ export default function Home() {
         </div>
 
         {/* Right Side: Controls */}
-        <div className="bg-gray-100 rounded-lg shadow-lg p-6 w-[420px]">
+        <div className="bg-apts-dark rounded-lg text-white shadow-lg p-6 w-[420px]">
           {/* Select Exercise */}
           <div>
             <h3 className="font-semibold text-lg mb-2">Select Exercise</h3>
@@ -105,7 +105,7 @@ export default function Home() {
                 <button
                   key={ex.data}
                   onClick={() => setExercise(ex.data)}
-                  className={`px-3 py-2 rounded-md w-[150px] hover:bg-lavender hover:text-black transition-all duration-500 ${exercise === ex.data ? "bg-lavender text-black" : "bg-black text-lavender"}`}
+                  className={`px-3 py-2 rounded-md w-[150px] bg-purple-dark text-lavender-200 hover:bg-lavender hover:text-black transition-all duration-500 ${exercise === ex.data ? "bg-lavender text-black" : "bg-black text-lavender"}`}
                 >
                   {ex.name}
                 </button>
@@ -123,7 +123,7 @@ export default function Home() {
                   type="number"
                   value={sets}
                   onChange={(e) => setSets(Number(e.target.value))}
-                  className="border p-2 w-full"
+                  className="border p-2 w-full bg-gray-300 text-black"
                 />
               </div>
               <div className="flex flex-col flex-1">
@@ -132,7 +132,7 @@ export default function Home() {
                   type="number"
                   value={reps}
                   onChange={(e) => setReps(Number(e.target.value))}
-                  className="border p-2 w-full"
+                  className="border p-2 w-full bg-gray-300 text-black"
                 />
               </div>
             </div>
@@ -141,14 +141,14 @@ export default function Home() {
           {/* Start/Stop Buttons */}
           <div className="mt-4 flex gap-2 text-[16px]">
             <button
-              className="bg-black text-lavender hover:bg-lavender hover:text-black px-4 py-3 rounded-md transition-all duration-500 w-1/2"
+              className="bg-purple-dark text-lavender-200 hover:bg-lavender hover:text-black px-4 py-3 rounded-md transition-all duration-500 w-1/2"
               onClick={startWorkout}
               disabled={isWorkingOut}
             >
               Start Workout
             </button>
             <button
-              className="bg-black text-lavender hover:bg-lavender hover:text-black px-4 py-3 rounded-md transition-all duration-500 w-1/2"
+              className="bg-purple-dark text-lavender-200 hover:bg-lavender hover:text-black px-4 py-3 rounded-md transition-all duration-500 w-1/2"
               onClick={stopWorkout}
               disabled={!isWorkingOut}
             >
@@ -161,15 +161,15 @@ export default function Home() {
             <h3 className="font-semibold text-lg">Current Status</h3>
             <div className="flex justify-between">
               <p>Exercise : </p>
-              <p className="text-black font-semibold">{exercise}</p>
+              <p className="text-white font-semibold">{exercise}</p>
             </div>
             <div className="flex justify-between">
               <p>Set : </p>
-              <p className="text-black font-semibold">{currentSet} / {sets}</p>
+              <p className="text-white font-semibold">{currentSet} / {sets}</p>
             </div>
             <div className="flex justify-between">
               <p>Repetitions : </p>
-              <p className="text-black font-semibold">{count} / {reps}</p>
+              <p className="text-white font-semibold">{count} / {reps}</p>
             </div>
           </div>
         </div>

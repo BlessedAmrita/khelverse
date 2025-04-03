@@ -21,7 +21,7 @@ const ProfileHero = () => {
   console.log('Athlete Data:', athleteData); // Debugging
 
   const sport = athleteData?.sport || 'Unknown Sport';
-  const experienceLevel = athleteData?.experienceLevel || 'N/A';
+  const experienceLevel = athleteData?.experienceLevel || 'N/A'; 
   const firstName = athleteData?.firstName || 'Athlete';
   const profileImage = user?.photoURL || 'https://www.apc.edu.au/wp-content/uploads/2022/12/APC-EU-Educator-Placeholder.jpg';
 
