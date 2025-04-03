@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import CareerAdviceForm from './CareerAdviceForm';
 import FeatureHero from '../../shared/FeatureHero';
+import { Loader2 } from 'lucide-react';
 
 export default function CareerAdviceResult() {
   const [loading, setLoading] = useState(false);
