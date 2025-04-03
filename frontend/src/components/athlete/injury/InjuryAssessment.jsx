@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import InjuryAssessmentForm from "./InjuryAssessmentForm";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 
 export default function InjuryAssessment() {

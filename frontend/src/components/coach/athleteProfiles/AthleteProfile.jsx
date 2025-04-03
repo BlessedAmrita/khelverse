@@ -1,8 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Activity, Calendar, Clock, Medal, TrendingUp, User } from 'lucide-react';
+import { ArrowLeft, User } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 
 // Dummy athlete data (would come from an API in a real app)
 const ATHLETES = [

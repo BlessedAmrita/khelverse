@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithGoogle } from '@/firebase/auth';
 import { useDispatch } from 'react-redux';
-import Logo from '@/content/Logo';
 
 function HeroSection() {
   const words = ['Elevating', 'Redefining', 'Advancing'];

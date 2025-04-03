@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { ArrowRight, Clock, Check, DollarSign } from 'lucide-react';
+import { ArrowRight, Clock, Check} from 'lucide-react';
 
 const Sponsorships = () => {
   const sponsorships = [
