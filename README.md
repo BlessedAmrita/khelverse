@@ -19,7 +19,7 @@ Khelverse is a **Next.js-based Athlete Management Platform** designed to help at
 First, fork the repository, then clone your fork locally:  
 ```sh
 git clone https://github.com/YOUR_USERNAME/Khelverse.git  
-cd Khelverse
+cd khelverse
 ```
 ### 2️⃣ **Set Up Git Branch**
 Create a new branch for your work:  
@@ -61,5 +61,5 @@ This project is licensed under the **MIT License**.
 
 ### 🌟 Support  
 
-💡 Found an issue? Raise an [Issue](https://github.com/YOUR_USERNAME/Khelverse/issues).  
+💡 Found an issue? Raise an [Issue](https://github.com/BlessedAmrita/Khelverse/issues).  
 💖 Love this project? Give us a ⭐ on GitHub!  
