@@ -1,7 +1,7 @@
 'use client';
 import React, {useState, useEffect} from 'react';
 import FeatureHero from '../shared/FeatureHero';
-import EventsCalendar from '../coachEvent/EventCalendar';
+import EventsCalendar from '../coach/coachEvent/EventCalendar';
 import {
   FaTrophy,
   FaCalendarCheck,

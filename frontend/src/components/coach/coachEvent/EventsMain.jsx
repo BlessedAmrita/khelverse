@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import StatsCard from "./StatsCard.jsx";
-import CoachHeader from "./CoachHeader";
-import EventFilter from "./EventFilter";
-import EventCard from "./EventCard";
-import EventCalendar from "./EventCalendar";
+import CoachHeader from "./CoachHeader.jsx";
+import EventFilter from "./EventFilter.jsx";
+import EventCard from "./EventCard.jsx";
+import EventCalendar from "./EventCalendar.jsx";
 import { Calendar, Award, TrendingUp, Users } from "lucide-react";
 import { add, format, isSameDay } from "date-fns";
 

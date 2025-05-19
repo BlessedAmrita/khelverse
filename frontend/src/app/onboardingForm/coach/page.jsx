@@ -22,6 +22,8 @@ export default function CoachOnboarding() {
     lastName: '',
     dob: '',
     gender: '',
+    city: '',
+    state: '',
     experience: '',
     certifications: '',
     expertise: '',

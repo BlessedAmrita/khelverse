@@ -1,6 +1,17 @@
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function Step1({ formData, setFormData }) {
+    const indianStates = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
+    "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+    "Uttar Pradesh", "Uttarakhand", "West Bengal",
+    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+  ];
   return (
     <div>
       <h2 className='text-2xl font-sprintura text-lavender-200 font-bold mb-4'>Coach Basic Info</h2>
@@ -37,17 +48,51 @@ export default function Step1({ formData, setFormData }) {
       </div>
 
     
-      <label>Gender</label>
-      <select
-        value={formData.gender}
-        onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-        className='border p-2 w-full  border-white/20 bg-transparent text-white mt-1'
-      >
-        <option value=''>Select Gender</option>
-        <option value='Male'>Male</option>
-        <option value='Female'>Female</option>
-        <option value='Other'>Other</option>
-      </select>
+      <div className='my-3'>
+        <label>Gender</label>
+        <Select
+          value={formData.gender}
+          onValueChange={(value) => setFormData({ ...formData, gender: value })}
+        >
+          <SelectTrigger className="w-full border border-white/20 bg-transparent text-white mt-1">
+            <SelectValue placeholder="Select your gender" />
+          </SelectTrigger>
+          <SelectContent className="bg-white text-black">
+            <SelectItem value="Male">Male</SelectItem>
+            <SelectItem value="Female">Female</SelectItem>
+            <SelectItem value="Other">Other</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+       <div className='my-3'>
+        <label>City</label>
+        <Input
+          placeholder='Enter your city'
+          value={formData.city}
+          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+          className="border border-white/20 bg-transparent text-white mt-1"
+        />
+      </div>
+
+      <div className='my-3'>
+        <label>State</label>
+        <Select
+          value={formData.state}
+          onValueChange={(value) => setFormData({ ...formData, state: value })}
+        >
+          <SelectTrigger className="w-full border border-white/20 bg-transparent text-white mt-1">
+            <SelectValue placeholder="Select your state" />
+          </SelectTrigger>
+          <SelectContent className="bg-white text-black max-h-60 overflow-y-auto">
+            {indianStates.map((state, index) => (
+              <SelectItem key={index} value={state}>
+                {state}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
