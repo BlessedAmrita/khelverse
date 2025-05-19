@@ -15,6 +15,7 @@ import {
   CircleHelp,
   LayoutDashboard,
   Users,
+  ShieldUser,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -41,6 +42,7 @@ const Sidebar = () => {
       { name: 'Tracking', path: '/dashboard/athlete/performance_evaluation', icon: ChartColumnIncreasing },
       { name: 'Events', path: '/dashboard/athlete/events', icon: Calendar },
       { name: 'Career Guidance', path: '/dashboard/athlete/careerGuidance', icon: CircleHelp },
+      { name: 'Your Coach', path: '/dashboard/athlete/your_coach', icon: ShieldUser },
     ],
     coach: [
       { name: 'Dashboard', path: '/dashboard/coach', icon: LayoutDashboard },

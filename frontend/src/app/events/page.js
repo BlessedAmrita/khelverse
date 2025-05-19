@@ -1,4 +1,4 @@
-import EventsMain from '@/components/coachEvent/EventsMain';
+import EventsMain from '@/components/coach/coachEvent/EventsMain';
 import React from 'react';
 
 function page() {

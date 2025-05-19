@@ -1,10 +1,10 @@
+import YourCoachMain from '@/components/athlete/your_coach/YourCoachMain'
 import React from 'react'
-import Events from '@/components/coach/coachEvent/EventsMain'
 
 function page() {
   return (
     <div>
-     <Events/>
+        <YourCoachMain/>
     </div>
   )
 }
