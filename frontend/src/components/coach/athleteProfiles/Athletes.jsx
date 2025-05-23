@@ -228,7 +228,9 @@ const Athletes = () => {
               <AthleteCard
                 key={athlete.id}
                 athlete={{
-                  name: athlete.name || `${athlete.firstName} ${athlete.lastName}`,
+                  name: (athlete.firstName && athlete.lastName)
+                    ? `${athlete.firstName} ${athlete.lastName}`
+                    : athlete.name,
                   sport: athlete.sport,
                   age: calculateAge(athlete.dob),
                   experienceLevel: athlete.experienceLevel,
