@@ -7,44 +7,45 @@ import { store } from '@/config/store';
 export const signInWithGoogle = async (dispatch) => {
   const provider = new GoogleAuthProvider();
 
+  // Request calendar events scope so the accessToken has permission for Google Calendar API
+  provider.addScope('https://www.googleapis.com/auth/calendar');
+  provider.addScope('https://www.googleapis.com/auth/calendar.events');
   try {
     const result = await signInWithPopup(auth, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const accessToken = credential.accessToken; // ✅ this is the one you need
     const user = result.user;
     const userRef = doc(db, 'users', user.uid);
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
-      // ✅ Existing user → Retrieve data from Firestore
       const userData = userSnap.data();
       dispatch(setUser({ ...userData, isAuthenticated: true }));
 
       if (userData.isAuthenticated && userData.role) {
-        // 🔥 If user has completed onboarding, return their role
         return { user: userData, isNewUser: false };
       } else {
-        // 🚨 If user exists but hasn't completed onboarding, return with onboarding needed
         return { user: userData, isNewUser: true };
       }
     } else {
-      // 🆕 New user → Create initial entry in Firestore
       const newUser = {
         uid: user.uid,
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
-        role: '', // ⚠️ Role not set yet (filled in onboarding)
+        role: '',
         isOnboarded: false,
-        isAuthenticated: false, // 🚨 User hasn't completed onboarding
+        isAuthenticated: false,
       };
 
-      await setDoc(userRef, newUser); // Save in Firestore
+      await setDoc(userRef, newUser);
       dispatch(setUser(newUser));
 
-      return { user: newUser, isNewUser: true }; // 🔥 New user needs onboarding
+      return { user: newUser, isNewUser: true };
     }
   } catch (error) {
     console.error('🔥 Error signing in with Google:', error);
-    return { user: null, isNewUser: null }; // Return error state
+    return { user: null, isNewUser: null };
   }
 };
 
@@ -57,7 +58,6 @@ export const logout = async (dispatch) => {
     console.error('🔥 Error logging out:', error);
   }
 };
-
 
 // **💡 Listen to Auth State Changes & Sync with Redux**
 export const monitorAuthState = () => {
@@ -77,4 +77,3 @@ export const monitorAuthState = () => {
     }
   });
 };
-
