@@ -1,5 +1,5 @@
 'use client';
-import AthleteEventsMain from '@/components/events/AthleteEventsMain';
+import AthleteEventsMain from '@/components/athlete/events/AthleteEventsMain';
 import React from 'react';
 
 function page() {
