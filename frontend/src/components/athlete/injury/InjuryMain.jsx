@@ -1,7 +1,7 @@
 'use client';
 import React, {useState, useEffect} from 'react';
 import FeatureHero from '../../shared/FeatureHero';
-import InjuryAssessment from './InjuryAssessment';
+import MultiStepForm from './MultiStepForm';
 
 function InjuryMain() {
   //loader
@@ -30,7 +30,8 @@ function InjuryMain() {
         }
         title={'Injury Management'}
       />
-      <InjuryAssessment/>
+      {/* <InjuryAssessment/> */}
+      <MultiStepForm/>
     </div>
   );
 }
