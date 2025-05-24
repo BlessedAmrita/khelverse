@@ -1,74 +1,65 @@
 'use client';
-
 import React from 'react';
-import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 
-const AthleteCard = ({ athlete, index }) => {
-  const getPerformanceColor = (score) => {
-    if (score >= 85) return 'bg-green-500';
-    if (score >= 70) return 'bg-yellow-500';
-    return 'bg-red-500';
-  };
-
+const AthleteCard = ({ athlete }) => {
   return (
-    <motion.div 
-      className="glass-card overflow-hidden"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 * index }}
-      whileHover={{ y: -5, boxShadow: '0 10px 30px -10px rgba(155, 135, 245, 0.2)' }}
-    >
-      <div className="relative p-5">
-        <div className="absolute top-3 right-3 flex items-center space-x-1.5">
-          <span className="text-xs text-apts-white/70">Score</span>
-          <div className={`performance-dot ${getPerformanceColor(athlete.performanceScore)}`}></div>
-        </div>
+    <Link href={athlete.id ? `/athletes/${athlete.id}` : "#"} className="block group">
+      <div
+        className="glass-card bg-black/20 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
+          hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"
         
-        <div className="flex items-center mb-4">
-          <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-apts-purple to-apts-purple/60 mr-3 overflow-hidden">
-            <img 
-              src={athlete.img} 
-              alt={athlete.name} 
-              className="w-full h-full object-cover" 
-              onError={(e) => {
-                e.target.src = 'https://ui-avatars.com/api/?name=' + athlete.name.replace(' ', '+') + '&background=9b87f5&color=fff';
-              }}
-            />
-          </div>
-          
-          <div>
-            <h3 className="text-apts-white font-semibold text-lg">{athlete.name}</h3>
-            <div className="flex items-center">
-              <span className="text-xs text-apts-white/70 mr-2">{athlete.sport}</span>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-apts-purple/20 text-apts-purple">{athlete.level}</span>
+      >
+        <div className="relative">
+          <div className="flex items-center mb-4">
+            <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-apts-purple to-apts-purple/60 mr-3 overflow-hidden">
+              <img
+                src={
+                  athlete.photoURL ||
+                  'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3'
+                }
+                alt={athlete.name}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src =
+                    'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3';
+                }}
+              />
+            </div>
+
+            <div>
+              <h3 className="text-apts-white font-semibold text-lg">{athlete.name}</h3>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs text-apts-white/70">{athlete.sport}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-apts-purple/20 text-apts-purple">
+                  {athlete.experienceLevel ?? "N/A"}
+                </span>
+              </div>
             </div>
           </div>
+
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-apts-white/70">
+                Age: <span className="text-sm font-medium text-apts-white mx-1">{athlete.age ?? "N/A"}</span>
+              </span>
+            </div>
+
+            <div className="flex justify-between mt-4">
+              <span className="text-sm text-apts-white/70">
+                Location:{" "}
+                <span className="text-sm text-apts-white mx-1">{athlete.location ?? "Unknown"}</span>
+              </span>
+            </div>
+          </div>
+
+          <button className="w-full bg-apts-purple-dark text-lavender-100 rounded-xl apts-button mt-5">
+            View Details 
+          </button>
         </div>
-        
-        <div className="space-y-2">
-          <div className="flex justify-between">
-            <span className="text-sm text-apts-white/70">Performance</span>
-            <span className="text-sm font-medium text-apts-white">{athlete.performanceScore}%</span>
-          </div>
-          
-          <div className="w-full h-1.5 bg-apts-purple/20 rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-apts-purple"
-              initial={{ width: 0 }}
-              animate={{ width: `${athlete.performanceScore}%` }}
-              transition={{ delay: 0.2 * index, duration: 0.8, ease: "easeOut" }}
-            ></motion.div>
-          </div>
-          
-          <div className="flex justify-between mt-4">
-            <span className="text-sm text-apts-white/70">Next Session</span>
-            <span className="text-sm text-apts-white">{athlete.nextSession}</span>
-          </div>
-        </div>
-        
-        <button className="w-full bg-purple-dark text-lavender-100 apts-button mt-5">View Details</button>
       </div>
-    </motion.div>
+    </Link>
   );
 };
 

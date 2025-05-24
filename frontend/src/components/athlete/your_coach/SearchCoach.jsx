@@ -157,27 +157,30 @@ export default function SearchCoach() {
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h2 className="text-xl font-bold mb-4 text-center">Find Your Coach</h2>
+    <div className="p-4 max-w-full mx-auto">
+      <h2 className="text-xl font-bold mb-4  text-white font-sprintura">Find Your Coach</h2>
 
       <input
         type="text"
         placeholder="Search by Name"
-        className="p-2 border rounded w-full mb-2 text-black"
+        className="p-2 border rounded w-4/5 mb-2 text-black"
+        style={{ minWidth: '330px' }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
       <input
         type="text"
         placeholder="Filter by City"
-        className="p-2 border rounded w-full mb-2 text-black"
+        className="p-2 border rounded w-4/5 mb-2 text-black"
+        style={{ minWidth: '330px' }}
         value={city}
         onChange={(e) => setCity(e.target.value)}
       />
       <input
         type="text"
         placeholder="Filter by State"
-        className="p-2 border rounded w-full mb-2 text-black"
+        className="p-2 border rounded w-4/5 mb-2 text-black"
+        style={{ minWidth: '330px' }}
         value={state}
         onChange={(e) => setState(e.target.value)}
       />
@@ -206,10 +209,11 @@ export default function SearchCoach() {
           ))}
         </ul>
       )}
-
+  
       <button
         onClick={searchCoach}
-        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition mb-4"
+        className="w-4/5 bg-apts-purple-dark  hover:bg-apts-purple pulse-btn text-white py-2 font-semibold rounded transition mb-4"
+        style={{ minWidth: '330px' }}
       >
         Search
       </button>
@@ -218,7 +222,9 @@ export default function SearchCoach() {
         {(search.trim() || city.trim() || state.trim() ? results : defaultCoaches).map((coach) => (
           <li
             key={coach.id}
-            className="border p-3 rounded my-2 flex items-center gap-4 bg-white text-black"
+            className="my-2 w-4/5 flex items-center gap-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
+            hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"
+            style={{ maxWidth: '600px' ,  minWidth: '330px'}} 
           >
             <img
               src={coach.photoURL || "/default-profile.png"}
@@ -226,15 +232,17 @@ export default function SearchCoach() {
               className="w-12 h-12 rounded-full object-cover"
             />
             <div className="flex-grow">
-              <p className="font-bold">{coach.firstName} {coach.lastName}</p>
-              <p>Sport: {coach.sport || "N/A"}</p>
-              <p>City: {coach.city || "N/A"}</p>
-              <p>State: {coach.state || "N/A"}</p>
-              <p>Experience: {coach.experience ? coach.experience + " years" : "N/A"}</p>
+              <p className="font-bold text-xl">{coach.name}</p>
+              
+              <p className="text-white/70">Sport: <span className="text-white ">{coach.sport || "N/A"}</span></p>
+              <p className="text-white/70">Experience: <span className="text-white">{coach.experience ? coach.experience + " years" : "N/A"}</span></p>
+              <p className="text-white/70">City: <span className="text-white">{coach.city || "N/A"}</span></p>
+              <p className="text-white/70">State: <span className="text-white">{coach.state || "N/A"}</span></p>
+              
             </div>
             <button
               onClick={() => sendRequest(coach.id)}
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+              className="bg-apts-purple-dark  hover:bg-apts-purple pulse-btn text-white px-4 py-2 rounded font-semibold transition"
             >
               Connect
             </button>
@@ -245,7 +253,8 @@ export default function SearchCoach() {
       {!search && !city && !state && !showAll && (
         <button
           onClick={fetchAllCoaches}
-          className="w-full mt-2 bg-gray-800 text-white py-2 rounded hover:bg-gray-700 transition"
+          className="w-4/5 mt-2 bg-apts-purple-dark  hover:bg-apts-purple pulse-btn text-white/80 py-2 rounded transition"
+          style={{ minWidth: '330px' }}
         >
           Load More Coaches
         </button>
@@ -253,4 +262,3 @@ export default function SearchCoach() {
     </div>
   );
 }
-

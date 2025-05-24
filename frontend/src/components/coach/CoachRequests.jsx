@@ -96,7 +96,7 @@ export default function CoachRequests() {
     <div className="p-4 max-w-xl mx-auto">
       <h2 className="text-xl font-bold mb-4 text-center">Connection Requests</h2>
       {requests.length === 0 ? (
-        <p className="text-center text-gray-600">No pending requests</p>
+        <p className="text-center text-lg text-gray-600">No pending requests</p>
       ) : (
         <ul>
           {requests.map((req) => {
@@ -104,10 +104,13 @@ export default function CoachRequests() {
             return (
               <li
                 key={req.id}
-                className="border p-3 my-3 rounded flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-white text-black"
+                className="my-2 mx-auto w-2/3 items-center gap-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
+                hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"
+                style={{ }} 
               >
                 {athlete ? (
                   <>
+                  <div className="flex gap-4 mx-auto mb-4 justify-end items-center">
                     <img
                       src={athlete.photoURL || "/default-profile.png"}
                       alt={athlete.name}
@@ -117,14 +120,13 @@ export default function CoachRequests() {
                       <p className="text-lg font-semibold">
                         {athlete.firstName} {athlete.lastName}
                       </p>
-                      <p>Sport: {athlete.sport || "N/A"}</p>
-                      <p>Experience: {athlete.experienceLevel || "N/A"}</p>
-                      <p>Gender: {athlete.gender}</p>
-                      <p className="text-sm text-gray-600">
-                        Achievements: {athlete.achievements || "None"}
+                      <p className="text-white/70">Sport: <span className="text-white ">{athlete.sport || "N/A"}</span></p>
+                      <p className="text-white/70">Experience: <span className="text-white ">{athlete.experienceLevel || "N/A"}</span></p>
+                      <p className="text-white/70">Gender: <span className="text-white ">{athlete.gender}</span></p>
+                      <p className="text-white/70">
+                        Achievements: <span className="text-white ">{athlete.achievements || "None"}</span>
                       </p>
-                    </div>
-                    <div className="flex gap-2">
+                      <div className="flex mt-4 gap-2 ">
                       <button
                         onClick={() => acceptRequest(req)}
                         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
@@ -138,6 +140,9 @@ export default function CoachRequests() {
                         Reject
                       </button>
                     </div>
+                    </div>
+                    </div>
+                    
                   </>
                 ) : (
                   <span className="text-red-500">Athlete data unavailable</span>

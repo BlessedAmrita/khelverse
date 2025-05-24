@@ -12,14 +12,20 @@ export default function YourCoachMain() {
         }
         title={'Your Coach'}
       />
-      <div className="flex flex-col md:flex-row gap-6 p-4">
+
+<div
+    className="min-h-screen bg-cover bg-center bg-no-repeat "
+    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+  >
+      <div className="min-h-screen bg-black/55 flex flex-col md:flex-row gap-6 p-4">
       <div className="w-full md:w-1/2">
         <SearchCoach />
       </div>
       <div className="w-full md:w-1/2">
         <Notifications />
       </div>
+      </div>
     </div>
     </div>
-  );
+  ); 
 }
