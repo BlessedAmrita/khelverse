@@ -16,14 +16,14 @@ const sessions = [
 const UpcomingSessionsCard = () => {
   return (
     <motion.div
-      className="glass-card p-5 h-auto"
+      className="bg-black/40 border-none p-5 h-auto"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
     >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold text-apts-white">Upcoming Sessions</h2>
-        <button className="text-apts-purple hover:text-apts-purple/80 flex items-center text-sm">
+        <h2 className="text-lg font-semibold text-apts-white font-sprintura">Upcoming Sessions</h2>
+        <button className="text-apts-purple-light hover:text-apts-purple/80 flex items-center text-sm">
           <Calendar size={16} className="mr-1" />
           <span>View Calendar</span>
         </button>
@@ -64,7 +64,7 @@ const UpcomingSessionsCard = () => {
         ))}
       </div>
       
-      <Button asChild className="w-full apts-button mt-5 bg-purple-light text-apt-dark hover:bg-lavender pulse-btn">
+      <Button asChild className="w-full apts-button mt-5 bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn">
         <Link href="/dashboard/coach/sessions/new">
           <Plus className="mr-2 h-4 w-4" /> Schedule New Session
         </Link>

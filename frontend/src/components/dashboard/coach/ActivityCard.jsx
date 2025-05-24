@@ -14,18 +14,14 @@ const activities = [
 const ActivityCard = () => {
   return (
     <motion.div 
-      className="glass-card p-5 h-full"
+      className="bg-black/30 border-none p-5 h-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
     >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold text-apts-white">Recent Activity</h2>
-        <select className="bg-apts-dark-purple text-apts-white text-sm border border-apts-purple/20 rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-apts-purple/50">
-          <option value="all">All Activities</option>
-          <option value="training">Training</option>
-          <option value="nutrition">Nutrition</option>
-        </select>
+        <h2 className="text-lg font-semibold text-apts-white font-sprintura">Recent Activity</h2>
+        
       </div>
       
       <div className="space-y-4">
@@ -59,7 +55,7 @@ const ActivityCard = () => {
         ))}
       </div>
       
-      <button className="w-full text-apts-purple hover:text-apts-purple/80 text-sm mt-4">
+      <button className="w-full text-apts-purple hover:text-lavender-300 text-sm mt-4 hover:underline">
         View All Activity
       </button>
     </motion.div>

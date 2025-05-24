@@ -193,13 +193,13 @@ const Athletes = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-athlete p-4 md:p-8">
+    <div className="min-h-auto bg-gradient-athlete p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <header className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-lavender-200 mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-lavender-200 mb-2 font-sprintura">
             My Athletes
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground ">
             Monitor and manage all athletes under your coaching
           </p>
         </header>
@@ -209,7 +209,7 @@ const Athletes = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               placeholder="Search athletes..."
-              className="pl-10 bg-gray-200 border-none"
+              className="pl-10 bg-gray-100 border-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -217,8 +217,8 @@ const Athletes = () => {
         </div>
 
         {filteredAthletes.length === 0 ? (
-          <div className="text-center py-12 bg-secondary/50 rounded-lg">
-            <p className="text-muted-foreground">
+          <div className="text-center py-12 bg-transparent rounded-lg">
+            <p className="text-muted-foreground text-lg">
               No athletes found matching your criteria
             </p>
           </div>
