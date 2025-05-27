@@ -1,6 +1,7 @@
 "use client";
 import SearchCoach from "./SearchCoach";
 import Notifications from "./Notifications";
+import Message from "./Message";
 import FeatureHero from "@/components/shared/FeatureHero";
 
 export default function YourCoachMain() {
@@ -20,6 +21,7 @@ export default function YourCoachMain() {
       <div className="min-h-screen bg-black/55 flex flex-col md:flex-row gap-6 p-4">
       <div className="w-full md:w-1/2">
         <SearchCoach />
+        <Message />
       </div>
       <div className="w-full md:w-1/2">
         <Notifications />
