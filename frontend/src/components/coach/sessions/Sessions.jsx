@@ -77,12 +77,12 @@ const Sessions = () => {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <div className="min-h-screen flex flex-col ">
       <main className="flex-1 container py-8 animate-fade-in">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-white">Sessions</h1>
-            <p className="text-gray-300 mt-1">Manage your scheduled and past sessions</p>
+            {/* <h1 className="text-3xl font-bold text-white">Sessions</h1> */}
+            <p className=" text-2xl text-gray-300 font-sprintura">Manage your scheduled and past sessions</p>
           </div>
 
           {/* Disable create new session button if you want, else keep it */}
