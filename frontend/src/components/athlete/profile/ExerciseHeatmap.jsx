@@ -1,4 +1,3 @@
-'use client';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CalendarHeatmap from 'react-calendar-heatmap';
@@ -13,17 +12,20 @@ import { Calendar } from "lucide-react";
 const today = new Date();
 const startDate = subDays(today, 365);
 
-const ExerciseHeatmap = ({ setStreak }) => {
+const ExerciseHeatmap = ({ uid, setStreak }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const reduxUser = useSelector((state) => state.user);
   const [taskData, setTaskData] = useState([]);
+
+  // Use uid prop if passed, else fallback to redux user uid
+  const userIdToFetch = uid || reduxUser?.uid;
 
   useEffect(() => {
     const fetchHeatmapTasks = async () => {
-      if (!user?.uid) return;
+      if (!userIdToFetch) return;
 
       try {
-        const tasksRef = collection(db, 'users', user.uid, 'tasks');
+        const tasksRef = collection(db, 'users', userIdToFetch, 'tasks');
         const snapshot = await getDocs(tasksRef);
         const taskMap = {};
 
@@ -34,7 +36,10 @@ const ExerciseHeatmap = ({ setStreak }) => {
           taskMap[date] = completedCount;
         });
 
-        dispatch(fetchTasks(user.uid));
+        // Dispatch fetchTasks for redux user only (optional, or you can skip this)
+        if (!uid) {
+          dispatch(fetchTasks(userIdToFetch));
+        }
 
         const newTaskData = eachDayOfInterval({ start: startDate, end: today }).map((date) => {
           const formattedDate = format(date, 'yyyy-MM-dd');
@@ -56,20 +61,16 @@ const ExerciseHeatmap = ({ setStreak }) => {
           }
         }
 
-        // 💥 Send streak to parent
-        // setStreak(currentStreak);
         if (typeof setStreak === 'function') {
           setStreak(currentStreak);
         }
-
-
       } catch (error) {
         console.error('Error fetching heatmap tasks:', error);
       }
     };
 
     fetchHeatmapTasks();
-  }, [dispatch, user?.uid, setStreak]);
+  }, [dispatch, userIdToFetch, setStreak]);
 
   const classForValue = (value) => {
     if (!value || value.count === 0) return 'color-empty';
