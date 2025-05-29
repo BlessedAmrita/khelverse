@@ -70,14 +70,14 @@
 // const Athletes = () => {
 //   const [searchQuery, setSearchQuery] = useState('');
 //   const [filter, setFilter] = useState('All');
-  
+
 //   const filteredAthletes = ATHLETES.filter(athlete => {
 //     const matchesSearch = athlete.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
 //                           athlete.sport.toLowerCase().includes(searchQuery.toLowerCase());
 //     const matchesFilter = filter === 'All' || athlete.status === filter;
 //     return matchesSearch && matchesFilter;
 //   });
-  
+
 //   const statusOptions = ['All', 'Active', 'Recovery', 'Competing', 'Training'];
 
 //   return (
@@ -91,7 +91,7 @@
 //             Monitor and manage all athletes under your coaching
 //           </p>
 //         </header>
-        
+
 //         <div className="mb-8 flex flex-col sm:flex-row gap-4 items-center">
 //           <div className="relative w-full sm:max-w-md">
 //             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -102,7 +102,7 @@
 //               onChange={(e) => setSearchQuery(e.target.value)}
 //             />
 //           </div>
-          
+
 //           <div className="flex gap-2 overflow-x-auto pb-2 w-full sm:w-auto">
 //             {statusOptions.map(status => (
 //               <button
@@ -119,7 +119,7 @@
 //             ))}
 //           </div>
 //         </div>
-        
+
 //         {filteredAthletes.length === 0 ? (
 //           <div className="text-center py-12 bg-secondary/50 rounded-lg">
 //             <p className="text-muted-foreground">No athletes found matching your criteria</p>
@@ -225,9 +225,22 @@ const Athletes = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAthletes.map((athlete) => (
+              // <AthleteCard
+              //   key={athlete.id}
+              //   athlete={{
+              //     name: (athlete.firstName && athlete.lastName)
+              //       ? `${athlete.firstName} ${athlete.lastName}`
+              //       : athlete.name,
+              //     sport: athlete.sport,
+              //     age: calculateAge(athlete.dob),
+              //     experienceLevel: athlete.experienceLevel,
+              //     photoURL: athlete.photoURL,
+              //   }}
+              // />
               <AthleteCard
                 key={athlete.id}
                 athlete={{
+                  id: athlete.id, // ✅ Include ID here
                   name: (athlete.firstName && athlete.lastName)
                     ? `${athlete.firstName} ${athlete.lastName}`
                     : athlete.name,
@@ -235,8 +248,10 @@ const Athletes = () => {
                   age: calculateAge(athlete.dob),
                   experienceLevel: athlete.experienceLevel,
                   photoURL: athlete.photoURL,
+                  // location: `${athlete.city ?? ''}, ${athlete.state ?? ''}` || 'Unknown', // ✅ Optional
                 }}
               />
+
             ))}
           </div>
         )}
