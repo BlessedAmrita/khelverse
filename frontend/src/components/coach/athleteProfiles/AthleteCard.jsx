@@ -36,7 +36,7 @@
 //     <Link href={athlete.id ? `/athletes/${athlete.id}` : "#"} className="block athlete-card">
 //       <div className=" bg-apts-dark text-white p-6 h-full rounded-xl border border-athletePurple-dark/40">
 //         <div className=" bg-apts-dark text-white"></div>
-        
+
 //         <div className="flex justify-between items-start mb-4">
 //           <div className="flex items-center gap-4">
 //             <div className="h-14 w-14 rounded-full bg-accent overflow-hidden">
@@ -56,7 +56,7 @@
 //           </div>
 //           <ArrowUpRight className="h-5 w-5 text-athletePurple-light opacity-60 group-hover:opacity-100 transition-opacity" />
 //         </div>
-        
+
 //         <div className="grid grid-cols-2 gap-3 mb-4">
 //           <div className="bg-apts-lightdark p-3 rounded-lg">
 //             <p className="text-xs text-muted-foreground mb-1">Age</p>
@@ -67,13 +67,13 @@
 //             <p className="font-medium">{athlete.level}</p>
 //           </div>
 //         </div>
-        
+
 //         <div className="flex items-center justify-between">
 //           <div className="flex items-center gap-2">
 //             <span className={`h-2 w-2 rounded-full ${getStatusColor(athlete.status)} animate-pulse-subtle`}></span>
 //             <span className="text-sm">{athlete.status}</span>
 //           </div>
-          
+
 //           <div className="flex items-center gap-1.5">
 //             <Activity className={`h-4 w-4 ${getPerformanceIndicator(athlete.recentPerformance)}`} />
 //             <span className={`text-sm ${getPerformanceIndicator(athlete.recentPerformance)}`}>
@@ -96,11 +96,13 @@ import { ArrowUpRight } from 'lucide-react';
 
 const AthleteCard = ({ athlete }) => {
   return (
-    <Link href={athlete.id ? `/athletes/${athlete.id}` : "#"} className="block group">
+    // <Link href={athlete.id ? `/athletes/${athlete.id}` : "#"} className="block group">
+    <Link href={athlete.id ? `/dashboard/coach/athlete_profiles/${athlete.id}` : "#"} className="block group">
+
       <div
         className="glass-card bg-black/20 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
           hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"
-          
+
       >
         <div className="relative">
           <div className="flex items-center mb-4">
@@ -146,7 +148,7 @@ const AthleteCard = ({ athlete }) => {
           </div>
 
           <button className="w-full bg-apts-purple-dark text-lavender-100 rounded-xl apts-button mt-5">
-            View Details 
+            View Details
           </button>
         </div>
       </div>
