@@ -5,7 +5,8 @@ import { ArrowUpRight } from 'lucide-react';
 
 const AthleteCard = ({ athlete }) => {
   return (
-    <Link href={athlete.id ? `/athletes/${athlete.id}` : "#"} className="block group">
+    // <Link href={athlete.id ? `/athletes/${athlete.id}` : "#"} className="block group">
+    <Link href={athlete.id ? `/dashboard/coach/athlete_profiles/${athlete.id}` : "#"} className="block group">
       <div
         className="glass-card bg-black/20 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
           hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"

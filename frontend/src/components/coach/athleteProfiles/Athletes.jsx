@@ -225,18 +225,6 @@ const Athletes = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAthletes.map((athlete) => (
-              // <AthleteCard
-              //   key={athlete.id}
-              //   athlete={{
-              //     name: (athlete.firstName && athlete.lastName)
-              //       ? `${athlete.firstName} ${athlete.lastName}`
-              //       : athlete.name,
-              //     sport: athlete.sport,
-              //     age: calculateAge(athlete.dob),
-              //     experienceLevel: athlete.experienceLevel,
-              //     photoURL: athlete.photoURL,
-              //   }}
-              // />
               <AthleteCard
                 key={athlete.id}
                 athlete={{
@@ -248,7 +236,7 @@ const Athletes = () => {
                   age: calculateAge(athlete.dob),
                   experienceLevel: athlete.experienceLevel,
                   photoURL: athlete.photoURL,
-                  // location: `${athlete.city ?? ''}, ${athlete.state ?? ''}` || 'Unknown', // ✅ Optional
+                  location: `${athlete.city ?? ''}, ${athlete.state ?? ''}`, // ✅ Optional
                 }}
               />
 

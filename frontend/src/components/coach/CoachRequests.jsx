@@ -94,7 +94,7 @@ export default function CoachRequests() {
 
   return (
     <div className="p-4 max-w-xl mx-auto">
-      <h2 className="text-xl font-bold mb-4 text-center">Connection Requests</h2>
+      <h2 className="text-xl font-bold mb-4 text-center text-gray-200">Connection Requests</h2>
       {requests.length === 0 ? (
         <p className="text-center text-lg text-gray-600">No pending requests</p>
       ) : (

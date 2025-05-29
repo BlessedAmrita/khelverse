@@ -1,29 +1,11 @@
 'use client';
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserData } from '@/config/slices/userSlice';
-
-const ProfileHero = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const uid = user?.uid;
-
-  useEffect(() => {
-    if (uid && !user.firstName) {
-      dispatch(fetchUserData(uid)).then((res) => {
-        console.log("Fetched User Data from Firestore:", res.payload);
-      });
-    }
-  }, [dispatch, uid, user.firstName]);
-
-  console.log('Redux User Data:', user); // Debugging
-  const athleteData = user.additionalData; // ✅ FIXED! Data is at root level
-  console.log('Athlete Data:', athleteData); // Debugging
-
-  const sport = athleteData?.sport || 'Unknown Sport';
-  const experienceLevel = athleteData?.experienceLevel || 'N/A'; 
-  const firstName = athleteData?.firstName || 'Athlete';
-  const profileImage = user?.photoURL || 'https://www.apc.edu.au/wp-content/uploads/2022/12/APC-EU-Educator-Placeholder.jpg';
+const ProfileHero = ({athlete}) => {
+  const sport = athlete?.sport || 'Unknown Sport';
+  const experienceLevel = athlete?.experienceLevel || 'N/A'; 
+  const fullName = (athlete?.firstName || athlete?.lastName)
+    ? `${athlete?.firstName ?? ''} ${athlete?.lastName ?? ''}`.trim()
+    : 'Athlete';
+  const profileImage = athlete?.photoURL || 'https://www.apc.edu.au/wp-content/uploads/2022/12/APC-EU-Educator-Placeholder.jpg';
 
   return (
     <div className="relative w-full glass-dark animate-fade-in">
@@ -40,7 +22,7 @@ const ProfileHero = () => {
           </div>
 
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-bold mb-2">{firstName}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-2">{fullName}</h1>
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-purple/20 text-purple-light mb-4">
               <span className="mr-2">{sport}</span>
             </div>
