@@ -19,7 +19,7 @@ const SummaryCards = () => {
       mixBlendMode: 'multiply',
     }}
   ></div>
-
+ 
   {/* Soft glowing accents */}
   <div className="absolute top-0 right-0 w-32 h-32 -mr-10 -mt-10 bg-khelverse-purple/20 rounded-full blur-2xl"></div>
   <div className="absolute bottom-0 left-0 w-20 h-20 -ml-5 -mb-5 bg-khelverse-purple/20 rounded-full blur-xl"></div>

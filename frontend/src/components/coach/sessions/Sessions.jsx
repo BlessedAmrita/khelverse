@@ -88,7 +88,7 @@ const Sessions = () => {
           {/* Disable create new session button if you want, else keep it */}
           <Button
             asChild
-            className="bg-purple-dark text-lavender-200 hover:bg-lavender hover:text-black pulse-btn"
+            className="bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn"
           >
             <a href="/dashboard/coach/sessions/new">
               <Plus className="mr-2 h-4 w-4" /> Create New Session
@@ -117,12 +117,12 @@ const Sessions = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="all" className="mb-8" onValueChange={setActiveTab}>
-          <TabsList className="bg-black/40 border border-white/10 text-white">
-            <TabsTrigger value="all">All Sessions</TabsTrigger>
-            <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-            <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
-            <TabsTrigger value="completed">Completed</TabsTrigger>
+        <Tabs defaultValue="all" className="mb-8 bg-transparent" onValueChange={setActiveTab}>
+          <TabsList className="bg-transparent border border-none text-white">
+            <TabsTrigger value="all" className="data-[state=active]:bg-athletePurple data-[state=active]:text-white">All Sessions</TabsTrigger>
+            <TabsTrigger value="upcoming" className="data-[state=active]:bg-athletePurple data-[state=active]:text-white">Upcoming</TabsTrigger>
+            <TabsTrigger value="ongoing" className="data-[state=active]:bg-athletePurple data-[state=active]:text-white">Ongoing</TabsTrigger>
+            <TabsTrigger value="completed" className="data-[state=active]:bg-athletePurple data-[state=active]:text-white">Completed</TabsTrigger>
           </TabsList>
         </Tabs>
 
@@ -138,7 +138,7 @@ const Sessions = () => {
         ) : (
           <div className="text-center py-12 text-gray-400">
             <p>No sessions found matching your criteria</p>
-            <Button variant="outline" onClick={() => {
+            <Button variant="outline" className="mt-2 bg-purple-dark text-white hover:bg-purple-middle hover:text-white border-none" onClick={() => {
               setSearchTerm("");
               setActiveTab("all");
             }}>
