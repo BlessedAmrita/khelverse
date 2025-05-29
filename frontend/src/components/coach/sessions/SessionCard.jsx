@@ -36,11 +36,11 @@ const SessionCard = ({
     description.length > 150 ? description.slice(0, 150) + "..." : description;
 
   return (
-    <div className="bg-apts-dark border border-white/30 rounded-lg p-5 transition-all duration-300 hover:-translate-y-1 animate-fade-in flex flex-col h-full">
+    <div className="bg-gray-950  border border-white/20 rounded-lg p-5 transition-all duration-300 hover:-translate-y-1 animate-fade-in flex flex-col h-full">
       <div className="flex-grow">
         <div className="flex justify-between items-start mb-3">
           <h3 className="font-semibold text-lg text-lavender-200">{title}</h3>
-          <Badge className={cn("text-xs font-medium", statusStyles[status])}>
+          <Badge className={cn("text-xs font-medium", statusStyles[status], "border-none p-2 bg-athletePurple hover:bg-athletePurple")}>
             {statusTitles[status]}
           </Badge>
         </div>

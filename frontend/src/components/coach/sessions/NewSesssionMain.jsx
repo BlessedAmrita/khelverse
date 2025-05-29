@@ -133,35 +133,40 @@ export default function NewSessionMain() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-white dark:bg-gray-900 rounded-2xl shadow-lg space-y-4">
-      <h2 className="text-xl font-semibold mb-4 text-center">Create New Session</h2>
+    <div
+    className="min-h-screen bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+  >
+      <div className="min-h-screen bg-black/55">
+    <div className="max-w-xl mt-3 mx-auto p-4 bg-transparent text-white rounded-2xl shadow-lg space-y-4">
+      <h2 className="text-xl font-semibold mb-4 text-center font-sprintura">Create New Session</h2>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label>Title</Label>
-        <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Session title" />
+        <Input value={title} className="border-white/30" onChange={(e) => setTitle(e.target.value)} placeholder="Session title" />
       </div>
 
       <div className="space-y-2">
         <Label>Description</Label>
-        <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter details..." />
+        <Textarea value={description} className="border-white/30" onChange={(e) => setDescription(e.target.value)} placeholder="Enter details..." />
       </div>
 
       <div className="flex gap-4">
-        <div className="space-y-2 flex-1">
+        <div className="space-y-1 flex-1">
           <Label>Date</Label>
-          <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <Input type="date" value={date} className="border-white/30" onChange={(e) => setDate(e.target.value)} />
         </div>
-        <div className="space-y-2 flex-1">
+        <div className="space-y-1 flex-1">
           <Label>Time</Label>
-          <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+          <Input type="time" value={time} className="border-white/30" onChange={(e) => setTime(e.target.value)} />
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label>Connected Athlete</Label>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full justify-start">
+            <Button variant="outline" className="w-full bg-gray-950 border-white/30 hover:bg-gray-200 justify-start">
               {selectedAthlete ? (
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
@@ -180,7 +185,7 @@ export default function NewSessionMain() {
                         : selectedAthlete.name ?? 'N/A'}
                     </p>
 
-                    <p className="text-xs text-gray-500">{selectedAthlete.sport} • {selectedAthlete.level}</p>
+                    <p className="text-xs text-gray-400">{selectedAthlete.sport} • {selectedAthlete.level}</p>
                   </div>
                 </div>
               ) : (
@@ -215,9 +220,11 @@ export default function NewSessionMain() {
         </DropdownMenu>
       </div>
 
-      <Button onClick={handleCreateSession} className="w-full" disabled={loading}>
+      <Button onClick={handleCreateSession} className="w-full bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn" disabled={loading}>
         {loading ? 'Scheduling...' : 'Schedule Session'}
       </Button>
+    </div>
+    </div>
     </div>
   );
 }
