@@ -1,94 +1,245 @@
 'use client';
 
-import React, { useState } from 'react';
-import { MessageSquare, Send } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { MessageSquare, Send, Check, CheckCheck } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+import { useSelector } from 'react-redux';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+  orderBy,
+  onSnapshot,
+  setDoc,
+  addDoc,
+  serverTimestamp,
+  updateDoc,
+} from 'firebase/firestore';
+import { db } from '@/firebase/firebase';
+
+const ChatInterface = React.memo(({
+  currentCoach,
+  selectedAthlete,
+  messages,
+  newMessage,
+  setNewMessage,
+  handleSendMessage,
+  handleKeyDown,
+  messagesEndRef,
+}) => (
+  <div className="flex h-[80vh] max-h-[700px] overflow-hidden rounded-xl bg-black shadow-lg">
+    <div className="flex-1 flex flex-col">
+      {/* Chat Header */}
+      <div className="border-b border-khelverse-purple/10 p-3 flex items-center gap-2 bg-black">
+        <Avatar className="h-8 w-8 ring-1 ring-khelverse-purple/20">
+          {selectedAthlete?.photoURL ? (
+            <img src={selectedAthlete.photoURL} alt={selectedAthlete.name} className="rounded-full" />
+          ) : (
+            <AvatarFallback>{selectedAthlete?.initials}</AvatarFallback>
+          )}
+        </Avatar>
+        <div>
+          <h3 className="text-white text-sm font-medium">{selectedAthlete?.name}</h3>
+          <span className="text-xs text-emerald-500">{selectedAthlete?.status}</span>
+        </div>
+      </div>
+
+      {/* Messages */}
+      <div className="overflow-y-auto flex-1 p-4 space-y-4 scrollbar-hide">
+        {messages.map((msg) => (
+          <div key={msg.id} className={`flex gap-2 ${msg.senderId === currentCoach.uid ? 'justify-end' : 'justify-start'}`}>
+            {msg.senderId !== currentCoach.uid && (
+              <Avatar className="h-8 w-8 ring-1 ring-khelverse-purple/20">
+                <AvatarFallback>{msg.senderInitials}</AvatarFallback>
+              </Avatar>
+            )}
+            <div className={`max-w-[70%] p-3 text-sm rounded-2xl relative ${msg.senderId === currentCoach.uid
+              ? 'bg-gradient-to-r from-apts-purple-dark to-black/20 text-white rounded-br-none'
+              : 'bg-gradient-to-r from-black to-apts-purple-dark text-white rounded-bl-none'}`}>
+              {msg.text}
+              <div className="flex justify-end items-center gap-1 mt-1 text-white/70 text-xs">
+                {msg.time}
+                {msg.senderId === currentCoach.uid && (
+                  msg.seen ? <CheckCheck size={14} /> : <Check size={14} />
+                )}
+              </div>
+            </div>
+            {msg.senderId === currentCoach.uid && (
+              <Avatar className="h-8 w-8 bg-khelverse-purple text-white" />
+            )}
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Message Input */}
+      <div className="p-3 bg-black">
+        <div className="flex gap-2 items-center">
+          <Input
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type a message..."
+            className="bg-[#1a1a1a] border-khelverse-purple/10 text-white rounded-full"
+          />
+          <button
+            onClick={handleSendMessage}
+            disabled={!newMessage.trim()}
+            className="p-2 bg-khelverse-purple text-white rounded-full hover:opacity-90 disabled:opacity-50"
+          >
+            <Send size={18} />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+));
+ChatInterface.displayName = 'ChatInterface';
 
 const MessagingOverview = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: 'athlete',
-      name: 'Rahul Sharma',
-      initials: 'RS',
-      text: "Hi Coach! I've completed the training program for this week.",
-      time: '10:30 AM',
-      status: 'online'
-    },
-    {
-      id: 2,
-      sender: 'coach',
-      text: "Great job, Rahul! How did you find the new exercises?",
-      time: '10:32 AM'
-    },
-    {
-      id: 3,
-      sender: 'athlete',
-      name: 'Rahul Sharma',
-      initials: 'RS',
-      text: "They were challenging but very effective. I feel like my core strength has improved.",
-      time: '10:35 AM',
-      status: 'online'
-    }
-  ]);
-
+  const currentCoach = useSelector((state) => state.user);
+  const [chatSummaries, setChatSummaries] = useState([]);
+  const [selectedAthlete, setSelectedAthlete] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [selectedAthlete, setSelectedAthlete] = useState({
-    name: 'Rahul Sharma',
-    initials: 'RS',
-    status: 'online'
-  });
+  const messagesEndRef = useRef(null);
 
-  // Recent chat list
-  const recentChats = [
-    {
-      id: 1,
-      name: 'Rahul Sharma',
-      initials: 'RS',
-      lastMessage: "Coach, I've completed the training program for this week.",
-      time: '10:30 AM',
-      status: 'online'
-    },
-    {
-      id: 2,
-      name: 'Priya Patel',
-      initials: 'PP',
-      lastMessage: "I'm not feeling well. Can we reschedule my training?",
-      time: 'Yesterday',
-      status: ''
-    },
-    {
-      id: 3,
-      name: 'Akash Kumar',
-      initials: 'AK',
-      lastMessage: "Thank you for the feedback on my technique. I'll work on it.",
-      time: 'Yesterday',
-      status: 'online'
-    },
-    {
-      id: 4,
-      name: 'Maya Singh',
-      initials: 'MS',
-      lastMessage: "When is our next team meeting?",
-      time: 'Monday',
-      status: ''
+  useEffect(() => {
+  if (!currentCoach?.uid) return;
+
+  const q = query(collection(db, 'requests'), where('toId', '==', currentCoach.uid), where('status', '==', 'accepted'));
+
+  let unsubscribers = [];
+
+  const fetchChats = async () => {
+    const snapshot = await getDocs(q);
+    const seen = new Set();
+
+    for (const docSnap of snapshot.docs) {
+      const data = docSnap.data();
+      const athleteId = data.fromId;
+      if (!athleteId || seen.has(athleteId)) continue;
+      seen.add(athleteId);
+
+      const userSnap = await getDoc(doc(db, 'users', athleteId));
+      if (!userSnap.exists()) continue;
+      const userData = userSnap.data();
+
+      const chatId = `chat_${[athleteId, currentCoach.uid].sort().join('_')}`;
+      const chatDocRef = doc(db, 'chats', chatId);
+
+      // Setup listener for each chat
+      const unsub = onSnapshot(chatDocRef, (chatSnap) => {
+        const chatData = chatSnap.exists() ? chatSnap.data() : {};
+
+        setChatSummaries((prev) => {
+          const others = prev.filter(c => c.id !== athleteId);
+          return [
+            ...others,
+            {
+              id: athleteId,
+              name: userData.name,
+              initials: userData.name?.charAt(0) || 'A',
+              photoURL: userData.photoURL || '',
+              lastMessage: chatData.lastMessage || '',
+              time: chatData.lastMessageTimestamp?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '',
+              status: userData.status || '',
+            }
+          ].sort((a, b) => a.name.localeCompare(b.name)); // optional sort
+        });
+
+        // Auto-select first athlete if none selected
+        setSelectedAthlete((prev) => prev || {
+          id: athleteId,
+          name: userData.name,
+          initials: userData.name?.charAt(0) || 'A',
+          photoURL: userData.photoURL || '',
+          status: userData.status || '',
+        });
+      });
+
+      unsubscribers.push(unsub);
     }
-  ];
+  };
 
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const newMsg = {
-        id: messages.length + 1,
-        sender: 'coach',
+  fetchChats();
+
+  return () => {
+    unsubscribers.forEach(unsub => unsub());
+  };
+}, [currentCoach?.uid]);
+
+
+  useEffect(() => {
+    if (!currentCoach?.uid || !selectedAthlete?.id) return;
+
+    const chatId = `chat_${[currentCoach.uid, selectedAthlete.id].sort().join('_')}`;
+    const q = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp'));
+
+    const unsub = onSnapshot(q, async (snapshot) => {
+      const msgs = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        time: doc.data().timestamp?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '',
+      }));
+      setMessages(msgs);
+
+      setTimeout(() => {
+        if (messagesEndRef.current) {
+          messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+
+      // Mark all messages as seen when viewing the chat
+      snapshot.docs.forEach(async (docSnap) => {
+        const data = docSnap.data();
+        if (!data.seen && data.senderId !== currentCoach.uid) {
+          await updateDoc(doc(db, 'chats', chatId, 'messages', docSnap.id), { seen: true });
+        }
+      });
+    });
+
+    return () => unsub();
+  }, [currentCoach?.uid, selectedAthlete?.id]);
+
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || !currentCoach?.uid || !selectedAthlete?.id) return;
+
+    const chatId = `chat_${[currentCoach.uid, selectedAthlete.id].sort().join('_')}`;
+    const chatDocRef = doc(db, 'chats', chatId);
+
+    try {
+      await setDoc(chatDocRef, {
+        participants: [currentCoach.uid, selectedAthlete.id],
+        lastMessage: newMessage,
+        lastMessageTimestamp: serverTimestamp(),
+      }, { merge: true });
+
+      await addDoc(collection(db, 'chats', chatId, 'messages'), {
+        senderId: currentCoach.uid,
+        senderName: currentCoach.name,
+        senderInitials: currentCoach.name?.charAt(0).toUpperCase() || 'C',
         text: newMessage,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
+        timestamp: serverTimestamp(),
+        seen: false,
+      });
 
-      setMessages([...messages, newMsg]);
       setNewMessage('');
+    } catch (e) {
+      console.error('🔥 Message send failed:', e);
+      alert('Failed to send message.');
     }
   };
 
@@ -99,194 +250,85 @@ const MessagingOverview = () => {
     }
   };
 
-  // Chat component shown in the dialog
-  const ChatInterface = () => (
-    <div className="flex h-[80vh] max-h-[700px] overflow-hidden rounded-xl">
-      {/* Left sidebar with recent conversations */}
-      <div className="w-64 border-r border-khelverse-purple/10 flex flex-col bg-gradient-to-b from-black/50 to-black/70 backdrop-blur-md">
-        <div className="p-3 border-b border-khelverse-purple/10 bg-black/40">
-          <h3 className="flex items-center gap-2 font-medium text-white font-sprintura">
-            <MessageSquare size={18} className="text-khelverse-purple" />
-            Messages
-          </h3>
-        </div>
-
-        <div className="flex-1 overflow-y-auto">
-          {recentChats.map((chat) => (
-            <div
-              key={chat.id}
-              className={`flex items-center gap-3 p-3 hover:bg-khelverse-purple/5 cursor-pointer transition-all duration-200 border-b border-khelverse-purple/5 ${
-                chat.id === 1 ? 'bg-black/20' : ''
-              }`}
-            >
-              <div className="relative">
-                <Avatar className="h-10 w-10 ring-1 ring-khelverse-purple/20">
-                  <AvatarFallback className="bg-gradient-to-br from-khelverse-purple/30 to-khelverse-purple/10 text-khelverse-purple">
-                    {chat.initials}
-                  </AvatarFallback>
-                </Avatar>
-                {chat.status === 'online' && (
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-black"></span>
-                )}
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium text-sm text-white">{chat.name}</h4>
-                  <span className="text-xs text-muted-foreground">{chat.time}</span>
-                </div>
-                <p className="truncate text-xs text-muted-foreground">{chat.lastMessage}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Main chat area */}
-      <div className="flex-1 flex flex-col bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md">
-        {/* Chat header */}
-        <div className="border-b border-khelverse-purple/10 p-3 flex items-center justify-between bg-black/20 backdrop-blur-sm">
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <Avatar className="h-8 w-8 ring-1 ring-khelverse-purple/20">
-                <AvatarFallback className="bg-gradient-to-br from-khelverse-purple/30 to-khelverse-purple/10 text-khelverse-purple">
-                  {selectedAthlete.initials}
-                </AvatarFallback>
-              </Avatar>
-              {selectedAthlete.status === 'online' && (
-                <span className="absolute bottom-0 right-0 w-2 h-2 bg-green-500 rounded-full border border-black"></span>
-              )}
-            </div>
-            <div>
-              <h3 className="font-medium text-sm text-white">{selectedAthlete.name}</h3>
-              <span className="text-xs text-emerald-500">{selectedAthlete.status}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Chat messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex gap-2 ${message.sender === 'coach' ? 'justify-end' : 'justify-start'}`}
-            >
-              {message.sender === 'athlete' && (
-                <Avatar className="h-8 w-8 flex-shrink-0 ring-1 ring-khelverse-purple/20">
-                  <AvatarFallback className="bg-gradient-to-br from-khelverse-purple/30 to-khelverse-purple/10 text-white">
-                    {message.initials}
-                  </AvatarFallback>
-                </Avatar>
-              )}
-
-              <div
-                className={`max-w-[70%] p-3 ${
-                  message.sender === 'coach'
-                    ? 'bg-gradient-to-r from-apts-purple-dark to-black/20 text-white rounded-2xl rounded-br-none'
-                    : 'bg-gradient-to-r from-black to-apts-purple-dark text-white rounded-2xl rounded-br-non'
-                }`}
-              >
-                <p className="text-sm">{message.text}</p>
-                <div className={`text-xs mt-1 ${
-                  message.sender === 'coach' ? 'text-white/70 text-right' : 'text-muted-foreground'
-                }`}>
-                  {message.time}
-                </div>
-              </div>
-
-              {message.sender === 'coach' && (
-                <Avatar className="h-8 w-8 flex-shrink-0 bg-gradient-to-br from-khelverse-purple to-khelverse-purple-dark">
-                  <AvatarFallback className="text-white">C</AvatarFallback>
-                </Avatar>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Message input */}
-        <div className="p-3 bg-black/30 backdrop-blur-sm">
-          <div className="flex items-center gap-2">
-            <Input
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type a message..."
-              className="bg-black/20 border-khelverse-purple/10 focus-within:border-khelverse-purple/40 focus-within:ring-1 focus-within:ring-khelverse-purple/30 rounded-full"
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={!newMessage.trim()}
-              className="rounded-full bg-gradient-to-r from-khelverse-purple to-khelverse-purple-dark p-2 text-white hover:opacity-90 transition-all disabled:opacity-50"
-            >
-              <Send size={18} />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Preview component shown in the dashboard
-  const MessagingPreview = () => (
-    <div className=" glass-card bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md rounded-xl p-4 border border-khelverse-purple/10 hover:border-khelverse-purple/20 transition-all">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-medium flex items-center gap-2 font-sprintura text-white">
-          <MessageSquare size={20} className="text-khelverse-purple" />
+  return (
+    <div className='glass-card bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md rounded-xl p-4 border border-khelverse-purple/10'>
+      <div className='flex justify-between mb-4'>
+        <h3 className='text-lg font-sprintura text-white flex gap-2 items-center'>
+          <MessageSquare size={20} className='text-khelverse-purple' />
           Messages
         </h3>
-
-        <Dialog>
+        <Dialog modal={false}>
           <DialogTrigger asChild>
-            <Button variant="outline" className="bg-black/30 border-khelverse-purple/20 hover:border-khelverse-purple hover:bg-black/40 hover:text-apts-lavender text-khelverse-purple">
+            <Button variant='outline' className='text-khelverse-purple border-khelverse-purple/20 bg-black/30 hover:bg-black/40'>
               Open Messenger
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[900px] p-0 border-khelverse-purple/20 bg-transparent">
-            <ChatInterface />
+          <DialogContent className='sm:max-w-[1000px] w-full p-0 bg-transparent border-khelverse-purple/20'>
+            <DialogTitle className='sr-only'>Coach Messaging</DialogTitle>
+            <DialogDescription className='sr-only'>Coach chat with assigned athletes</DialogDescription>
+
+            <div className='flex flex-col md:flex-row h-[80vh] max-h-[700px] w-full overflow-hidden rounded-xl'>
+              {/* Sidebar */}
+              <div className="md:w-72 w-full md:max-w-sm flex-shrink-0 border-r border-khelverse-purple/10 bg-[#111111] flex flex-col">
+                <div className='p-3 border-b border-khelverse-purple/10'>
+                  <h3 className='text-white font-medium flex items-center gap-2 font-sprintura'>
+                    <MessageSquare size={25} className='text-khelverse-purple' />
+                    Messages
+                  </h3>
+                </div>
+                <div className='flex-1'>
+                  {chatSummaries.map((chat) => (
+                    <div
+                      key={`chat_${chat.id}`}
+                      onClick={() => {
+                        if (selectedAthlete?.id !== chat.id) setSelectedAthlete(chat);
+                      }}
+                      className={`p-3 border-b border-khelverse-purple/10 cursor-pointer hover:bg-[#1a1a1a] transition-all ${
+                        selectedAthlete?.id === chat.id ? 'bg-[#1f1f1f]' : ''
+                      }`}
+                    >
+                      <div className='flex items-center gap-3'>
+                        <Avatar className='h-10 w-10 ring-1 ring-khelverse-purple/20'>
+                          {chat.photoURL ? (
+                            <img src={chat.photoURL} alt={chat.name} className='rounded-full' />
+                          ) : (
+                            <AvatarFallback>{chat.initials}</AvatarFallback>
+                          )}
+                        </Avatar>
+                        <div className='flex-1 min-w-0'>
+                          <div className='flex justify-between items-center'>
+                            <span className='text-sm font-semibold text-white truncate'>{chat.name}</span>
+                            <span className='text-xs text-muted-foreground'>{chat.time}</span>
+                          </div>
+                          <p className='text-xs text-muted-foreground truncate w-full'>{chat.lastMessage || 'No messages yet.'}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Chat Interface */}
+              <div className='flex-1'>
+                {selectedAthlete && (
+                  <ChatInterface
+                    currentCoach={currentCoach}
+                    selectedAthlete={selectedAthlete}
+                    messages={messages}
+                    newMessage={newMessage}
+                    setNewMessage={setNewMessage}
+                    handleSendMessage={handleSendMessage}
+                    handleKeyDown={handleKeyDown}
+                    messagesEndRef={messagesEndRef}
+                  />
+                )}
+              </div>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
-
-      {/* <div className="space-y-3">
-        {recentChats.slice(0, 3).map((chat) => (
-          <div key={chat.id} className="flex items-start gap-3 p-2 rounded-lg bg-black/20 border border-khelverse-purple/5 hover:border-khelverse-purple/15 transition-all">
-            <Avatar className="h-9 w-9 ring-1 ring-khelverse-purple/10">
-              <AvatarFallback className="bg-gradient-to-br from-khelverse-purple/30 to-khelverse-purple/10 text-khelverse-purple">
-                {chat.initials}
-              </AvatarFallback>
-            </Avatar>
-
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <h4 className="font-medium text-sm">{chat.name}</h4>
-                <span className="text-xs text-muted-foreground">{chat.time}</span>
-              </div>
-              <p className="truncate text-xs text-muted-foreground">{chat.lastMessage}</p>
-            </div>
-
-            {chat.status === 'online' && (
-              <span className="w-2 h-2 bg-green-500 rounded-full mt-2"></span>
-            )}
-          </div>
-        ))}
-      </div> */}
-
-      {/* <div className="mt-4 text-center">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="link" className="text-khelverse-purple hover:text-khelverse-purple-dark">
-              View all messages
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[900px] p-0 border-khelverse-purple/20 bg-transparent">
-            <ChatInterface />
-          </DialogContent>
-        </Dialog>
-      </div> */}
     </div>
   );
-
-  return <MessagingPreview />;
 };
 
 export default MessagingOverview;
