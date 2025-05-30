@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import AthleteCard from "./AthleteCard";
 import toast from "react-hot-toast";
 import React from 'react';

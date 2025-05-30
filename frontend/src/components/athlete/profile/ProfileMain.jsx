@@ -73,14 +73,14 @@ function ProfileMain({ athlete, readOnly = false }) {
   };
 
   const handleEditField = async (field) => {
-    const currentValue = activeUser?.additionalData?.[field] || '';
+    const currentValue = activeUser?.[field] || '';
     const promptMessage = field === 'dob' ? 'Enter DOB in YYYY-MM-DD format:' : `Enter new ${field}:`;
     const newValue = prompt(promptMessage, currentValue);
     if (!newValue || newValue === currentValue) return;
 
     try {
       await updateDoc(doc(db, "users", activeUid), {
-        [`additionalData.${field}`]: newValue
+        [`${field}`]: newValue
       });
       fetchUserFromFirestore(activeUid); // Refresh UI
       alert(`${field} updated successfully!`);
@@ -107,7 +107,6 @@ function ProfileMain({ athlete, readOnly = false }) {
           <StreakCounter streak={streak} />
           <AchievementTimeline achievements={achievements} userId={activeUid} refreshAchievements={fetchAchievements} readOnly={readOnly} />
           <MedicalRecords uid={activeUid} readOnly={readOnly} />
-          {/* <ExerciseHeatmap uid={activeUid} setStreak={!readOnly ? setStreak : undefined} /> */}
           <ExerciseHeatmap
             uid={readOnly ? athlete?.uid : undefined}
             setStreak={setStreak}

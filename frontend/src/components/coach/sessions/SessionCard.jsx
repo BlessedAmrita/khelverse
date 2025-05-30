@@ -25,7 +25,7 @@ const SessionCard = ({
   athleteName,
   athleteFirstName,
   athleteLastName,
-  athleteImage,
+  athletePhotoURL,
   description,
   meetLink,
   status,
@@ -59,7 +59,7 @@ const SessionCard = ({
           <div className="flex items-center gap-3 mt-2">
             <User className="h-4 w-4 text-purple-light" />
             <img
-              src={athleteImage}
+              src={athletePhotoURL}
               alt={athleteName}
               className="h-8 w-8 rounded-full object-cover border border-white/20"
             />

@@ -51,7 +51,10 @@ const ChatInterface = React.memo(({
           )}
         </Avatar>
         <div>
-          <h3 className="text-white text-sm font-medium">{selectedAthlete?.name}</h3>
+          {/* <h3 className="text-white text-sm font-medium">{selectedAthlete?.name}</h3> */}
+          <h3 className="text-white text-sm font-medium">
+            {`${selectedAthlete?.firstName || ''} ${selectedAthlete?.lastName || selectedAthlete?.name || ''}`.trim()}
+          </h3>
           <span className="text-xs text-emerald-500">{selectedAthlete?.status}</span>
         </div>
       </div>
@@ -117,69 +120,81 @@ const MessagingOverview = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-  if (!currentCoach?.uid) return;
+    if (!currentCoach?.uid) return;
 
-  const q = query(collection(db, 'requests'), where('toId', '==', currentCoach.uid), where('status', '==', 'accepted'));
+    const q = query(collection(db, 'requests'), where('toId', '==', currentCoach.uid), where('status', '==', 'accepted'));
 
-  let unsubscribers = [];
+    let unsubscribers = [];
 
-  const fetchChats = async () => {
-    const snapshot = await getDocs(q);
-    const seen = new Set();
+    const fetchChats = async () => {
+      const snapshot = await getDocs(q);
+      const seen = new Set();
 
-    for (const docSnap of snapshot.docs) {
-      const data = docSnap.data();
-      const athleteId = data.fromId;
-      if (!athleteId || seen.has(athleteId)) continue;
-      seen.add(athleteId);
+      for (const docSnap of snapshot.docs) {
+        const data = docSnap.data();
+        const athleteId = data.fromId;
+        if (!athleteId || seen.has(athleteId)) continue;
+        seen.add(athleteId);
 
-      const userSnap = await getDoc(doc(db, 'users', athleteId));
-      if (!userSnap.exists()) continue;
-      const userData = userSnap.data();
+        const userSnap = await getDoc(doc(db, 'users', athleteId));
+        if (!userSnap.exists()) continue;
+        const userData = userSnap.data();
 
-      const chatId = `chat_${[athleteId, currentCoach.uid].sort().join('_')}`;
-      const chatDocRef = doc(db, 'chats', chatId);
+        const chatId = `chat_${[athleteId, currentCoach.uid].sort().join('_')}`;
+        const chatDocRef = doc(db, 'chats', chatId);
 
-      // Setup listener for each chat
-      const unsub = onSnapshot(chatDocRef, (chatSnap) => {
-        const chatData = chatSnap.exists() ? chatSnap.data() : {};
+        // Setup listener for each chat
+        const unsub = onSnapshot(chatDocRef, (chatSnap) => {
+          const chatData = chatSnap.exists() ? chatSnap.data() : {};
 
-        setChatSummaries((prev) => {
-          const others = prev.filter(c => c.id !== athleteId);
-          return [
-            ...others,
-            {
-              id: athleteId,
-              name: userData.name,
-              initials: userData.name?.charAt(0) || 'A',
-              photoURL: userData.photoURL || '',
-              lastMessage: chatData.lastMessage || '',
-              time: chatData.lastMessageTimestamp?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '',
-              status: userData.status || '',
-            }
-          ].sort((a, b) => a.name.localeCompare(b.name)); // optional sort
+          setChatSummaries((prev) => {
+            const others = prev.filter(c => c.id !== athleteId);
+            return [
+              ...others,
+              {
+                id: athleteId,
+                // name: userData.name,
+                name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
+                initials: userData.name?.charAt(0) || 'A',
+                photoURL: userData.photoURL || '',
+                lastMessage: chatData.lastMessage || '',
+                time: chatData.lastMessageTimestamp?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '',
+                status: userData.status || '',
+              }
+            ].sort((a, b) => a.name.localeCompare(b.name)); // optional sort
+          });
+
+          // Auto-select first athlete if none selected
+          // setSelectedAthlete((prev) => prev || {
+          //   id: athleteId,
+          //   // name: userData.name,
+          //   name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
+          //   initials: userData.name?.charAt(0) || 'A',
+          //   photoURL: userData.photoURL || '',
+          //   status: userData.status || '',
+          // });
+          setSelectedAthlete((prev) => prev || {
+            id: athleteId,
+            name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
+            firstName: userData.firstName || '',
+            lastName: userData.lastName || '',
+            initials: (userData.firstName?.charAt(0) || userData.name?.charAt(0) || 'A').toUpperCase(),
+            photoURL: userData.photoURL || '',
+            status: userData.status || '',
+          });
+
         });
 
-        // Auto-select first athlete if none selected
-        setSelectedAthlete((prev) => prev || {
-          id: athleteId,
-          name: userData.name,
-          initials: userData.name?.charAt(0) || 'A',
-          photoURL: userData.photoURL || '',
-          status: userData.status || '',
-        });
-      });
+        unsubscribers.push(unsub);
+      }
+    };
 
-      unsubscribers.push(unsub);
-    }
-  };
+    fetchChats();
 
-  fetchChats();
-
-  return () => {
-    unsubscribers.forEach(unsub => unsub());
-  };
-}, [currentCoach?.uid]);
+    return () => {
+      unsubscribers.forEach(unsub => unsub());
+    };
+  }, [currentCoach?.uid]);
 
 
   useEffect(() => {
@@ -283,9 +298,8 @@ const MessagingOverview = () => {
                       onClick={() => {
                         if (selectedAthlete?.id !== chat.id) setSelectedAthlete(chat);
                       }}
-                      className={`p-3 border-b border-khelverse-purple/10 cursor-pointer hover:bg-[#1a1a1a] transition-all ${
-                        selectedAthlete?.id === chat.id ? 'bg-[#1f1f1f]' : ''
-                      }`}
+                      className={`p-3 border-b border-khelverse-purple/10 cursor-pointer hover:bg-[#1a1a1a] transition-all ${selectedAthlete?.id === chat.id ? 'bg-[#1f1f1f]' : ''
+                        }`}
                     >
                       <div className='flex items-center gap-3'>
                         <Avatar className='h-10 w-10 ring-1 ring-khelverse-purple/20'>
