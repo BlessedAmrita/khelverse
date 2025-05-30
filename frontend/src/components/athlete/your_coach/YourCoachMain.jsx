@@ -5,7 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
 
 import SearchCoach from "./SearchCoach";
-import ShowConnectedCoach from "./ShowConnectedCoach";
+import ShowConnectedCoach from "./showConnectedCoach";
 import Message from "./Message";
 import FeatureHero from "@/components/shared/FeatureHero";
 
