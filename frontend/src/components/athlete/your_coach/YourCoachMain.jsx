@@ -8,6 +8,7 @@ import SearchCoach from "./SearchCoach";
 import ShowConnectedCoach from "./showConnectedCoach";
 import Message from "./Message";
 import FeatureHero from "@/components/shared/FeatureHero";
+import Sessions from "./Sessions";
 
 export default function YourCoachMain() {
   const user = useSelector((state) => state.user);
@@ -64,8 +65,8 @@ export default function YourCoachMain() {
             "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')",
         }}
       >
-        <div className="min-h-screen bg-black/55 flex flex-col md:flex-row gap-6 p-4">
-          <div className="w-full md:w-1/2">
+        <div className="min-h-screen bg-black/55 flex flex-col md:flex-row p-4">
+          <div className="w-full md:w-2/5">
             {loading ? (
               <p className="text-white">Loading...</p>
             ) : connectedCoach ? (
@@ -75,8 +76,9 @@ export default function YourCoachMain() {
             )}
           </div>
 
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-3/5">
             <Message />
+            <Sessions/>
             {/* <Notifications /> */}
           </div>
         </div>

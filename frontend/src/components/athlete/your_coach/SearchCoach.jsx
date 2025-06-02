@@ -30,6 +30,11 @@ export default function SearchCoach() {
 
   const user = useSelector((state) => state.user);
 
+  const formatName = (coach) =>
+    coach.firstName && coach.lastName
+      ? `${coach.firstName} ${coach.lastName}`
+      : coach.name || "Unnamed";
+
   const fetchInitialCoaches = async () => {
     try {
       const q = query(
@@ -47,7 +52,11 @@ export default function SearchCoach() {
 
   const fetchAllCoaches = async () => {
     try {
-      const q = query(collection(db, "users"), where("role", "==", "coach"), orderBy("name"));
+      const q = query(
+        collection(db, "users"),
+        where("role", "==", "coach"),
+        orderBy("name")
+      );
       const snapshot = await getDocs(q);
       setDefaultCoaches(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
       setShowAll(true);
@@ -61,14 +70,17 @@ export default function SearchCoach() {
     try {
       const q = query(
         collection(db, "users"),
-        where("role", "==", "coach"),
-        orderBy("name"),
-        startAt(searchTerm),
-        endAt(searchTerm + "\uf8ff"),
-        limit(5)
+        where("role", "==", "coach")
       );
       const snapshot = await getDocs(q);
-      setAutocomplete(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      const matches = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter((c) => {
+          const fullName = formatName(c).toLowerCase();
+          return fullName.includes(searchTerm.toLowerCase());
+        })
+        .slice(0, 5);
+      setAutocomplete(matches);
     } catch (err) {
       console.error("Error fetching autocomplete:", err);
     }
@@ -112,19 +124,15 @@ export default function SearchCoach() {
     }
 
     try {
-      const q = search.trim()
-        ? query(
-            collection(db, "users"),
-            where("role", "==", "coach"),
-            orderBy("name"),
-            startAt(search),
-            endAt(search + "\uf8ff")
-          )
-        : query(collection(db, "users"), where("role", "==", "coach"));
-
+      const q = query(collection(db, "users"), where("role", "==", "coach"));
       const snapshot = await getDocs(q);
       let filtered = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
+      if (search.trim()) {
+        filtered = filtered.filter((c) =>
+          formatName(c).toLowerCase().includes(search.toLowerCase())
+        );
+      }
       if (city.trim()) {
         filtered = filtered.filter((c) =>
           (c.city || "").toLowerCase().includes(city.toLowerCase())
@@ -180,20 +188,22 @@ export default function SearchCoach() {
     return () => clearTimeout(handler);
   }, [search]);
 
+  const displayList = search.trim() || city.trim() || state.trim() ? results : defaultCoaches;
+
   return (
     <div className="p-4 max-w-full mx-auto">
       <h2 className="text-xl font-bold mb-4 text-white font-sprintura">Find Your Coach</h2>
 
       {connectedCoach ? (
-        <div className="w-4/5 mb-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border" style={{ maxWidth: '600px', minWidth: '330px' }}>
+        <div className="w-full mb-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border" style={{ maxWidth: '600px', minWidth: '330px' }}>
           <div className="flex items-center gap-4">
             <img
               src={connectedCoach.photoURL || "/default-profile.png"}
-              alt={connectedCoach.name}
+              alt={formatName(connectedCoach)}
               className="w-12 h-12 rounded-full object-cover"
             />
             <div className="flex-grow">
-              <p className="font-bold text-xl">{connectedCoach.name}</p>
+              <p className="font-bold text-xl">{formatName(connectedCoach)}</p>
               <p className="text-white/70">Sport: <span className="text-white">{connectedCoach.sport || "N/A"}</span></p>
               <p className="text-white/70">Experience: <span className="text-white">{connectedCoach.experience ? connectedCoach.experience + " years" : "N/A"}</span></p>
               <p className="text-white/70">City: <span className="text-white">{connectedCoach.city || "N/A"}</span></p>
@@ -212,7 +222,7 @@ export default function SearchCoach() {
           <input
             type="text"
             placeholder="Search by Name"
-            className="p-2 border rounded w-4/5 mb-2 text-black"
+            className="p-2 border rounded w-full mb-2 text-black"
             style={{ minWidth: '330px' }}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -220,7 +230,7 @@ export default function SearchCoach() {
           <input
             type="text"
             placeholder="Filter by City"
-            className="p-2 border rounded w-4/5 mb-2 text-black"
+            className="p-2 border rounded w-full mb-2 text-black"
             style={{ minWidth: '330px' }}
             value={city}
             onChange={(e) => setCity(e.target.value)}
@@ -228,7 +238,7 @@ export default function SearchCoach() {
           <input
             type="text"
             placeholder="Filter by State"
-            className="p-2 border rounded w-4/5 mb-2 text-black"
+            className="p-2 border rounded w-full mb-2 text-black"
             style={{ minWidth: '330px' }}
             value={state}
             onChange={(e) => setState(e.target.value)}
@@ -241,17 +251,17 @@ export default function SearchCoach() {
                   key={coach.id}
                   className="p-2 hover:bg-gray-200 cursor-pointer flex items-center gap-3"
                   onClick={() => {
-                    setSearch(coach.name);
+                    setSearch(formatName(coach));
                     setAutocomplete([]);
                   }}
                 >
                   <img
                     src={coach.photoURL || "/default-profile.png"}
-                    alt={coach.name}
+                    alt={formatName(coach)}
                     className="w-8 h-8 rounded-full object-cover"
                   />
                   <div>
-                    <p className="font-semibold">{coach.name}</p>
+                    <p className="font-semibold">{formatName(coach)}</p>
                     <p className="text-sm text-gray-600">{coach.sport}</p>
                   </div>
                 </li>
@@ -261,27 +271,27 @@ export default function SearchCoach() {
 
           <button
             onClick={searchCoach}
-            className="w-4/5 bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white py-2 font-semibold rounded transition mb-4"
+            className="w-full bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white py-2 font-semibold rounded transition mb-4"
             style={{ minWidth: '330px' }}
           >
             Search
           </button>
 
           <ul>
-            {(search.trim() || city.trim() || state.trim() ? results : defaultCoaches).map((coach) => (
+            {displayList.map((coach) => (
               <li
                 key={coach.id}
-                className="my-2 w-4/5 flex items-center gap-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
+                className="my-2 w-full flex items-center gap-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
                 hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"
                 style={{ maxWidth: '600px', minWidth: '330px' }}
               >
                 <img
                   src={coach.photoURL || "/default-profile.png"}
-                  alt={coach.name}
+                  alt={formatName(coach)}
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex-grow">
-                  <p className="font-bold text-xl">{coach.name}</p>
+                  <p className="font-bold text-xl">{formatName(coach)}</p>
                   <p className="text-white/70">Sport: <span className="text-white">{coach.sport || "N/A"}</span></p>
                   <p className="text-white/70">Experience: <span className="text-white">{coach.experience ? coach.experience + " years" : "N/A"}</span></p>
                   <p className="text-white/70">City: <span className="text-white">{coach.city || "N/A"}</span></p>
@@ -296,16 +306,6 @@ export default function SearchCoach() {
               </li>
             ))}
           </ul>
-
-          {!search && !city && !state && !showAll && (
-            <button
-              onClick={fetchAllCoaches}
-              className="w-4/5 mt-2 bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white/80 py-2 rounded transition"
-              style={{ minWidth: '330px' }}
-            >
-              Load More Coaches
-            </button>
-          )}
         </>
       )}
     </div>
