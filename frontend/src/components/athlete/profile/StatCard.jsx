@@ -19,26 +19,26 @@ const StatCard = ({ title, value, icon, delay = 0, editable = false, onEdit = ()
     " animate-slide-up";
 
   return (
-    <div className={`glass rounded-xl overflow-hidden ${animationClass}`}>
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-3">
-            <div className="rounded-full bg-purple/10 p-2">
-              <Icon />
-            </div>
-            <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
+    <div className={`relative overflow-hidden rounded-xl bg-gradient-to-r from-khelverse-purple/20 to-black transform transition-all hover:scale-[1.02] ${animationClass}`}>
+    <div className="p-6 relative z-20 flex flex-col h-full">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-3">
+          <div className="rounded-full bg-white/10 p-2 backdrop-blur-sm">
+            <Icon />
           </div>
-          {editable && (
-            <button onClick={onEdit} className="bg-purple/10 rounded-full p-1 hover:bg-purple/20 transition">
-              <Pencil className="h-4 w-4 text-purple-light" />
-            </button>
-          )}
+          <h3 className="text-sm font-medium text-white/80">{title}</h3>
         </div>
-        <div className="flex items-end">
-          <span className="text-3xl font-bold">{value}</span>
-        </div>
+        {editable && (
+          <button onClick={onEdit} className="bg-white/10 rounded-full p-1 hover:bg-white/20 transition backdrop-blur-sm">
+            <Pencil className="h-4 w-4 text-khelverse-purple" />
+          </button>
+        )}
+      </div>
+      <div className="flex items-end justify-center">
+        <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-khelverse-purple">{value}</span>
       </div>
     </div>
+  </div>
   );
 };
 

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from "react";
 import { Award, Plus } from "lucide-react";
+import { Button } from '@/components/ui/button';
 import NewAchievementForm from "./NewAchievementForm";
 
 const AchievementTimeline = ({ achievements, userId, refreshAchievements, readOnly = false }) => {
@@ -17,20 +18,28 @@ const AchievementTimeline = ({ achievements, userId, refreshAchievements, readOn
   };
 
   return (
-    <div className="glass rounded-xl p-6 mt-6 animate-slide-up-delay-2">
+    <div className="bg-transparent rounded-xl p-6 mt-6 animate-slide-up-delay-2">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold flex items-center gap-2">
-          <Award className="h-5 w-5 text-purple-light" />
+        <h2 className="text-xl font-bold flex items-center gap-2 font-sprintura">
+          <Award className="h-8 w-8 text-purple-light" />
           Achievements
         </h2>
         {!readOnly && (
-          <button
-            onClick={() => setShowModal(true)}
-            className="btn btn-sm btn-outline text-sm flex items-center gap-1"
+          // <button
+          //   onClick={() => setShowModal(true)}
+          //   className="btn btn-sm btn-outline text-sm flex items-center gap-1"
+          // >
+          //   <Plus className="w-4 h-4" />
+          //   Add Achievement
+          // </button>
+          <Button
+          onClick={() => setShowModal(true)}
+          className='bg-purple-light/20 border border-purple-400/30 hover:bg-purple-light/40 text-purple-200 hover:text-white transition-all duration-300'
+          size='sm'
           >
-            <Plus className="w-4 h-4" />
-            Add Achievement
-          </button>
+          <Plus className='w-4 h-4 mr-2' />
+          Add Achievement
+        </Button>
         )}
       </div>
 
@@ -43,7 +52,7 @@ const AchievementTimeline = ({ achievements, userId, refreshAchievements, readOn
               key={achievement.id}
               className="relative pl-6 pb-6 border-l border-muted-foreground/20 last:border-0 last:pb-0"
             >
-              <div className="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-apts-purple"></div>
+              <div className="absolute left-[-2px] top-0 w-4 h-4 rounded-full bg-apts-purple"></div>
               <div className="space-y-1">
                 <div className="text-sm text-muted-foreground">
                   {new Date(achievement.date).toLocaleDateString('en-US', {
@@ -70,7 +79,7 @@ const AchievementTimeline = ({ achievements, userId, refreshAchievements, readOn
       )}
 
       {!readOnly && showModal && (
-        <div className="inset-0 z-50 bg-black/50 flex items-center justify-center backdrop-blur-sm">
+        <div className="inset-0 z-50 bg-transparent flex items-center justify-center backdrop-blur-sm">
           <div className="glass p-6 rounded-xl w-full max-w-lg relative animate-fade-in shadow-lg text-white max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setShowModal(false)}
@@ -78,7 +87,7 @@ const AchievementTimeline = ({ achievements, userId, refreshAchievements, readOn
             >
               ✕
             </button>
-            <h3 className="text-xl font-semibold mb-4">Adding Achievement...</h3>
+            <h3 className="text-xl font-semibold mb-4 font-sprintura text-center">Add Achievement</h3>
             <NewAchievementForm userId={userId} onSuccess={handleAchievementAdded} />
           </div>
         </div>

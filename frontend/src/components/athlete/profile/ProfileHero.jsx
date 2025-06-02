@@ -8,11 +8,11 @@ const ProfileHero = ({athlete}) => {
   const profileImage = athlete?.photoURL || 'https://www.apc.edu.au/wp-content/uploads/2022/12/APC-EU-Educator-Placeholder.jpg';
 
   return (
-    <div className="relative w-full glass-dark animate-fade-in">
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-10 blur-3xl -z-10 rounded-3xl"></div>
-      <div className="glass rounded-3xl p-8 md:p-12 overflow-hidden">
+    <div className="relative w-full bg-transparent animate-fade-in border-none">
+      <div className="absolute inset-0 bg-transparent  rounded-3xl"></div>
+      <div className="bg-transparent rounded-3xl p-8 md:p-12 overflow-hidden">
         <div className="flex flex-col md:flex-row items-center gap-8">
-          <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-gradient-to-br from-purple to-purple-light p-1">
+          <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-gradient-to-br from-khelverse-purple to-purple-light p-1">
             <img 
               src={profileImage} 
               alt="Profile"
@@ -22,7 +22,7 @@ const ProfileHero = ({athlete}) => {
           </div>
 
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-bold mb-2">{fullName}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-2 font-sprintura">{fullName}</h1>
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-purple/20 text-purple-light mb-4">
               <span className="mr-2">{sport}</span>
             </div>

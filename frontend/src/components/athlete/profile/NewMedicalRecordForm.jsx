@@ -38,7 +38,7 @@ const NewMedicalRecordForm = ({ userId, onSuccess }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5 bg-transparent">
             {[
                 { label: 'Condition', name: 'condition', required: true },
                 { label: 'Description', name: 'description' },
@@ -55,7 +55,7 @@ const NewMedicalRecordForm = ({ userId, onSuccess }) => {
                         value={form[name]}
                         onChange={handleChange}
                         required={required}
-                        className="input input-bordered w-full bg-white/80 text-black placeholder:text-gray-400"
+                        className="input w-full rounded-md p-2 bg-white/10 text-white placeholder-gray-400"
                         placeholder={`Enter ${label.toLowerCase()}`}
                     />
                 </div>
@@ -70,14 +70,14 @@ const NewMedicalRecordForm = ({ userId, onSuccess }) => {
                     value={form.date}
                     onChange={handleChange}
                     required
-                    className="input input-bordered w-full bg-white/80 text-black"
+                    className="input w-full rounded-md p-2 bg-white/10 text-white"
                 />
             </div>
-
+            <div className="flex justify-center">
             <button
                 type="submit"
                 disabled={loading}
-                className={`btn btn-primary w-full transition duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''
+                className={`w-1/2 mt-2 bg-apts-purple-dark p-1 rounded-lg hover:bg-apts-purple pulse-btn text-white/80 ${loading ? 'opacity-70 cursor-not-allowed' : ''
                     }`}
             >
                 {loading ? (
@@ -89,6 +89,7 @@ const NewMedicalRecordForm = ({ userId, onSuccess }) => {
                     'Add Medical Record'
                 )}
             </button>
+            </div>
         </form>
     );
 };
