@@ -20,6 +20,7 @@ const config = {
 		},
     extend: {
       animation: {
+        slowspin: 'slowspin 3s linear infinite',
         shimmer: 'shimmer 2s linear infinite',
         aurora: 'aurora 60s linear infinite',
         scroll:
@@ -36,6 +37,14 @@ const config = {
         'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
       },
       keyframes: {
+        slowspin: {
+          from: {
+						transform: 'rotate(0deg)'
+					},
+					to: {
+						transform: 'rotate(360deg)'
+					}
+        },
         shimmer: {
           from: { backgroundPosition: '0 0' },
           to: { backgroundPosition: '-200% 0' },
@@ -169,7 +178,7 @@ const config = {
 					800: '#5b21b6',
 					900: '#4c1d95',
 				},
-
+ 
         apts: {
           lightdark:'#222222',
 					dark: '#121212',

@@ -89,12 +89,17 @@ function ProfileMain({ athlete, readOnly = false }) {
       alert("Failed to update. Try again.");
     }
   };
-
+ 
   if (!activeUser) return <div className="text-white p-4">Loading profile...</div>;
 
   return (
     <div className="min-h-screen w-full bg-black text-white py-8 px-4 md:px-8">
       <div className="max-w-7xl mx-auto relative">
+      <div
+    className="min-h-screen bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+  >
+      <div className="min-h-screen bg-black/55">
         <ProfileHero athlete={activeUser} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
@@ -114,6 +119,8 @@ function ProfileMain({ athlete, readOnly = false }) {
 
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

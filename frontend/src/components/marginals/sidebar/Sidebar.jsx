@@ -16,6 +16,13 @@ import {
   LayoutDashboard,
   Users,
   ShieldUser,
+
+  ClipboardList,
+
+  Activity,
+  Contact,
+  IdBadge,
+  UserRound
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -46,10 +53,11 @@ const Sidebar = () => {
     ],
     coach: [
       { name: 'Dashboard', path: '/dashboard/coach', icon: LayoutDashboard },
-      { name: 'Athlete Profiles', path: '/dashboard/coach/athlete_profiles', icon: User },
-      { name: 'Sessions', path: '/dashboard/coach/sessions', icon: Users },
+      { name: 'Profile', path:'/dashboard/coach/profile', icon: User },
+      { name: 'Athlete Profiles', path: '/dashboard/coach/athlete_profiles', icon: Users },
+      { name: 'Sessions', path: '/dashboard/coach/sessions', icon: ClipboardList },
       { name: 'Events', path: '/dashboard/coach/events', icon: Calendar },
-    ],
+    ], 
     organization: [
       { name: 'Dashboard', path: '/dashboard/organization', icon: LayoutDashboard },
       { name: 'Athlete Management', path: '/dashboard/organization/athlete_management', icon: Settings },
