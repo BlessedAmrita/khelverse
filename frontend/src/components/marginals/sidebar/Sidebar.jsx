@@ -45,7 +45,7 @@ const Sidebar = () => {
       { name: 'Targets', path: '/dashboard/athlete/targets', icon: Target },
       { name: 'Diet Plan', path: '/dashboard/athlete/diet', icon: Salad },
       { name: 'Injury', path: '/dashboard/athlete/injury', icon: HeartPulse },
-      { name: 'Training', path: '/dashboard/athlete/training', icon: Dumbbell },
+      { name: 'Training', path: 'https://huggingface.co/spaces/khelverse/live-train', icon: Dumbbell },
       { name: 'Tracking', path: '/dashboard/athlete/performance_evaluation', icon: ChartColumnIncreasing },
       { name: 'Events', path: '/dashboard/athlete/events', icon: Calendar },
       { name: 'Career Guidance', path: '/dashboard/athlete/careerGuidance', icon: CircleHelp },

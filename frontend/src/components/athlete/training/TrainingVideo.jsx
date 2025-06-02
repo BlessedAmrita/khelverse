@@ -11,7 +11,7 @@ export default function Home() {
   const [statusCheckInterval, setStatusCheckInterval] = useState(null); // To store interval ID
 
   const startWorkout = async () => {
-    const response = await fetch("http://127.0.0.1:5000/start_exercise", {
+    const response = await fetch("https://pjxcharya-gradiotrainer.hf.space/start_exercise", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ exercise_type: exercise, sets: sets, reps: reps }),
@@ -32,7 +32,7 @@ export default function Home() {
   };
 
   const stopWorkout = async () => {
-    const response = await fetch("http://127.0.0.1:5000/stop_exercise", { method: "POST" });
+    const response = await fetch("https://pjxcharya-gradiotrainer.hf.space/stop_exercise", { method: "POST" });
 
     if (response.ok) {
       console.log("Workout stopped!");
@@ -51,7 +51,7 @@ export default function Home() {
   };
 
   const getStatus = async () => {
-    const response = await fetch("http://127.0.0.1:5000/get_status", { method: "GET" });
+    const response = await fetch("https://pjxcharya-gradiotrainer.hf.space/get_status", { method: "GET" });
 
     if (response.ok) {
       const data = await response.json();
@@ -88,7 +88,7 @@ export default function Home() {
         <div className="bg-apts-dark rounded-lg shadow-lg p-4 w-[700px]">
           <div className="bg-gray-400 h-[500px] rounded-md flex items-center justify-center">
             <img
-              src="http://127.0.0.1:5000/video_feed"
+              src="https://pjxcharya-gradiotrainer.hf.space/video_feed"
               alt="Live Workout Feed"
               className="h-[500px] w-full rounded-md"
             />

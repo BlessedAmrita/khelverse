@@ -24,57 +24,19 @@ export default function ShowConnectedCoach({ onRemoved }) {
     fetchCoachDetails();
   }, [user]);
 
-  // const handleRemoveConnection = async () => {
-  //   try {
-  //     await updateDoc(doc(db, "users", user.uid), {
-  //       connectedCoachId: null,
-  //     });
-  //     toast.success("Disconnected from coach.");
-  //     setCoach(null);
-  //     onRemoved();
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error("Failed to remove connection.");
-  //   }
-  // };
-
-  const handleRemoveConnection = async (coachId, athleteId) => {
+  const handleRemoveConnection = async () => {
     try {
-      const coachRef = doc(db, "users", coachId);
-      const coachSnap = await getDoc(coachRef);
-
-      if (!coachSnap.exists()) {
-        toast.error("Coach not found");
-        return;
-      }
-
-      const currentList = coachSnap.data().connectedAthletes || [];
-      if (!currentList.includes(athleteId)) {
-        toast.error("Athlete not found in coach's list");
-        return;
-      }
-
-      const updatedList = currentList.filter(id => id !== athleteId);
-
-      await updateDoc(coachRef, { connectedAthletes: updatedList });
-      console.log("Coach's connectedAthletes updated:", updatedList);
-
-      await updateDoc(doc(db, "users", athleteId), { connectedCoachId: null });
-      console.log("Athlete's connectedCoachId cleared");
-
-
-      toast.success("Disconnected from coach");
-
+      await updateDoc(doc(db, "users", user.uid), {
+        connectedCoachId: null,
+      });
+      toast.success("Disconnected from coach.");
       setCoach(null);
-      if (typeof onRemoved === "function") onRemoved();
-
-    } catch (error) {
-      console.error("Error removing connection:", error);
-      toast.error("Failed to remove connection");
+      onRemoved();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to remove connection.");
     }
   };
-
-
 
   if (!coach) return null;
 
