@@ -50,7 +50,7 @@ const NewAchievementForm = ({ userId, onSuccess }) => {
           value={form.title}
           onChange={handleChange}
           required
-          className="input w-full rounded-md p-2 bg-white/10 text-white placeholder-gray-300"
+          className="input w-full rounded-md p-2 bg-white/10 text-white placeholder-gray-400"
           placeholder="e.g. State Champion 2024"
         />
       </div>
@@ -61,7 +61,7 @@ const NewAchievementForm = ({ userId, onSuccess }) => {
           name="description"
           value={form.description}
           onChange={handleChange}
-          className="input w-full rounded-md p-2 bg-white/10 text-white placeholder-gray-300"
+          className="input w-full rounded-md p-2 bg-white/10 text-white placeholder-gray-400"
           placeholder="Describe your achievement..."
         />
       </div>
@@ -78,13 +78,15 @@ const NewAchievementForm = ({ userId, onSuccess }) => {
         />
       </div>
 
+      <div className="flex justify-center">
       <button
         type="submit"
         disabled={submitting}
-        className="btn btn-primary w-full mt-2"
+        className="w-1/2 mt-2 bg-apts-purple-dark p-1 rounded-lg hover:bg-apts-purple pulse-btn text-white/80"
       >
         {submitting ? "Adding..." : "Add Achievement"}
       </button>
+      </div>
     </form>
   );
 };

@@ -25,10 +25,10 @@ import { Flame } from "lucide-react";
 
 const StreakCounter = ({ streak = 0 }) => {
   return (
-    <div className="glass rounded-xl p-6 animate-slide-up">
+    <div className="bg-transparent rounded-xl p-2 animate-slide-up">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold flex items-center gap-2">
+        <h2 className="text-lg font-bold flex items-center gap-2 font-sprintura">
           {/* <Activity className="h-5 w-5 text-purple-light" /> */}
           <Flame className="text-purple-light h-8 w-8" />
           Current Streak
@@ -45,7 +45,7 @@ const StreakCounter = ({ streak = 0 }) => {
         </div>
         <div className="ml-5">
           <h3 className="text-lg font-medium mb-1">Days</h3>
-          <p className="text-sm text-muted-foreground">Keep it up!</p>
+          <p className="text-sm text-muted-foreground">Keep going!</p>
         </div>
       </div>
 

@@ -82,11 +82,11 @@ const ExerciseHeatmap = ({ uid, setStreak }) => {
   const avgPerActiveDay = activeDays > 0 ? (totalExercises / activeDays).toFixed(2) : 0;
 
   return (
-    <div className="glass rounded-xl p-6 animate-slide-up-delay-1">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+    <div className="bg-transparent backdrop-blur-sm rounded-xl p-6 animate-slide-up-delay-1">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
         <div className="flex items-center gap-2">
-          <Calendar className="h-5 w-5 text-purple-light" />
-          <h2 className="text-xl font-bold">Exercise Activity</h2>
+          <Calendar className="h-6 w-6 text-purple-light" />
+          <h2 className="text-xl font-bold font-sprintura">Exercise Activity</h2>
         </div>
         <div className="flex flex-wrap gap-4">
           <div className="px-3 py-1.5 rounded-lg bg-[#232323]">
