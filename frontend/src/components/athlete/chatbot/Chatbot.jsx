@@ -4,20 +4,43 @@ import { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Send } from 'lucide-react';
+import { Send, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 
 const Chatbot = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([]);
   const [sessionId, setSessionId] = useState(null);
   const messagesEndRef = useRef(null);
 
+  // ✅ Load messages from localStorage on first render
+  const [messages, setMessages] = useState(() => {
+    try {
+      const saved = localStorage.getItem('chatbotMessages');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error('Failed to load messages:', e);
+      return [];
+    }
+  });
+
+  // ✅ Load sessionId from localStorage
   useEffect(() => {
-    const savedSessionId = sessionStorage.getItem('chatbotSessionId');
-    if (savedSessionId) setSessionId(savedSessionId);
+    const savedSessionId = localStorage.getItem('chatbotSessionId');
+    if (savedSessionId) {
+      setSessionId(savedSessionId);
+    }
   }, []);
+
+  // ✅ Save messages to localStorage on change
+  useEffect(() => {
+    localStorage.setItem('chatbotMessages', JSON.stringify(messages));
+  }, [messages]);
+
+  // ✅ Auto scroll to last message
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -43,7 +66,7 @@ const Chatbot = () => {
 
       if (!sessionId && newSessionId) {
         setSessionId(newSessionId);
-        sessionStorage.setItem('chatbotSessionId', newSessionId);
+        localStorage.setItem('chatbotSessionId', newSessionId);
       }
 
       setMessages((prev) => [...prev, botMsg]);
@@ -63,9 +86,10 @@ const Chatbot = () => {
     }
   };
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  const handleClearChat = () => {
+    setMessages([]);
+    localStorage.removeItem('chatbotMessages');
+  };
 
   return (
     <>
@@ -87,6 +111,17 @@ const Chatbot = () => {
       {/* Modal Chatbot UI */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[400px] w-[90%] h-[500px] bg-black border border-purple-700/40 flex flex-col justify-between p-4 rounded-xl">
+          {/* Header and Clear Button */}
+          <div className="flex justify-between items-center mb-1">
+            <h2 className="text-white text-sm font-semibold">KhelBot Assistant</h2>
+            <button
+              onClick={handleClearChat}
+              className="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1"
+            >
+              <Trash2 size={14} /> Clear
+            </button>
+          </div>
+
           {/* Message Display Area */}
           <div className="overflow-y-auto space-y-3 flex-1">
             {messages.map((msg, idx) => (
