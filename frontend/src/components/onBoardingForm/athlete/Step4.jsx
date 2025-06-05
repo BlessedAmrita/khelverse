@@ -1,7 +1,7 @@
 export default function Step4({ formData, setFormData }) {
   return (
     <div>
-      <h2 className='text-2xl text-lavender-200  font-bold mb-4'>Achievements & Final Details</h2>
+      <h2 className='text-2xl text-lavender-200  font-bold mb-4 font-sprintura'>Achievements & Final Details</h2>
 
       <div className='my-3'>
       <label>Achievements</label>
