@@ -55,6 +55,7 @@ const Sidebar = () => {
       { name: 'Dashboard', path: '/dashboard/coach', icon: LayoutDashboard },
       { name: 'Profile', path:'/dashboard/coach/profile', icon: User },
       { name: 'Athlete Profiles', path: '/dashboard/coach/athlete_profiles', icon: Users },
+      { name: 'Training Plans', path: '/dashboard/coach/training_plans', icon: Dumbbell },
       { name: 'Sessions', path: '/dashboard/coach/sessions', icon: ClipboardList },
       { name: 'Events', path: '/dashboard/coach/events', icon: Calendar },
     ], 

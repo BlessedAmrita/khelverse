@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 export default function Step3({ formData, setFormData }) {
   return (
     <div>
-      <h2 className='text-2xl text-lavender-200 font-bold mb-4'>Physical & Health Metrics</h2>
+      <h2 className='text-2xl text-lavender-200 font-bold mb-4 font-sprintura'>Physical & Health Metrics</h2>
 
       <div className='my-3'>
       <label>Height (cm)</label>
