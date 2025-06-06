@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 const CoachProfile = () => {
   const reduxUser = useSelector((state) => state.user);
   const [coachProfile, setCoachProfile] = useState(null);
-  // These will now be derived from coachProfile.expertise and coachProfile.certifications
   const [expertiseList, setExpertiseList] = useState([]);
   const [certificationsList, setCertificationsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -225,7 +224,7 @@ const CoachProfile = () => {
                     alt='Profile'
                     className='w-full h-full rounded-full object-cover'
                     onError={(e) => {
-                      e.target.src = 'https://www.apc.edu.au/wp-content/uploads/2022/12/APC-EU-Educator-Placeholder.jpg';
+                      e.target.src = 'https://res.cloudinary.com/dpmlrxlzr/image/upload/v1749203206/I_Made_Some_Profile_Pictures_For_You_Pandas_9_Pics_phdvbn.jpg';
                     }}
                   />
                 </div>
@@ -243,27 +242,6 @@ const CoachProfile = () => {
                   <p className='text-muted-foreground'>
                   Passionate {coachSport} coach focused on unlocking athletes' full potential through strategic training, mentorship, and              performance excellence.
                   </p>
-                  {/* <Button
-                    onClick={() => handleEditField('firstName', coachProfile.firstName)}
-                    className='mt-4 bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                    size='sm'
-                  >
-                    Edit Name
-                  </Button>
-                  <Button
-                    onClick={() => handleEditField('city', coachProfile.city)}
-                    className='ml-2 mt-4 bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                    size='sm'
-                  >
-                    Edit Location
-                  </Button>
-                  <Button
-                    onClick={() => handleEditField('specialization', coachProfile.specialization)}
-                    className='ml-2 mt-4 bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                    size='sm'
-                  >
-                    Edit Bio
-                  </Button> */}
                 </div>
               </div>
             </div>

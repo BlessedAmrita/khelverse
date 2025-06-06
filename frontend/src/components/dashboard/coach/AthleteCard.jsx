@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 const AthleteCard = ({ athlete }) => {
   return (
-    // <Link href={athlete.id ? `/athletes/${athlete.id}` : "#"} className="block group">
     <Link href={athlete.id ? `/dashboard/coach/athlete_profiles/${athlete.id}` : "#"} className="block group">
       <div
         className="glass-card bg-black/20 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
@@ -17,13 +16,13 @@ const AthleteCard = ({ athlete }) => {
               <img
                 src={
                   athlete.photoURL ||
-                  'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3'
+                  'https://res.cloudinary.com/dpmlrxlzr/image/upload/v1749203206/I_Made_Some_Profile_Pictures_For_You_Pandas_9_Pics_phdvbn.jpg'
                 }
                 alt={athlete.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.src =
-                    'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3';
+                    'https://res.cloudinary.com/dpmlrxlzr/image/upload/v1749203206/I_Made_Some_Profile_Pictures_For_You_Pandas_9_Pics_phdvbn.jpg';
                 }}
               />
             </div>

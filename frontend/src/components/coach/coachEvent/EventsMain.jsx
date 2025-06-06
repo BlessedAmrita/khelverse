@@ -1,65 +1,98 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
+import { collection, query, where, onSnapshot, addDoc, doc, getDoc } from 'firebase/firestore';
+import { db, auth } from '@/firebase/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { Trophy, Calendar, Users } from 'lucide-react';
-import CreateEventForm from './CreateEventForm';
-import EventCard from './EventCard';
-import AthletesList from './AthletesList';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import FeatureHero from '@/components/shared/FeatureHero';
+import CreateEventForm from './CreateEventForm'; 
+import EventCard from './EventCard';          
+import AthletesList from './AthletesList';     
+import { Calendar as CalendarComponent } from '@/components/ui/calendar'; 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; 
+import FeatureHero from '@/components/shared/FeatureHero'; 
 
 const Index = () => {
-  const [events, setEvents] = useState([
-    {
-      id: '1',
-      name: 'Swimming Championship',
-      date: '2024-06-15',
-      time: '09:00',
-      location: 'Aquatic Center',
-      description: 'Annual swimming championship for all age groups',
-      uniqueCode: 'SWIM24',
-      registeredAthletes: [
-        { id: '1', name: 'Alex Johnson', sport: 'Swimming', team: 'Blue Sharks' },
-        { id: '2', name: 'Emma Davis', sport: 'Swimming', team: 'Wave Riders' },
-        { id: '3', name: 'Michael Chen', sport: 'Swimming', team: 'Blue Sharks' }
-      ]
-    },
-    {
-      id: '2',
-      name: 'Track & Field Meet',
-      date: '2024-06-20',
-      time: '14:00',
-      location: 'Stadium Complex',
-      description: 'Inter-school track and field competition',
-      uniqueCode: 'TRACK24',
-      registeredAthletes: [
-        { id: '4', name: 'Sarah Wilson', sport: 'Track', team: 'Lightning Bolts' },
-        { id: '5', name: 'James Rodriguez', sport: 'Field', team: 'Thunder Hawks' }
-      ]
-    }
-  ]);
-
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [user, setUser] = useState(null);
+  const [totalRegisteredAthletes, setTotalRegisteredAthletes] = useState(0);
 
-  // Effect for initial loading state
+  // 1. Authenticate User
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
+    const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setIsLoading(false); // Set loading to false once auth state is known
+    });
+    return unsubscribeAuth;
   }, []);
 
-  // Existing useEffect for scrolling to top when selectedEvent changes (for internal navigation)
+  // 2. Fetch Events created by the current coach
   useEffect(() => {
-    if (selectedEvent) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+    if (!user || !user.uid) {
+      setEvents([]);
+      return;
     }
-  }, [selectedEvent]);
 
-  const handleCreateEvent = (newEvent) => {
-    setEvents([newEvent, ...events]);
+    const q = query(collection(db, 'events'), where('createdBy', '==', user.uid));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const eventsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setEvents(eventsData);
+    }, (error) => {
+      console.error("Error fetching coach's events:", error);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  // 3. Calculate total registered athletes for this coach's events
+  // This requires fetching all registrations that belong to events created by this coach.
+  useEffect(() => {
+    if (!user || !user.uid || events.length === 0) {
+      setTotalRegisteredAthletes(0);
+      return;
+    }
+
+    // Get the IDs of events created by this coach
+    const coachEventIds = events.map(event => event.id);
+
+    if (coachEventIds.length === 0) {
+      setTotalRegisteredAthletes(0);
+      return;
+    }
+
+    // Query registrations for events created by this coach
+    // Note: Firestore 'in' query is limited to 10 items. For more, you'd need multiple queries or a batched read.
+    // For simplicity, assuming less than 10 events for now for 'in' query.
+    // A more robust solution might be a Cloud Function that aggregates this.
+    const qRegistrations = query(collection(db, 'registrations'), where('eventId', 'in', coachEventIds));
+
+    const unsubscribeRegistrations = onSnapshot(qRegistrations, (snapshot) => {
+      setTotalRegisteredAthletes(snapshot.size); // Count total documents (registrations)
+    }, (error) => {
+      console.error("Error fetching total registered athletes for coach's events:", error);
+    });
+
+    return () => unsubscribeRegistrations();
+  }, [user, events]); // Re-run when user or events change
+
+  const handleCreateEvent = async (newEvent) => {
+    if (!user) {
+      console.error("User not authenticated to create event.");
+      return;
+    }
+    try {
+      await addDoc(collection(db, 'events'), {
+        ...newEvent,
+        createdBy: user.uid, // Coach's UID
+        createdAt: new Date(),
+        // No registeredAthletes array here, as registrations are in a separate collection
+      });
+      console.log('Event added successfully!');
+    } catch (error) {
+      console.error('Error adding event:', error);
+    }
   };
 
   const handleViewAthletes = (event) => {
@@ -68,14 +101,11 @@ const Index = () => {
 
   const handleBackToEvents = () => {
     setSelectedEvent(null);
-    // You might want to scroll to top when going back as well
-    window.scrollTo({
-       top: 0,
-       behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const eventDates = events.map(event => new Date(event.date));
+  // Prepare dates for the calendar component
+  const eventDates = events.map(event => event.date ? new Date(event.date.seconds * 1000) : null).filter(Boolean);
 
   if (isLoading) {
     return (
@@ -101,33 +131,20 @@ const Index = () => {
   return (
     <div className="min-h-screen khelverse-bg">
       <div className="">
-        {/* Header */}
-        <FeatureHero title={'Events'}/>
+        <FeatureHero title={'Events'} />
 
         <div
-            className="min-h-screen bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+          className="min-h-screen bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
         >
-          <div className="min-h-screen bg-black/55">
+          <div className="min-h-screen bg-black/55 p-8 md:p-12">
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {/* ... (Your existing stats cards) ... */}
+              {/* Total Events */}
               <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-khelverse-purple/20 to-black transform transition-all hover:scale-[1.02] p-6">
-                {/* Radial fade overlay */}
-                <div
-                    className="absolute inset-0 z-10 pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(circle at center, transparent 50%, black 100%)',
-                      opacity: 0.65,
-                      mixBlendMode: 'multiply',
-                    }}
-                ></div>
-
-                {/* Soft glowing accents */}
+                <div className="absolute inset-0 z-10 pointer-events-none" style={{ background: 'radial-gradient(circle at center, transparent 50%, black 100%)', opacity: 0.65, mixBlendMode: 'multiply' }}></div>
                 <div className="absolute top-0 right-0 w-32 h-32 -mr-10 -mt-10 bg-khelverse-purple/20 rounded-full blur-2xl"></div>
                 <div className="absolute bottom-0 left-0 w-20 h-20 -ml-5 -mb-5 bg-khelverse-purple/20 rounded-full blur-xl"></div>
-
-                {/* Main card content */}
                 <div className="relative z-20 flex items-center">
                   <Calendar className="text-khelverse-purple mr-3" size={24} />
                   <div>
@@ -137,70 +154,56 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* UPCOMING EVENTS */}
+              {/* Upcoming Events */}
               <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-khelverse-purple/20 to-black transform transition-all hover:scale-[1.02] p-6">
-                {/* Radial fade overlay */}
-                <div
-                    className="absolute inset-0 z-10 pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(circle at center, transparent 50%, black 100%)',
-                      opacity: 0.65,
-                      mixBlendMode: 'multiply',
-                    }}
-                ></div>
-
-                {/* Soft glowing accents */}
+                <div className="absolute inset-0 z-10 pointer-events-none" style={{ background: 'radial-gradient(circle at center, transparent 50%, black 100%)', opacity: 0.65, mixBlendMode: 'multiply' }}></div>
                 <div className="absolute top-0 right-0 w-32 h-32 -mr-10 -mt-10 bg-khelverse-purple/20 rounded-full blur-2xl"></div>
                 <div className="absolute bottom-0 left-0 w-20 h-20 -ml-5 -mb-5 bg-khelverse-purple/20 rounded-full blur-xl"></div>
-
-                {/* Main card content */}
                 <div className="relative z-20 flex items-center">
                   <Trophy className="text-khelverse-purple mr-3" size={24} />
                   <div>
                     <h3 className="text-white font-semibold font-sprintura">Upcoming Events</h3>
                     <p className="text-2xl font-bold text-khelverse-light-purple">
-                      {events.filter(event => new Date(event.date) >= new Date()).length}
+                      {events.filter(event => {
+                        if (!event.date) return false;
+
+                        const eventDate = new Date(event.date);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+
+                        return eventDate >= today;
+                      }).length}
                     </p>
+
                   </div>
                 </div>
               </div>
-              {/* REGISTERED ATHLETES */}
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-khelverse-purple/20 to-black transform transition-all hover:scale-[1.02] p-6">
-                {/* Radial fade overlay */}
-                <div
-                    className="absolute inset-0 z-10 pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(circle at center, transparent 50%, black 100%)',
-                      opacity: 0.65,
-                      mixBlendMode: 'multiply',
-                    }}
-                ></div>
 
-                {/* Soft glowing accents */}
+
+              {/* Registered Athletes (across all coach's events) */}
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-khelverse-purple/20 to-black transform transition-all hover:scale-[1.02] p-6">
+                <div className="absolute inset-0 z-10 pointer-events-none" style={{ background: 'radial-gradient(circle at center, transparent 50%, black 100%)', opacity: 0.65, mixBlendMode: 'multiply' }}></div>
                 <div className="absolute top-0 right-0 w-32 h-32 -mr-10 -mt-10 bg-khelverse-purple/20 rounded-full blur-2xl"></div>
                 <div className="absolute bottom-0 left-0 w-20 h-20 -ml-5 -mb-5 bg-khelverse-purple/20 rounded-full blur-xl"></div>
-
-                {/* Main card content */}
                 <div className="relative z-20 flex items-center">
                   <Users className="text-khelverse-purple mr-3" size={24} />
                   <div>
-                    <h3 className="text-white font-semibold font-sprintura">Registered Athletes</h3>
+                    <h3 className="text-white font-semibold font-sprintura">Total Registrations</h3>
                     <p className="text-2xl font-bold text-khelverse-light-purple">
-                      {events.reduce((total, event) => total + event.registeredAthletes.length, 0)}
+                      {totalRegisteredAthletes}
                     </p>
                   </div>
                 </div>
               </div>
-
             </div>
 
             {/* Create Event Form and Calendar Layout */}
             <div className="flex flex-col md:flex-row gap-6 mb-8">
-              <div className="w-3/4">
+              <div className="w-full md:w-3/4"> {/* Adjusted width for better responsiveness */}
                 <CreateEventForm onCreateEvent={handleCreateEvent} />
               </div>
-              <div className="">
-                <Card className="bg-transparent border-none">
+              <div className="w-full md:w-1/4 flex justify-center items-center"> {/* Adjusted width */}
+                <Card className="bg-transparent border-none w-full">
                   <CardHeader>
                     <CardTitle className="text-white text-lg font-bold flex items-center font-sprintura">
                       <Calendar className="mr-2 text-khelverse-purple" size={20} />
@@ -209,58 +212,59 @@ const Index = () => {
                   </CardHeader>
                   <CardContent>
                     <CalendarComponent
-                        mode="multiple"
-                        selected={eventDates}
-                        className="rounded-md border-gray-700 bg-gray-900 text-white"
-                        classNames={{
-                          months: "flex flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-                          month: "space-y-4",
-                          caption: "flex justify-center pt-1 relative items-center text-white",
-                          caption_label: "text-sm font-medium text-white",
-                          nav: "space-x-1 flex items-center",
-                          nav_button: "h-7 w-7 bg-transparent p-0 text-purple-400 hover:bg-purple-900/20",
-                          nav_button_previous: "absolute left-1",
-                          nav_button_next: "absolute right-1",
-                          table: "w-full border-collapse space-y-1",
-                          head_row: "flex",
-                          head_cell: "text-gray-400 rounded-md w-8 font-normal text-[0.8rem]",
-                          row: "flex w-full mt-2",
-                          cell: "h-8 w-8 text-center text-sm p-0 relative text-white",
-                          day: "h-8 w-8 p-0 font-normal text-white hover:bg-purple-900/20 rounded-md",
-                          day_range_end: "day-range-end",
-                          day_selected: "bg-purple-600 text-white hover:bg-purple-700",
-                          day_today: "bg-purple-400 text-white font-bold",
-                          day_outside: "text-gray-600 opacity-50",
-                          day_disabled: "text-gray-600 opacity-50",
-                          day_range_middle: "aria-selected:bg-purple-600 aria-selected:text-white",
-                          day_hidden: "invisible",
-                        }}
+                      mode="multiple"
+                      selected={eventDates}
+                      className="rounded-md border-gray-700 bg-gray-900 text-white"
+                      classNames={{
+                        months: "flex flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+                        month: "space-y-4",
+                        caption: "flex justify-center pt-1 relative items-center text-white",
+                        caption_label: "text-sm font-medium text-white",
+                        nav: "space-x-1 flex items-center",
+                        nav_button: "h-7 w-7 bg-transparent p-0 text-purple-400 hover:bg-purple-900/20",
+                        nav_button_previous: "absolute left-1",
+                        nav_button_next: "absolute right-1",
+                        table: "w-full border-collapse space-y-1",
+                        head_row: "flex",
+                        head_cell: "text-gray-400 rounded-md w-8 font-normal text-[0.8rem]",
+                        row: "flex w-full mt-2",
+                        cell: "h-8 w-8 text-center text-sm p-0 relative text-white",
+                        day: "h-8 w-8 p-0 font-normal text-white hover:bg-purple-900/20 rounded-md",
+                        day_range_end: "day-range-end",
+                        day_selected: "bg-purple-600 text-white hover:bg-purple-700",
+                        day_today: "bg-purple-400 text-white font-bold",
+                        day_outside: "text-gray-600 opacity-50",
+                        day_disabled: "text-gray-600 opacity-50",
+                        day_range_middle: "aria-selected:bg-purple-600 aria-selected:text-white",
+                        day_hidden: "invisible",
+                      }}
                     />
                   </CardContent>
                 </Card>
               </div>
             </div>
 
-
             {/* Events List */}
             <div className="mb-8">
               <h3 className="text-2xl font-bold text-white mb-6 font-sprintura">Your Events</h3>
               {events.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Calendar size={64} className="mx-auto text-gray-600 mb-4" />
-                    <h3 className="text-gray-400 text-xl font-semibold mb-2">No Events Created Yet</h3>
-                    <p className="text-gray-500">Create your first event using the form above.</p>
-                  </div>
+                <div className="text-center py-12">
+                  <Calendar size={64} className="mx-auto text-gray-600 mb-4" />
+                  <h3 className="text-gray-400 text-xl font-semibold mb-2">No Events Created Yet</h3>
+                  <p className="text-gray-500">Create your first event using the form above.</p>
+                </div>
               ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {events.map((event) => (
-                        <EventCard
-                            key={event.id}
-                            event={event}
-                            onViewAthletes={handleViewAthletes}
-                        />
-                    ))}
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {events.map((event) => (
+                    <EventCard
+                      key={event.id}
+                      event={event}
+                      onViewAthletes={handleViewAthletes}
+                      // Pass the current user's UID to EventCard for conditional rendering (e.g., edit/delete)
+                      currentUserId={user?.uid}
+                    />
+                  ))}
+                </div>
               )}
             </div>
           </div>

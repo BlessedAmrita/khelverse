@@ -5,7 +5,7 @@ const ProfileHero = ({athlete}) => {
   const fullName = (athlete?.firstName || athlete?.lastName)
     ? `${athlete?.firstName ?? ''} ${athlete?.lastName ?? ''}`.trim()
     : 'Athlete';
-  const profileImage = athlete?.photoURL || 'https://www.apc.edu.au/wp-content/uploads/2022/12/APC-EU-Educator-Placeholder.jpg';
+  const profileImage = athlete?.photoURL || 'https://res.cloudinary.com/dpmlrxlzr/image/upload/v1749203206/I_Made_Some_Profile_Pictures_For_You_Pandas_9_Pics_phdvbn.jpg';
 
   return (
     <div className="relative w-full bg-transparent animate-fade-in border-none">
@@ -17,7 +17,7 @@ const ProfileHero = ({athlete}) => {
               src={profileImage} 
               alt="Profile"
               className="w-full h-full rounded-full object-cover"
-              onError={(e) => { e.target.src = 'https://www.apc.edu.au/wp-content/uploads/2022/12/APC-EU-Educator-Placeholder.jpg'; }}
+              onError={(e) => { e.target.src = 'https://res.cloudinary.com/dpmlrxlzr/image/upload/v1749203206/I_Made_Some_Profile_Pictures_For_You_Pandas_9_Pics_phdvbn.jpg'; }}
             />
           </div>
 
