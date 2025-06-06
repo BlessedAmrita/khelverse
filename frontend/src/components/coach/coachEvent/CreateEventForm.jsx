@@ -23,12 +23,13 @@ const CreateEventForm = ({ onCreateEvent }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Simple validation for required fields
     if (!formData.name || !formData.date || !formData.time || !formData.location) {
+      // Optionally, add some UI feedback for required fields here
       return;
     }
 
     const newEvent = {
-      id: Date.now().toString(),
       ...formData,
       uniqueCode: generateUniqueCode(),
       registeredAthletes: []
@@ -57,7 +58,9 @@ const CreateEventForm = ({ onCreateEvent }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="name" className="text-gray-300">Event Name *</Label>
+              <Label htmlFor="name" className="text-gray-300">
+                Event Name *
+              </Label>
               <Input
                 id="name"
                 value={formData.name}
@@ -68,7 +71,9 @@ const CreateEventForm = ({ onCreateEvent }) => {
               />
             </div>
             <div>
-              <Label htmlFor="location" className="text-gray-300">Location *</Label>
+              <Label htmlFor="location" className="text-gray-300">
+                Location *
+              </Label>
               <Input
                 id="location"
                 value={formData.location}
@@ -82,7 +87,9 @@ const CreateEventForm = ({ onCreateEvent }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="date" className="text-gray-300">Date *</Label>
+              <Label htmlFor="date" className="text-gray-300">
+                Date *
+              </Label>
               <Input
                 id="date"
                 type="date"
@@ -93,7 +100,9 @@ const CreateEventForm = ({ onCreateEvent }) => {
               />
             </div>
             <div>
-              <Label htmlFor="time" className="text-gray-300">Time *</Label>
+              <Label htmlFor="time" className="text-gray-300">
+                Time *
+              </Label>
               <Input
                 id="time"
                 type="time"
@@ -106,7 +115,9 @@ const CreateEventForm = ({ onCreateEvent }) => {
           </div>
 
           <div>
-            <Label htmlFor="description" className="text-gray-300">Description</Label>
+            <Label htmlFor="description" className="text-gray-300">
+              Description
+            </Label>
             <Textarea
               id="description"
               value={formData.description}
