@@ -1,30 +1,65 @@
 import { z } from 'zod';
 
-const athleteSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  dob: z.string().refine((val) => {
+// Helper: Date of Birth Age Validator
+const dobValidator = z
+  .string()
+  .refine((val) => {
     const dob = new Date(val);
     const today = new Date();
-    const currentYear = today.getFullYear();
-    const minAge = 10;
+    const age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < dob.getDate())
+    ) {
+      return age - 1 >= 10 && age - 1 <= 150;
+    }
+    return age >= 10 && age <= 150;
+  }, (val) => {
+    const dob = new Date(val);
+    const age = new Date().getFullYear() - dob.getFullYear();
+    if (isNaN(dob.getTime())) return { message: 'Please enter a valid date of birth' };
+    if (age < 10) return { message: 'You must be at least 10 years old' };
+    if (age > 150) return { message: 'Age cannot be more than 150 years' };
+    return { message: 'Invalid Date of Birth' };
+  });
 
-    // Ensure DOB is a valid date and the age is 10 or older
-    const age = currentYear - dob.getFullYear();
-    if (age < minAge || dob > today) return false;
-    return true;
-  }, 'Invalid Date of Birth or age is less than 10 years'),
-  sport: z.string().min(3, 'Sport name must be valid'),
-  height: z.number().min(50, 'Height must be valid'),
-  weight: z.number().min(20, 'Weight must be valid'),
-  heartRate: z.number().min(30, 'Heart rate must be valid'),
-  sleepHours: z.number().min(1, 'Sleep hours must be at least 1'),
-  primaryGoal: z.enum([
-    'Improve Endurance',
-    'Increase Speed',
-    'Build Strength',
-    'Optimize Training Efficiency',
-  ]),
+// Step 1: Personal Information
+export const step1Schema = z.object({
+  firstName: z.string().min(1, { message: 'First name is required' }).regex(/^[A-Za-z]+$/, { message: '(only alphabets allowed)' }),
+  lastName: z.string().min(1, { message: 'Last name is required' }).regex(/^[A-Za-z]+$/, { message: '(only alphabets allowed)' }),
+  dob: dobValidator,
+  gender: z.string().min(1, { message: 'Gender is required' }),
+  city: z.string().min(1, { message: 'City is required' }),
+  state: z.string().min(1, { message: 'State is required' }),
 });
 
-export default athleteSchema;
+// Step 2: Sport & Experience
+export const step2Schema = z.object({
+  sport: z.string().min(1, { message: 'Please select a sport' }),
+  experienceLevel: z
+    .string()
+    .min(1, { message: 'Experience level is required' }),
+});
+
+// Step 3: Physical Stats & Medical
+export const step3Schema = z.object({
+  height: z
+    .string()
+    .refine(val => {
+      const num = parseInt(val);
+      return !isNaN(num) && num >= 50 && num <= 272;
+    }, { message: 'Height must be between 50cm and 272cm' }),
+  weight: z
+    .string()
+    .refine(val => {
+      const num = parseInt(val);
+      return !isNaN(num) && num >= 20 && num <= 300;
+    }, { message: 'Weight must be between 20kg and 300kg' }),
+  medicalHistory: z.string().optional(),
+});
+
+// Step 4: Achievements
+export const step4Schema = z.object({
+  achievements: z.string().optional(),
+});
