@@ -1,9 +1,15 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-export default function Step1({ formData, setFormData }) {
+export default function Step1({ formData, setFormData, formErrors = {} }) {
   const indianStates = [
     "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
     "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
@@ -16,7 +22,7 @@ export default function Step1({ formData, setFormData }) {
   ];
 
   return (
-    <div className='bg-black'>
+    <div>
       <h2 className='text-2xl font-sprintura text-lavender-200 font-bold mb-4'>Personal Information</h2>
 
       <div className='my-3'>
@@ -27,6 +33,9 @@ export default function Step1({ formData, setFormData }) {
           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
           className="border border-white/20 bg-transparent text-white mt-1"
         />
+        {formErrors.firstName && (
+          <p className='text-purple-dark text-sm mt-1'>{formErrors.firstName}</p>
+        )}
       </div>
 
       <div className='my-3'>
@@ -37,6 +46,9 @@ export default function Step1({ formData, setFormData }) {
           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
           className="border border-white/20 bg-transparent text-white mt-1"
         />
+        {formErrors.lastName && (
+          <p className='text-purple-dark text-sm mt-1'>{formErrors.lastName}</p>
+        )}
       </div>
 
       <div className='my-3'>
@@ -47,6 +59,9 @@ export default function Step1({ formData, setFormData }) {
           onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
           className="border border-white/20 bg-transparent text-white mt-1"
         />
+        {formErrors.dob && (
+          <p className='text-purple-dark text-sm mt-1'>{formErrors.dob}</p>
+        )}
       </div>
 
       <div className='my-3'>
@@ -64,8 +79,10 @@ export default function Step1({ formData, setFormData }) {
             <SelectItem value="Other">Other</SelectItem>
           </SelectContent>
         </Select>
+        {formErrors.gender && (
+          <p className='text-purple-dark text-sm mt-1'>{formErrors.gender}</p>
+        )}
       </div>
-
 
       <div className='my-3'>
         <label>City</label>
@@ -75,6 +92,9 @@ export default function Step1({ formData, setFormData }) {
           onChange={(e) => setFormData({ ...formData, city: e.target.value })}
           className="border border-white/20 bg-transparent text-white mt-1"
         />
+        {formErrors.city && (
+          <p className='text-purple-dark text-sm mt-1'>{formErrors.city}</p>
+        )}
       </div>
 
       <div className='my-3'>
@@ -94,6 +114,9 @@ export default function Step1({ formData, setFormData }) {
             ))}
           </SelectContent>
         </Select>
+        {formErrors.state && (
+          <p className='text-purple-dark text-sm mt-1'>{formErrors.state}</p>
+        )}
       </div>
     </div>
   );
