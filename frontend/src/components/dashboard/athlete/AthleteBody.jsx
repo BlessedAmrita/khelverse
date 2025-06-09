@@ -60,9 +60,9 @@ function AthleteBody() {
 
   return (
     <div className='h-auto w-full flex flex-col gap-5 justify-evenly px-[10px]'>
-      <div className='w-full h-[200px] flex gap-[5px] '>
+      <div className='w-full h-[200px] flex '>
         <DailyTask />
-        <Notification />
+        {/* <Notification /> */}
       </div>
 
       <div className='h-auto flex flex-col gap-5'>

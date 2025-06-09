@@ -114,12 +114,12 @@ const PerformanceCharts = () => {
   };
 
   return (
-    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
+    <Card className="bg-transparent  text-white border-none">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Performance Metrics</CardTitle>
+        <CardTitle className="font-sprintura">Performance Metrics</CardTitle>
         <div className="flex flex-col sm:flex-row gap-2">
           <ToggleGroup type="single" value={timePeriod} onValueChange={setTimePeriod} className="justify-start">
-          <ToggleGroupItem value={TimePeriod.Week} aria-label="Weekly view" className="data-[state=off]:bg-apts-dark data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100">
+          <ToggleGroupItem value={TimePeriod.Week} aria-label="Weekly view" className="data-[state=off]:bg-transparent  data-[state=off]:text-white data-[state=on]:bg-purple-dark data-[state=on]:text-lavender-100">
           Week
           </ToggleGroupItem>
 <ToggleGroupItem 

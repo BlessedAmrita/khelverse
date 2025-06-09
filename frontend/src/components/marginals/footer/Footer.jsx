@@ -43,6 +43,7 @@ const Footer = () => {
             </div>
           </div>
           
+          
           <div>
             <h4 className="font-medium text-white mb-4">Product</h4>
             <ul className="space-y-3">

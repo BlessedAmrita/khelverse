@@ -88,7 +88,7 @@ export default function MultiStepForm() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-apts-dark text-white rounded-lg">
+    <div className="max-w-3xl mx-auto p-4 bg-transparent backdrop-blur-sm text-white rounded-lg">
       {step === 1 && (
         <Step1AthleteData data={formData} updateData={updateFormData} nextStep={nextStep} />
       )}

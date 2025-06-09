@@ -14,7 +14,7 @@ const ProgressSummary = () => {
           change={metric.change}
           improved={metric.improved}
           icon={metric.icon}
-          className="animate-slide-in"
+          className="animate-slide-in bg-transparent backdrop-blur-sm"
           style={{ animationDelay: `${index * 50}ms` }}
         />
       ))}

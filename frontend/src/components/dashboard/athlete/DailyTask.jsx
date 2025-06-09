@@ -11,7 +11,7 @@ function DailyTask() {
 
   return (
     <div
-      className='w-[80%] h-full bg-black rounded-xl px-4 py-7 overflow-clip bg-cover bg-center bg-no-repeat relative group cursor-pointer'
+      className='w-full h-full bg-black rounded-xl px-4 py-7 overflow-clip bg-cover bg-center bg-no-repeat relative group cursor-pointer'
       style={{
         backgroundImage: `url("https://res.cloudinary.com/dpmlrxlzr/image/upload/v1742159052/pexels-mikhail-nilov-6740823_2_thbalk.jpg")`,
       }}

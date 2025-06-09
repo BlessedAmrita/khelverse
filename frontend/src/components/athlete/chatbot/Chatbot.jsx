@@ -110,13 +110,13 @@ const Chatbot = () => {
 
       {/* Modal Chatbot UI */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[400px] w-[90%] h-[500px] bg-black border border-purple-700/40 flex flex-col justify-between p-4 rounded-xl">
+        <DialogContent className="sm:max-w-[400px] w-[90%] h-[500px] bg-black border border-apts-purple/40 flex flex-col justify-between p-4 rounded-xl">
           {/* Header and Clear Button */}
           <div className="flex justify-between items-center mb-1">
-            <h2 className="text-white text-sm font-semibold">KhelBot Assistant</h2>
+            <h2 className="text-white text-sm font-semibold font-sprintura">KhelBot Assistant</h2>
             <button
               onClick={handleClearChat}
-              className="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1"
+              className="text-xs text-apts-purple hover:text-purple-300 flex items-center gap-1"
             >
               <Trash2 size={14} /> Clear
             </button>
@@ -129,8 +129,8 @@ const Chatbot = () => {
                 key={idx}
                 className={`text-sm p-3 rounded-xl max-w-[80%] ${
                   msg.sender === 'user'
-                    ? 'bg-purple-700 text-white ml-auto'
-                    : 'bg-[#222] text-purple-300'
+                    ? 'bg-gradient-to-r from-apts-purple-dark to-black/20 text-white ml-auto'
+                    : 'bg-gradient-to-r from-black/20 to-apts-purple-dark text-white'
                 }`}
               >
                 {msg.text}
@@ -146,11 +146,11 @@ const Chatbot = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
-              className="bg-[#1a1a1a] text-white border-purple-700"
+              className="bg-[#1a1a1a] text-white border-apts-purple"
             />
             <Button
               onClick={handleSend}
-              className="bg-purple-700 hover:bg-purple-800 text-white"
+              className="bg-apts-purple-dark hover:bg-purple-800 text-white"
               disabled={!input.trim()}
             >
               <Send size={18} />

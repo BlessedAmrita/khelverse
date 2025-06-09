@@ -28,10 +28,15 @@ function TodaysTargetsMain() {
       <FeatureHero
         title={"Today's Targets"}
       />
-      <div className='min-h-screen h-auto bg-black'>
-      <div className="flex">
+      <div
+    className="min-h-screen bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+  >
+    <div className="min-h-screen bg-black/70">
+      <div className="flex flex-col sm:flex-row">
         <TodaysTarget/>
         <IncompleteTasks/>
+      </div>
       </div>
      </div>
     </div>

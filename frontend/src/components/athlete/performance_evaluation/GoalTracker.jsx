@@ -5,9 +5,9 @@ import { goalData } from "@/content/mockData";
 const GoalTracker = () => {
   console.log("Goal Data:", goalData); // Debugging line to check the data structure
   return (
-    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
+    <Card className="bg-transparent text-white border-none">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Goals & Milestones</CardTitle>
+        <CardTitle className="font-sprintura">Goals & Milestones</CardTitle>
         <Award className="h-5 w-5 text-lavender" />
       </CardHeader>
       <CardContent>

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { User, Calendar, Trophy, FileText } from 'lucide-react'; // User icon is still imported in case of fallback
+import { User, Calendar, Trophy, FileText } from 'lucide-react';
 import ReviewDialog from './ReviewDialog';
 
 const PendingPlanCard = ({ plan, onReview }) => {
@@ -44,21 +44,7 @@ const PendingPlanCard = ({ plan, onReview }) => {
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-2">
-              {/* Replaced User icon with image */}
-              <div className="relative w-8 h-8 rounded-full bg-gradient-to-br from-apts-purple to-apts-purple/60 mr-1 overflow-hidden">
-                <img
-                  src={
-                    plan.athletePhotoURL || // Assuming plan has athletePhotoURL
-                    'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3' // Default/fallback image
-                  }
-                  alt={plan.athleteName}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.src =
-                      'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3'; // Fallback on error
-                  }}
-                />
-              </div>
+              <User className="w-5 h-5 text-khelverse-purple" />
               <h3 className="font-semibold text-white text-xl">{plan.athleteName}</h3>
             </div>
             <div className="flex rounded-full space-x-2">
@@ -87,24 +73,24 @@ const PendingPlanCard = ({ plan, onReview }) => {
           </div>
         </CardContent>
         
-        <CardFooter className="flex space-x-2 pt-4">
+        <CardFooter className="flex space-x-2 pt-4"> {/* Removed flex-wrap, kept space-x-2 for consistent spacing */}
           <Button
             onClick={handleQuickApprove}
-            className="flex-grow bg-green-700 hover:bg-green-600 text-white text-xs px-2 py-1"
+            className="flex-grow bg-green-700 hover:bg-green-600 text-white text-xs px-2 py-1" // Added flex-grow, reduced padding/font-size
           >
             Quick Approve
           </Button>
           <Button
             onClick={() => setShowReviewDialog(true)}
             variant="outline"
-            className="flex-grow border-khelverse-purple text-khelverse-purple hover:bg-khelverse-purple hover:text-white text-xs px-2 py-1"
+            className="flex-grow border-khelverse-purple text-khelverse-purple hover:bg-khelverse-purple hover:text-white text-xs px-2 py-1" // Added flex-grow, reduced padding/font-size
           >
             Review & Edit
           </Button>
           <Button
             onClick={handleQuickReject}
             variant="destructive"
-            className="flex-grow bg-red-600 hover:bg-red-500 text-xs px-2 py-1"
+            className="flex-grow bg-red-600 hover:bg-red-500 text-xs px-2 py-1" // Added flex-grow, reduced padding/font-size
           >
             Reject
           </Button>

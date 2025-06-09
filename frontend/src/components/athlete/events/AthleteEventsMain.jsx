@@ -336,20 +336,23 @@ const AthleteEventsMain = () => {
 
               {/* Upcoming Events Section */}
               <div className="lg:col-span-2">
-                <div className="rounded-2xl p-6 mb-8">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                      <Clock className="text-purple-400" size={24} />
-                      <h2 className="text-2xl font-bold font-sprintura text-lavender-100">Upcoming Events</h2>
-                    </div>
-                    {/* Only show "Add Personal Event" if NOT connected to a coach */}
-                    <Dialog open={isAddEventOpen} onOpenChange={setIsAddEventOpen}>
-                      <DialogTrigger asChild>
-                        <Button className="bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white">
-                          <Plus size={16} className="mr-2" />
-                          Add Personal Event
-                        </Button>
-                      </DialogTrigger>
+              <div className="rounded-2xl p-6 mb-8">
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div className="flex items-center gap-3">
+      <Clock className="text-purple-400" size={24} />
+      <h2 className="text-2xl font-bold font-sprintura text-lavender-100">Upcoming Events</h2>
+    </div>
+
+    {/* Button remains inside, responsive and never overflows */}
+    <Dialog open={isAddEventOpen} onOpenChange={setIsAddEventOpen}>
+      <DialogTrigger asChild>
+        <Button
+          className="w-full sm:w-auto bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white"
+        >
+          <Plus size={16} className="mr-2" />
+          Add Personal Event
+        </Button>
+      </DialogTrigger>
                       <DialogContent className=" bg-black/90 border-purple-500/30 text-white">
                         <div
                           className=" bg-cover bg-center bg-no-repeat"

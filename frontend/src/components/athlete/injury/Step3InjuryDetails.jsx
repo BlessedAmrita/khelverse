@@ -65,7 +65,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Injury Type</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Sprain" {...field} />
+                                <Input placeholder="e.g. Sprain" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -79,7 +79,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Body Part</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Ankle" {...field} />
+                                <Input placeholder="e.g. Ankle" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -92,7 +92,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Side</FormLabel>
-                            <select {...field} className="w-full rounded border p-2 bg-apts-dark text-white border-white/20">
+                            <select {...field} className="w-full rounded p-2 border border-white/10 bg-transparent text-white">
                                 <option value="">Select</option>
                                 <option value="Right">Right</option>
                                 <option value="Left">Left</option>
@@ -108,7 +108,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Severity</FormLabel>
-                            <select {...field} className="w-full rounded border p-2 bg-apts-dark text-white border-white/20">
+                            <select {...field} className="w-full rounded p-2 border border-white/10 bg-transparent text-white">
                                 <option value="">Select</option>
                                 <option value="Mild">Mild</option>
                                 <option value="Moderate">Moderate</option>
@@ -126,7 +126,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Date of Injury</FormLabel>
                             <FormControl>
-                                <Input type="date" {...field} />
+                                <Input type="date" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -140,7 +140,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Mechanism of Injury</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Fall, collision" {...field} />
+                                <Input placeholder="e.g. Fall, collision" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -154,7 +154,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Symptoms (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Swelling, Bruising" {...field} />
+                                <Input placeholder="e.g. Swelling, Bruising" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -168,7 +168,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Pain Score at Rest (0-10)</FormLabel>
                             <FormControl>
-                                <Input type="number" {...field} min={0} max={10} />
+                                <Input type="number" {...field} min={0} max={10} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -182,7 +182,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Pain Score at Movement (0-10)</FormLabel>
                             <FormControl>
-                                <Input type="number" {...field} min={0} max={10} />
+                                <Input type="number" {...field} min={0} max={10} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -196,7 +196,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Pain Type</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Sharp, Dull" {...field} />
+                                <Input placeholder="e.g. Sharp, Dull" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -210,7 +210,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Functional Limitations (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Difficulty walking" {...field} />
+                                <Input placeholder="e.g. Difficulty walking" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -224,7 +224,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Imaging Results</FormLabel>
                             <FormControl>
-                                <Textarea placeholder="e.g. MRI findings" {...field} />
+                                <Textarea placeholder="e.g. MRI findings" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -238,7 +238,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Diagnosis Details</FormLabel>
                             <FormControl>
-                                <Textarea placeholder="Detailed diagnosis" {...field} />
+                                <Textarea placeholder="Detailed diagnosis" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -252,7 +252,7 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                         <FormItem>
                             <FormLabel>Treatment Received So Far (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Physical therapy, Medication" {...field} />
+                                <Input placeholder="e.g. Physical therapy, Medication" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -260,10 +260,10 @@ export default function Step3InjuryDetails({ data, updateData, prevStep, nextSte
                 />
 
                 <div className="flex justify-between mt-4">
-                    <Button variant="outline" onClick={prevStep}>
+                    <Button variant="outline" onClick={prevStep} className="bg-gray-300 text-black">
                         Previous
                     </Button>
-                    <Button type="submit">Next</Button>
+                    <Button type="submit" className=" bg-apts-purple-dark  hover:bg-apts-purple text-white ">Next</Button>
                 </div>
             </form>
         </Form>

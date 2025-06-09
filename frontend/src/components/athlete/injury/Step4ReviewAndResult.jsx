@@ -41,12 +41,12 @@ export default function Step4ReviewAndResult({ data, result, prevStep, onSubmit 
             Click Submit to generate the injury assessment report.
           </p>
           <div className="flex justify-between mt-6">
-            <Button variant="outline" onClick={prevStep}>
+            <Button variant="outline" onClick={prevStep} className="bg-gray-300 text-black">
               ← Previous
             </Button>
             <Button
               onClick={handleSubmit}
-              className="bg-purple-600 hover:bg-purple-700"
+              className="bg-apts-purple-dark  hover:bg-apts-purple text-white"
               disabled={loading}
             >
               {loading ? (
@@ -63,7 +63,7 @@ export default function Step4ReviewAndResult({ data, result, prevStep, onSubmit 
 
       {result && (
         <>
-          <h2 className="text-2xl font-semibold text-lavender-200 mt-8 mb-4 flex items-center gap-2 print:mt-0">
+          <h2 className="text-2xl font-semibold text-lavender-200 mt-8 mb-4 flex items-center gap-2 print:mt-0 font-sprintura">
             🩺 Injury Assessment Report
           </h2>
 
@@ -211,12 +211,12 @@ export default function Step4ReviewAndResult({ data, result, prevStep, onSubmit 
           </div>
 
           <div className="flex justify-between mt-6 print:hidden">
-            <Button variant="outline" onClick={prevStep}>
+            <Button variant="outline" onClick={prevStep} className="bg-gray-300 text-black">
               ← Previous
             </Button>
             <button
               onClick={() => handleDownload(resultRef)}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded shadow transition"
+              className="bg-apts-purple-dark  hover:bg-apts-purple text-white rounded-lg px-2"
               aria-label="Download report as PDF"
               title="Download report as PDF"
             >

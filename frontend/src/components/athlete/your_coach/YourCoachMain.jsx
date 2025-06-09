@@ -65,8 +65,9 @@ export default function YourCoachMain() {
             "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')",
         }}
       >
-        <div className="min-h-screen bg-black/55 flex flex-col md:flex-row p-4">
-          <div className="w-full md:w-2/5">
+        <div className="min-h-screen bg-black/55  p-4">
+          <div className="h-auto flex flex-col md:flex-row ">
+          <div className="w-full md:w-1/2 p-2">
             {loading ? (
               <p className="text-white">Loading...</p>
             ) : connectedCoach ? (
@@ -75,9 +76,13 @@ export default function YourCoachMain() {
               <SearchCoach />
             )}
           </div>
+          <div className="flex justify-center items-center p-4 w-full md:w-1/2">
+          <Message />
+          </div>
+          </div>
+         
 
-          <div className="w-full md:w-3/5">
-            <Message />
+          <div className="w-full ">
             <Sessions/>
             {/* <Notifications /> */}
           </div>
