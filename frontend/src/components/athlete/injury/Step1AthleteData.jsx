@@ -40,7 +40,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
         <FormField
           control={form.control}
           name="athlete_id"
@@ -48,7 +48,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Athlete Name</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder="" {...field} className="border border-white/10 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -62,7 +62,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Age</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input type="number" {...field} className="border border-white/10 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,7 +76,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Height (cm)</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input type="number" {...field} className="border border-white/10 bg-transparent text-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,7 +90,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Weight (kg)</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input type="number" {...field} className="border border-white/10 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -104,7 +104,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Sport</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Cricket" {...field} />
+                <Input placeholder="e.g. Cricket" {...field} className="border border-white/10 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -118,7 +118,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Role in Sport</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Fast Bowler" {...field} />
+                <Input placeholder="e.g. Fast Bowler" {...field} className="border border-white/10 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -131,7 +131,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Dominant Side</FormLabel>
-              <select {...field} className="w-full rounded border p-2 bg-apts-dark text-white border-white/20">
+              <select {...field} className="w-full rounded p-2 border border-white/10 bg-transparent text-white">
                 <option value="">Select</option>
                 <option value="Right">Right</option>
                 <option value="Left">Left</option>
@@ -147,7 +147,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Activity Level</FormLabel>
-              <select {...field} className="w-full rounded border p-2 bg-apts-dark text-white border-white/20">
+              <select {...field} className="w-full rounded p-2 border border-white/10 bg-transparent text-white">
                 <option value="">Select</option>
                 <option value="Professional">Professional</option>
                 <option value="Amateur">Amateur</option>
@@ -165,7 +165,7 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Years of Experience in Sport</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input type="number" {...field} className="border border-white/10 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -179,14 +179,14 @@ export default function Step1AthleteData({ data, updateData, nextStep }) {
             <FormItem>
               <FormLabel>Training Volume (hours/week)</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input type="number" {...field} className="border border-white/10 bg-transparent text-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full mt-4">
+        <Button type="submit" className="w-full mt-4 bg-apts-purple-dark  hover:bg-apts-purple text-white ">
           Next
         </Button>
       </form>

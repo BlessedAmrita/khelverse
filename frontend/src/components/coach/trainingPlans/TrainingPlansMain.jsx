@@ -86,8 +86,8 @@ const TrainingPlans = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-khelverse-black via-khelverse-gray to-khelverse-black p-6">
-      <div className="max-w-7xl ">
+    <div className="min-h-screen bg-gradient-to-br from-khelverse-black via-khelverse-gray to-khelverse-black w-full">
+      <div className="w-full ">
         {/* <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-khelverse-purple to-khelverse-purple-light bg-clip-text text-transparent">
             Training Plans
@@ -102,7 +102,7 @@ const TrainingPlans = () => {
     style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
   >
       <div className="min-h-screen bg-black/55">
-        <Tabs defaultValue="pending" className="w-full">
+        <Tabs defaultValue="pending" className="w-full px-4">
           <TabsList className="grid w-full max-w-md grid-cols-2 mb-8 bg-khelverse-gray border-none">
             <TabsTrigger 
               value="pending" 

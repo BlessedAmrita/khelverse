@@ -8,11 +8,16 @@ import FeatureHero from "@/components/shared/FeatureHero";
 const EvaluationMain = () => {
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-8">
+      <div className="">
         {/* <DashboardHeader /> */}
         <FeatureHero title={"Performance Tracking"}/>
         
-        <div className="mb-6 mt-4 bg-black">
+        <div
+    className="min-h-screen bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+  >
+    <div className="min-h-screen bg-black/50 mx-3">
+        <div className="mb-6 mt-4 bg-transparent">
           <ProgressSummary />
         </div>
         
@@ -27,6 +32,9 @@ const EvaluationMain = () => {
             <GoalTracker />
           </div>
         </div>
+        </div>
+        </div>
+
         
       </div>
     </div>

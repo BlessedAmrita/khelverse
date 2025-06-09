@@ -63,7 +63,7 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                         <FormItem>
                             <FormLabel>Previous Injuries (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. ACL tear, Sprained Ankle" {...field} />
+                                <Input placeholder="e.g. ACL tear, Sprained Ankle" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -77,7 +77,7 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                         <FormItem>
                             <FormLabel>Medical Conditions (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Asthma, Diabetes" {...field} />
+                                <Input placeholder="e.g. Asthma, Diabetes" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -91,7 +91,7 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                         <FormItem>
                             <FormLabel>Specific Goals of Recovery</FormLabel>
                             <FormControl>
-                                <Textarea placeholder="Describe your goals" {...field} />
+                                <Textarea placeholder="Describe your goals" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -105,7 +105,7 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                         <FormItem>
                             <FormLabel>Access to Facilities (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Gym, Physiotherapy" {...field} />
+                                <Input placeholder="e.g. Gym, Physiotherapy" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -119,7 +119,7 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                         <FormItem>
                             <FormLabel>Psychological Factors (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Anxiety, Motivation issues" {...field} />
+                                <Input placeholder="e.g. Anxiety, Motivation issues" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -133,7 +133,7 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                         <FormItem>
                             <FormLabel>Current Medications/Supplements (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Ibuprofen, Protein supplements" {...field} />
+                                <Input placeholder="e.g. Ibuprofen, Protein supplements" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -147,7 +147,7 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                         <FormItem>
                             <FormLabel>Dietary Preferences/Restrictions (comma separated)</FormLabel>
                             <FormControl>
-                                <Input placeholder="e.g. Vegan, Lactose intolerant" {...field} />
+                                <Input placeholder="e.g. Vegan, Lactose intolerant" {...field} className="border border-white/10 bg-transparent text-white"/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -155,10 +155,10 @@ export default function Step2AthleteAdditional({ data, updateData, nextStep, pre
                 />
 
                 <div className="flex justify-between mt-4">
-                    <Button variant="outline" onClick={prevStep}>
+                    <Button variant="outline" className="bg-gray-300 text-black" onClick={prevStep}>
                         Previous
                     </Button>
-                    <Button type="submit">Next</Button>
+                    <Button type="submit" className=" bg-apts-purple-dark  hover:bg-apts-purple text-white ">Next</Button>
                 </div>
             </form>
         </Form>

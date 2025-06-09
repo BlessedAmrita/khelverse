@@ -7,7 +7,16 @@
 @tailwind utilities;
 
 html {
+  -webkit-text-size-adjust: 100%; /* Prevent iOS from zooming in */
+  touch-action: manipulation;    /* Reduce delay on tap */
+
   scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
 }
 .react-calendar-heatmap rect {
   rx: 4px; /* Rounded corners */
@@ -191,6 +200,7 @@ html {
   .subtle-glass-effect {
     @apply bg-white/70 backdrop-blur-md border border-white/10 shadow-subtle;
   }
+  
   .section-heading {
     @apply text-xl md:text-2xl font-display font-medium tracking-tight mb-6;
   }
@@ -252,6 +262,34 @@ html {
   .khelverse-glow {
     @apply drop-shadow-[0_0_8px_rgba(155,135,245,0.7)];
   }
+
+  .sidebar-khelverse-glow-border {
+    position: relative; /* Essential for positioning the pseudo-element */
+    overflow: hidden;   /* Hides any overflow from the glow, keeping it contained */
+    isolation: isolate; /* Creates a new stacking context for reliable layering */
+  }
+
+  .sidebar-khelverse-glow-border::after {
+    content: ''; /* Required for pseudo-elements */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 3px; /* Adjust border thickness here */
+    
+    background: linear-gradient(
+      to bottom,
+      #121212 0%,
+      #9b87f5 10%, /* Using khelverse-purple for darker start */
+      #D6BCFA 90%, /* Using khelverse-light-purple for lighter end */
+      #121212 100%
+    ); /* Example: Adjust hex codes to match your theme */
+
+    box-shadow: 0 0 10px rgba(155, 135, 245, 0.7), /* Standard glow matching khelverse-glow color */
+                0 0 20px rgba(155, 135, 245, 0.5); /* Stronger, wider glow */
+    z-index: 1; /* Ensures it's above the sidebar's main background */
+  }
+
 }
 
 

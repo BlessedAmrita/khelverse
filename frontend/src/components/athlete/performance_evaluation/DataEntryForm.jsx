@@ -5,9 +5,9 @@ import { Plus, Save } from "lucide-react";
 
 const DataEntryForm = () => {
   return (
-    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
+    <Card className="bg-transparent  text-white border-none">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Add Performance Data</CardTitle>
+        <CardTitle className="font-sprintura">Add Performance Data</CardTitle>
         <Plus className="h-5 w-5 text-lavender" />
       </CardHeader>
       <CardContent>

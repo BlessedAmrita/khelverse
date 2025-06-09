@@ -94,9 +94,10 @@ export default function DietPlan() {
         <>
           <div ref={resultRef} className="space-y-6 w-full">
             {/* Overview */}
-            <div className="glass-dark animate-fade-in rounded-lg shadow border border-lavender/60">
-              <div className="glass rounded-lg p-8 md:p-12 overflow-hidden">
-                <h2 className="text-xl font-semibold text-lavender-300">🏀 Athlete Overview</h2>
+            <div className="space-y-3 p-6 rounded-lg glass-dark shadow-lg border border-lavender/50 relative print:p-0 print:shadow-none print:border-none print:space-y-4">
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-20 blur-3xl -z-10 rounded-lg print:hidden"></div>
+
+                <h2 className="text-xl font-semibold text-lavender-300 font-sprintura">🏀 Athlete Overview</h2>
                 <p className="mt-2 text-white">
                   <strong className="text-lavender-200">Sport:</strong> {responseData.overview.sport} <br />
                   <strong className="text-lavender-200">Position:</strong> {responseData.overview.position} <br />
@@ -106,12 +107,13 @@ export default function DietPlan() {
                   <strong className="text-lavender-200">Goal:</strong> {responseData.overview.goal}
                 </p>
               </div>
-            </div>
+            
 
             {/* Meal Plan */}
-            <div className="glass-dark animate-fade-in rounded-lg shadow border border-lavender/60">
-              <div className="glass rounded-lg p-8 md:p-12 overflow-hidden">
-                <h3 className="text-lg font-semibold text-lavender-300">🍴 Meal Plan</h3>
+            <div className="space-y-3 p-6 rounded-lg glass-dark shadow-lg border border-lavender/50 relative print:p-0 print:shadow-none print:border-none print:space-y-4">
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-20 blur-3xl -z-10 rounded-lg print:hidden"></div>
+
+                <h3 className="text-lg font-semibold text-lavender-300 font-sprintura">🍴 Meal Plan</h3>
                 {Object.entries(responseData.meal_plan).map(([meal, items]) => (
                   <div key={meal} className="mt-3">
                     <h4 className="text-md font-semibold text-lavender-200 capitalize">{meal}</h4>
@@ -123,12 +125,13 @@ export default function DietPlan() {
                   </div>
                 ))}
               </div>
-            </div>
+            
 
             {/* Macronutrients */}
-            <div className="glass-dark animate-fade-in rounded-lg shadow border border-[#72FF72]/60">
-              <div className="glass rounded-lg p-8 md:p-12 overflow-hidden">
-                <h2 className="text-xl font-semibold text-lavender-300">💪 Macronutrients</h2>
+            <div className="space-y-3 p-6 rounded-lg glass-dark shadow-lg border border-lavender/50 relative print:p-0 print:shadow-none print:border-none print:space-y-4">
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-dark via-purple to-purple-light opacity-20 blur-3xl -z-10 rounded-lg print:hidden"></div>
+
+                <h2 className="text-xl font-semibold text-lavender-300 font-sprintura">💪 Macronutrients</h2>
                 <p className="mt-2 text-lavender-100">
                   <strong>Protein:</strong> {responseData.macronutrients.protein} <br />
                   <strong>Carbs:</strong> {responseData.macronutrients.carbs} <br />
@@ -136,12 +139,12 @@ export default function DietPlan() {
                 </p>
               </div>
             </div>
-          </div>
+          
 
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded shadow transition"
+            className="mt-6 bg-apts-purple-dark  hover:bg-apts-purple text-white px-5 py-2 rounded shadow transition"
           >
             📄 Download as PDF
           </button>

@@ -22,14 +22,19 @@ function AthleteMain() {
       </div>
     );
   }
-
+ 
   return (
-    <div className='w-full min-h-screen bg-cover bg-center bg-no-repeat bg-black pb-[30px]'>
+    <div
+    className="min-h-screen bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+  >
+    <div className="min-h-screen bg-black/55">
       {/* style={{
         backgroundImage: "url('https://res.cloudinary.com/dpmlrxlzr/image/upload/v1742150476/6.0_inp9st.svg')"
       }}> */}
       <AthleteHero />
       <AthleteBody />
+    </div>
     </div>
   );
 }

@@ -45,8 +45,8 @@ const IncompleteTasks = () => {
   }, [user.uid]);
 
   return (
-    <div className="sticky top-0 max-h-screen overflow-y-auto bg-black p-6 rounded-lg text-white shadow-lg w-[400px]">
-      <h2 className="text-xl font-bold text-lavender mb-4">Past Incomplete Tasks</h2>
+    <div className="sticky top-0 max-h-screen overflow-y-auto bg-black p-6 rounded-lg text-white shadow-lg min-w-[40%] max-w-full items-center">
+      <h2 className="text-xl font-bold text-lavender mb-4 font-sprintura">Past Incomplete Tasks</h2>
       {incompleteTasks.length > 0 ? (
         incompleteTasks.map(({ date, tasks }) => (
           <div key={date} className="mb-6">

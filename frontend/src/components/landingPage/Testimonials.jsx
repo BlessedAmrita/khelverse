@@ -19,7 +19,7 @@ import { motion } from 'framer-motion';
               viewport={{ once: true }}
             >
               What People <span className="text-gradient pr-3">Say</span>
-            </motion.h2>
+            </motion.h2> 
             <motion.p 
               className="text-white/70"
               initial={{ opacity: 0, y: 10 }}

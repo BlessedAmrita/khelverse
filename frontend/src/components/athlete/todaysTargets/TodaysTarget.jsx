@@ -97,7 +97,7 @@ const TodaysTarget = () => {
   };
 
   return (
-    <div className="p-6 rounded-lg shadow-lg text-white max-w-[800px] mx-auto flex-1">
+    <div className="p-6 rounded-lg shadow-lg text-white min-w-[60%] max-w-full mx-auto flex-1">
       <div className="flex items-center space-x-4 mb-4 w-full">
         <Input
           value={newTask}
@@ -105,7 +105,7 @@ const TodaysTarget = () => {
           placeholder="Add a new task"
           className="text-white"
         />
-        <Button onClick={handleAddTask} className="bg-lavender text-black hover:bg-black hover:text-lavender border-2 border-lavender transition-all duration-300">
+        <Button onClick={handleAddTask} className="bg-apts-purple-dark text-white hover:bg-black hover:text-white border-2 border-apts-purple-dark transition-all duration-300">
           Add Task
         </Button>
       </div>
@@ -113,7 +113,7 @@ const TodaysTarget = () => {
       <div className="space-y-4">
         <ul className="space-y-3">
           {tasks.map((task) => (
-            <li key={task.taskId} className="flex items-center justify-between text-white py-4 px-7 rounded-lg bg-lavender/20">
+            <li key={task.taskId} className="flex items-center justify-between text-white py-4 px-7 rounded-lg bg-gray-900/60 ">
               <div className="flex items-center space-x-3">
               <Checkbox
                checked={task.completed}
@@ -136,7 +136,7 @@ const TodaysTarget = () => {
                 </AlertDialogTrigger>
 
                 {taskToDelete?.taskId === task.taskId && (
-                  <AlertDialogContent className="bg-white dark:bg-gray-900">
+                  <AlertDialogContent className="bg-black text-white dark:bg-gray-900 border-white/45">
                     <AlertDialogHeader>
                       <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
                       <AlertDialogDescription>
@@ -144,7 +144,7 @@ const TodaysTarget = () => {
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <Button variant="outline" onClick={() => setTaskToDelete(null)}>Cancel</Button>
+                      <Button variant="outline" className="bg-gray-200 text-black" onClick={() => setTaskToDelete(null)}>Cancel</Button>
                       <Button variant="destructive" onClick={handleDeleteTask}>Delete Task</Button>
                     </AlertDialogFooter>
                   </AlertDialogContent>

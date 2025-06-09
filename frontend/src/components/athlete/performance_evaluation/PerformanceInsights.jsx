@@ -7,9 +7,9 @@ import { insightsList } from "@/content/mockData";
 
 const PerformanceInsights = () => {
   return (
-    <Card className="glass-card bg-apts-dark text-white border-lavender/20">
+    <Card className="bg-transparent text-white border-none">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Performance Insights</CardTitle>
+        <CardTitle className="font-sprintura">Performance Insights</CardTitle>
         <Lightbulb className="h-5 w-5 text-lavender" />
       </CardHeader>
       <CardContent>
@@ -33,7 +33,7 @@ const PerformanceInsights = () => {
             return (
               <div 
                 key={index} 
-                className="flex gap-3 p-3 rounded-lg bg-[#222222] animate-slide-in"
+                className="flex gap-3 p-3 rounded-lg bg-transparent animate-slide-in"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className={`mt-0.5 ${iconColor}`}>

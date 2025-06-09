@@ -184,7 +184,7 @@ const Message = () => {
   };
 
   return (
-    <div className='glass-card bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md rounded-xl p-4 border border-khelverse-purple/10'>
+    <div className='glass-card bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md rounded-xl p-4 border border-khelverse-purple/10 w-full'>
       <div className='flex justify-between mb-4'>
         <h3 className='text-lg font-sprintura text-white flex gap-2 items-center'>
           <MessageSquare size={20} className='text-khelverse-purple' />
@@ -194,7 +194,7 @@ const Message = () => {
           <DialogTrigger asChild>
             <Button
               variant='outline'
-              className='text-khelverse-purple border-khelverse-purple/20 bg-black/30 hover:bg-black/40'
+              className='ml-4 text-khelverse-purple border-khelverse-purple/20 bg-black/30 hover:bg-black/40'
             >
               Open Messenger
             </Button>
