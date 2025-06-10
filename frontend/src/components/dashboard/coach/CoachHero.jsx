@@ -28,10 +28,10 @@ function CoachHero() {
 
   return (
     <div className="h-[100px] bg-gradient-to-br backdrop-blur-lg overflow-hidden mb-[10px] w-full flex items-center justify-between text-lavender px-[30px] top-0 sticky z-10">
-      <h1 className="text-xl font-semibold font-sprintura tracking-widest">Hey {userName}!</h1>
-      <div className="flex gap-[20px] items-center">
+      <h1 className="text-xl font-semibold font-sprintura tracking-wide">Hey {userName}!</h1>
+      <div className="flex gap-[20px] items-center justify-end pl-4">
       <p className='text-md font-semibold font-poppins tracking-wider'>{today}</p>
-      <div className="flex gap-[20px] items-center">
+      <div className="flex gap-[10px] items-center">
         <img 
           src={profileImage} 
           alt="Profile" 
