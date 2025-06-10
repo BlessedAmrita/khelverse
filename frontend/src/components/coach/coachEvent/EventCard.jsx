@@ -57,7 +57,7 @@ const EventCard = ({ event, onViewAthletes }) => {
         {event.description && (
           <p className="text-gray-400 text-sm">{event.description}</p>
         )}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-700">
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-gray-700">
           <div className="flex items-center space-x-2">
             <span className="text-gray-400 text-sm">Event Code:</span>
             <code className="bg-gray-800 px-2 py-1 rounded text-purple-400 font-mono">
@@ -74,7 +74,7 @@ const EventCard = ({ event, onViewAthletes }) => {
           </div>
           <Button
             onClick={() => onViewAthletes(event)}
-            className="bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white"
+            className="bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white mt-4 sm:mt-0"
             size="sm"
           >
             <Users size={14} className="mr-1" />

@@ -125,10 +125,10 @@ function RetirementPlanningMain() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-black">
+      <div className="min-h-screen w-full flex items-center justify-center bg-apts-black">
         <div className="text-center">
           <div className="w-16 h-16 border-t-4 border-apts-purple rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-white text-lg font-poppins">Loading Support...</p>
+          <p className="mt-4 text-apts-white text-lg font-sprintura">TRACK. TRAIN. TRIUMPH</p>
         </div>
       </div>
     );
@@ -136,13 +136,18 @@ function RetirementPlanningMain() {
 
   return (
     <div className="w-full min-h-screen bg-black relative overflow-hidden">
+       <div
+        className="min-h-screen bg-repeat bg-left-top"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+      >
+        <div className="min-h-screen bg-black/55">
       {/* Background Effects */}
-      <div className="absolute inset-0">
+      {/* <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-blue-900/5"></div>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-apts-purple/5 rounded-full blur-3xl animate-pulse-soft"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl animate-pulse-soft animation-delay-400"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-apts-purple/3 to-transparent rounded-full blur-2xl"></div>
-      </div>
+      </div> */}
       
       {/* Content */}
       <div className="relative z-10">
@@ -169,12 +174,12 @@ function RetirementPlanningMain() {
                 placeholder="Search opportunities..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-apts-lightdark/60 backdrop-blur-md border border-white/20 rounded-lg text-white font-poppins placeholder-white/60 focus:outline-none focus:border-apts-purple focus:ring-1 focus:ring-apts-purple"
+                className="w-full pl-12 pr-4 py-3 bg-transparent backdrop-blur-sm border border-white/20 rounded-lg text-white font-poppins placeholder-white/60 focus:outline-none focus:border-apts-purple focus:ring-1 focus:ring-apts-purple"
               />
             </div>
 
             {/* Filter Section */}
-            <div className="bg-apts-lightdark/60 backdrop-blur-md rounded-lg border border-white/20 p-6 flex flex-wrap gap-4">
+            <div className="bg-transparent backdrop-blur-sm rounded-lg border border-white/20 p-6 flex flex-wrap gap-4">
               <div className="flex items-center gap-2 mb-4 w-full">
                 <Filter className="w-5 h-5 text-apts-purple" />
                 <span className="text-white font-poppins font-medium">Filter Opportunities</span>
@@ -258,7 +263,7 @@ function RetirementPlanningMain() {
                   return (
                     <div 
                       key={item.id} 
-                      className="group relative bg-apts-lightdark/60 backdrop-blur-md border border-white/20 rounded-xl p-6 transition-all duration-300 hover:border-apts-purple/60 hover:shadow-lg hover:shadow-apts-purple/20 hover:-translate-y-1 cursor-pointer flex flex-col h-full"
+                      className="group relative bg-transparent backdrop-blur-sm border border-white/20 rounded-xl p-6 transition-all duration-300 hover:border-apts-purple/60 hover:shadow-lg hover:shadow-apts-purple/20 hover:-translate-y-1 cursor-pointer flex flex-col h-full"
                     >
                       {/* Subtle glow effect on hover */}
                       <div className="absolute inset-0 bg-gradient-to-br from-apts-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
@@ -344,7 +349,7 @@ function RetirementPlanningMain() {
                             href={item.officialLink} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-apts-purple to-apts-purple/80 hover:from-apts-purple/90 hover:to-apts-purple/70 text-white font-poppins font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-apts-purple/25 group-hover:scale-[1.02]"
+                            className="w-full inline-flex items-center justify-center px-4 py-3 bg-apts-purple-dark text-white hover:bg-apts-purple font-poppins font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-apts-purple/25 group-hover:scale-[1.02]"
                           >
                             Explore Now
                           </a>
@@ -369,6 +374,8 @@ function RetirementPlanningMain() {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

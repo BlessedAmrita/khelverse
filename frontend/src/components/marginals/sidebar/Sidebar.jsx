@@ -273,7 +273,7 @@ const Sidebar = () => {
         {/* Sidebar Links */}
         <nav className='flex flex-col space-y-4 pr-[20px]'>
           {activeNav.map(({ name, path, icon: Icon }) => (
-            <Link key={name} href={path} className='flex items-center space-x-2 py-2 pl-[5px] hover:bg-dustypink rounded'>
+            <Link key={name} href={path} className='flex items-center space-x-2 py-2 pl-[5px] hover:bg-apts-purple-light rounded'>
               <Icon size={20} />
               {isOpen && <span>{name}</span>}
             </Link>
