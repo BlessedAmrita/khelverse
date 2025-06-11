@@ -1,110 +1,144 @@
 'use client';
-
 import React, { useState } from 'react';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { User, Calendar, Trophy, FileText } from 'lucide-react';
-import ReviewDialog from './ReviewDialog';
+import { useDisclosure } from "@heroui/react";
+import { useSelector } from "react-redux";
+import CoachPlanCard from './CoachPlanCard';
+import { PlanViewModal } from '@/components/athlete/todaysTargets/trainingPlans/PlanViewModal';
+import { RevisePlanModal } from '@/components/athlete/todaysTargets/trainingPlans/RevisePlanModal';
+import { usePlans } from '@/hooks/usePlans';
+import { toast } from 'sonner';
 
-const PendingPlanCard = ({ plan, onReview }) => {
-  const [showReviewDialog, setShowReviewDialog] = useState(false);
+// Receive onPlanUpdated as a prop
+const PendingPlanCard = ({ plan, onPlanUpdated }) => {
+    const { isOpen: isPlanViewModalOpen, onOpen: onOpenPlanViewModal, onOpenChange: onPlanViewModalChange } = useDisclosure();
+    const { isOpen: isReviseModalOpen, onOpen: onOpenReviseModal, onOpenChange: onReviseModalChange } = useDisclosure();
 
-  const handleQuickApprove = () => {
-    onReview(plan.id, 'approve', 'Quick approval - plan looks good!');
-  };
+    const [selectedPlan, setSelectedPlan] = useState(null);
+    const [selectedPlanToRevise, setSelectedPlanToRevise] = useState(null);
 
-  const handleQuickReject = () => {
-    onReview(plan.id, 'reject', 'Plan needs revision before approval.');
-  };
+    const user = useSelector((state) => state.user);
 
-  const getSportColor = (sport) => {
-    const colors = {
-      'Cricket': 'bg-green-500',
-      'Swimming': 'bg-blue-500',
-      'Football': 'bg-orange-500',
-      'Basketball': 'bg-red-500',
-      'Tennis': 'bg-yellow-500'
+    const {
+        reviseExistingPlan,
+        updatePlanApprovalStatus,
+        // Removed fetchPlans from here, as we're using the prop
+    } = usePlans();
+
+    const handleOpenForReview = () => {
+        setSelectedPlan(plan);
+        onOpenPlanViewModal();
     };
-    return colors[sport] || 'bg-gray-500';
-  };
 
-  const getLevelColor = (level) => {
-    const colors = {
-      'Beginner': 'bg-gray-500',
-      'Intermediate': 'bg-blue-500',
-      'Advanced': 'bg-purple-500'
+    const handleOpenReviseModal = () => {
+        setSelectedPlanToRevise(selectedPlan);
+        onPlanViewModalChange(false);
+        onOpenReviseModal();
     };
-    return colors[level] || 'bg-gray-500';
-  };
 
-  return (
-    <>
-      <Card className="bg-transparent backdrop-blur-sm border-khelverse-purple/20 hover:border-khelverse-purple/40 transition-all duration-300 hover:shadow-lg hover:shadow-khelverse-purple/20 animate-fade-in">
-        <CardHeader className="pb-3">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center space-x-2">
-              <User className="w-5 h-5 text-khelverse-purple" />
-              <h3 className="font-semibold text-white text-xl">{plan.athleteName}</h3>
-            </div>
-            <div className="flex rounded-full space-x-2">
-              <Badge className={` text-white text-xs`}>
-                {plan.sport}
-              </Badge>
-              <Badge className="text-xs px-2 py-0.5 rounded-full bg-apts-purple/20 text-apts-purple">
-                {plan.level}
-              </Badge>
-            </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="space-y-4">
-          <div>
-            <div className="flex items-center space-x-2 mb-2">
-              <FileText className="w-4 h-4 text-khelverse-purple-light" />
-              <h4 className="font-bold text-medium text-white">{plan.planTitle}</h4>
-            </div>
-            <p className="text-gray-300 text-sm line-clamp-3">{plan.planDescription}</p>
-          </div>
-          
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
-            <Calendar className="w-4 h-4" />
-            <span>Submitted: {new Date(plan.submittedDate).toLocaleDateString()}</span>
-          </div>
-        </CardContent>
-        
-        <CardFooter className="flex space-x-2 pt-4"> {/* Removed flex-wrap, kept space-x-2 for consistent spacing */}
-          <Button
-            onClick={handleQuickApprove}
-            className="flex-grow bg-green-700 hover:bg-green-600 text-white text-xs px-2 py-1" // Added flex-grow, reduced padding/font-size
-          >
-            Quick Approve
-          </Button>
-          <Button
-            onClick={() => setShowReviewDialog(true)}
-            variant="outline"
-            className="flex-grow border-khelverse-purple text-khelverse-purple hover:bg-khelverse-purple hover:text-white text-xs px-2 py-1" // Added flex-grow, reduced padding/font-size
-          >
-            Review & Edit
-          </Button>
-          <Button
-            onClick={handleQuickReject}
-            variant="destructive"
-            className="flex-grow bg-red-600 hover:bg-red-500 text-xs px-2 py-1" // Added flex-grow, reduced padding/font-size
-          >
-            Reject
-          </Button>
-        </CardFooter>
-      </Card>
+    const handleRevisePlan = async (planFromModal, reviewFeedbackFromModal) => {
+        console.log("Coach side - handleRevisePlan received: Plan:", planFromModal, "Feedback:", reviewFeedbackFromModal);
 
-      <ReviewDialog
-        open={showReviewDialog}
-        onOpenChange={setShowReviewDialog}
-        plan={plan}
-        onReview={onReview}
-      />
-    </>
-  );
+        const planToSubmit = planFromModal;
+        const actualReviewString = reviewFeedbackFromModal;
+
+        if (!planToSubmit || !actualReviewString) {
+            toast.error("Error: Missing plan or review feedback for revision.");
+            return;
+        }
+
+        try {
+            const success = await reviseExistingPlan(planToSubmit, actualReviewString);
+
+            if (success) {
+                toast.success('Plan revised successfully!');
+                onReviseModalChange(false);
+                setSelectedPlanToRevise(null);
+                // Call the prop to trigger re-fetch in the parent component
+                if (onPlanUpdated) {
+                    onPlanUpdated();
+                }
+            } else {
+                toast.error('Failed to revise plan.');
+            }
+        } catch (err) {
+            console.error("Error revising plan:", err);
+            toast.error(`Error: ${err.message}`);
+        }
+    };
+
+    const handleApprovePlan = async () => {
+        if (!selectedPlan) return;
+        console.log("Approving plan with ID:", selectedPlan.id);
+        try {
+            const success = await updatePlanApprovalStatus(selectedPlan.id, 'active');
+            if (success) {
+                toast.success('Plan approved!');
+                onPlanViewModalChange(false);
+                setSelectedPlan(null);
+                // Call the prop to trigger re-fetch in the parent component
+                if (onPlanUpdated) {
+                    onPlanUpdated();
+                }
+            } else {
+                toast.error('Failed to approve plan.');
+            }
+        } catch (err) {
+            console.error("Error approving plan:", err);
+            toast.error(`Error: ${err.message}`);
+        }
+    };
+
+    const handleRejectPlan = async () => {
+        if (!selectedPlan) return;
+        try {
+            const success = await updatePlanApprovalStatus(selectedPlan.id, 'rejected');
+            if (success) {
+                toast.info('Plan rejected.');
+                onPlanViewModalChange(false);
+                setSelectedPlan(null);
+                // Call the prop to trigger re-fetch in the parent component
+                if (onPlanUpdated) {
+                    onPlanUpdated();
+                }
+            } else {
+                toast.error('Failed to reject plan.');
+            }
+        } catch (err) {
+            console.error("Error rejecting plan:", err);
+            toast.error(`Error: ${err.message}`);
+        }
+    };
+
+    return (
+        <div>
+            <CoachPlanCard
+                plan={plan}
+                onOpenPlan={handleOpenForReview}
+                showReviewButtons={true}
+            />
+
+            <PlanViewModal
+                isOpen={isPlanViewModalOpen}
+                onOpenChange={onPlanViewModalChange}
+                plan={selectedPlan}
+                userRole={user?.role}
+                hasCoach={true}
+                onRevise={handleOpenReviseModal}
+                onApprove={handleApprovePlan}
+                onReject={handleRejectPlan}
+                showActions={true}
+            />
+
+            {selectedPlanToRevise && (
+                <RevisePlanModal
+                    isOpen={isReviseModalOpen}
+                    onOpenChange={onReviseModalChange}
+                    plan={selectedPlanToRevise}
+                    onSubmit={handleRevisePlan}
+                />
+            )}
+        </div>
+    );
 };
 
 export default PendingPlanCard;

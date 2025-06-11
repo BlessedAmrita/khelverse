@@ -81,19 +81,8 @@ const Sessions = () => {
       <main className="flex-1 container py-8 animate-fade-in">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            {/* <h1 className="text-3xl font-bold text-white">Sessions</h1> */}
             <p className=" text-2xl text-gray-300 font-sprintura">View your scheduled and past sessions</p>
           </div>
-
-          {/* Disable create new session button if you want, else keep it */}
-          {/* <Button
-            asChild
-            className="bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn"
-          >
-            <a href="/dashboard/coach/sessions/new">
-              <Plus className="mr-2 h-4 w-4" /> Create New Session
-            </a>
-          </Button> */}
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -131,7 +120,6 @@ const Sessions = () => {
         ) : filteredSessions.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSessions.map((session) => (
-              console.log("Session:", session),
               <SessionCard key={session.id} {...session} />
             ))}
           </div>

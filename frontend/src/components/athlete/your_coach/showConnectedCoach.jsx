@@ -51,11 +51,11 @@ export default function ShowConnectedCoach({ onRemoved }) {
       >
         <img
           src={coach.photoURL || "/default-profile.png"}
-          alt={coach.name}
+          alt={coach.firstName || coach.name}
           className="w-12 h-12 rounded-full object-cover"
         />
         <div className="flex-grow">
-          <p className="font-bold text-xl">{coach.name}</p>
+          <p className="font-bold text-xl">{(coach.firstName && coach.lastName)? `${coach.firstName} ${coach.lastName}`:coach.name }</p>
           <p className="text-white/70">
             Sport: <span className="text-white">{coach.sport || "N/A"}</span>
           </p>

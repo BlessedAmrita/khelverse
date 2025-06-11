@@ -1,4 +1,3 @@
-// src/firebase/auth.js
 import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, db } from '@/firebase/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -14,7 +13,7 @@ export const signInWithGoogle = async (dispatch) => {
   try {
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const accessToken = credential.accessToken; // ✅ this is the one you need
+    const accessToken = credential.accessToken;
     const user = result.user;
     const userRef = doc(db, 'users', user.uid);
     const userSnap = await getDoc(userRef);
@@ -59,6 +58,7 @@ export const logout = async (dispatch) => {
     console.error('🔥 Error logging out:', error);
   }
 };
+
 
 // **💡 Listen to Auth State Changes & Sync with Redux**
 export const monitorAuthState = () => {

@@ -1,6 +1,6 @@
-import axios from 'axios';  // You can use axios for making HTTP requests
+import axios from 'axios'; 
 
-const API_URL = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';  // Google Calendar API endpoint
+const API_URL = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';  
 
 // Function to create an event in Google Calendar
 export const GoogleCalendarAPI = {
@@ -8,7 +8,7 @@ export const GoogleCalendarAPI = {
     try {
       const response = await axios.post(API_URL, eventDetails, {
         headers: {
-          'Authorization': `Bearer YOUR_GOOGLE_ACCESS_TOKEN`,  // Replace with the actual OAuth token
+          'Authorization': `Bearer YOUR_GOOGLE_ACCESS_TOKEN`,  
           'Content-Type': 'application/json',
         },
       });
