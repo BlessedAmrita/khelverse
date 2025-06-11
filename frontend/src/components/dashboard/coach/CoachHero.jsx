@@ -33,7 +33,6 @@ function CoachHero() {
         <p className="hidden sm:block text-md font-semibold font-poppins tracking-wider">
           {today}
         </p>
-
         <div className="flex gap-[10px] items-center">
           <img
             src={profileImage}
