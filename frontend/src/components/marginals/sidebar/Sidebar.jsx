@@ -376,7 +376,7 @@ const Sidebar = () => {
           >
             <Button
               onClick={user?.isAuthenticated ? handleLogout : handleGetStarted}
-              className="flex items-center justify-center gap-3 p-5 mt-auto bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn rounded-3xl"
+              className="w-full flex items-center justify-center gap-3 p-5 mt-auto bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn rounded-3xl"
             >
               {user?.isAuthenticated ? <LogOut size={20} /> : <LogIn size={20} />}
               {isOpen && <span>{user?.isAuthenticated ? 'Logout' : 'Login'}</span>}
