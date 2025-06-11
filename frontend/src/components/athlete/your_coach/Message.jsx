@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { MessageSquare, Send, Check, CheckCheck, ChevronLeft } from 'lucide-react'; // Added ChevronLeft
+import { MessageSquare, Send, Check, CheckCheck, ChevronLeft } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,7 @@ import { fetchUserData } from '@/config/slices/userSlice';
 
 const Message = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user); // This 'user' object should contain the athlete's UID
 
   const [selectedCoach, setSelectedCoach] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -41,9 +41,12 @@ const Message = () => {
   const [lastMessage, setLastMessage] = useState('');
   const [lastMessageTime, setLastMessageTime] = useState('');
   const messagesEndRef = useRef(null);
-  const [isMobileView, setIsMobileView] = useState(false); // New state for mobile view
-  const [showChatList, setShowChatList] = useState(true); // New state to control chat list visibility on mobile
+  const [isMobileView, setIsMobileView] = useState(false);
+  const [showChatList, setShowChatList] = useState(true);
+  const [athleteConnectedCoachId, setAthleteConnectedCoachId] = useState(null); // New state for connectedCoachId from Firestore
 
+  // currentAthlete now uses data directly from the user (Redux) for basic info
+  // but connectedCoachId will be fetched separately from the athlete's Firestore doc.
   const currentAthlete = user?.uid
     ? {
         uid: user.uid,
@@ -52,14 +55,13 @@ const Message = () => {
       }
     : null;
 
-  // 📐 Hook to detect screen size for responsive layout
   useEffect(() => {
     const handleResize = () => {
-      setIsMobileView(window.innerWidth < 768); // Tailwind's 'md' breakpoint is 768px
+      setIsMobileView(window.innerWidth < 768);
     };
 
     window.addEventListener('resize', handleResize);
-    handleResize(); // Call on mount to set initial state
+    handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -71,43 +73,74 @@ const Message = () => {
     }
   }, [user.uid, user.name, dispatch]);
 
-  // 🧠 Fetch assigned coach using requests collection
+
+  // 🎯 NEW LOGIC: Fetch the athlete's document to get the connectedCoachId
   useEffect(() => {
-    if (!currentAthlete?.uid) return;
+    if (!currentAthlete?.uid) {
+      setAthleteConnectedCoachId(null);
+      setSelectedCoach(null);
+      return;
+    }
 
-    const fetchCoach = async () => {
+    const fetchAthleteDoc = async () => {
       try {
-        const q = query(
-          collection(db, 'requests'),
-          where('fromId', '==', currentAthlete.uid),
-          where('status', '==', 'accepted')
-        );
+        const athleteDocRef = doc(db, 'users', currentAthlete.uid);
+        const athleteDocSnap = await getDoc(athleteDocRef);
 
-        const snapshot = await getDocs(q);
-        if (!snapshot.empty) {
-          const requestData = snapshot.docs[0].data();
-          const coachId = requestData.toId;
-
-          const coachRef = doc(db, 'users', coachId);
-          const coachSnap = await getDoc(coachRef);
-          if (coachSnap.exists()) {
-            const coachData = coachSnap.data();
-            setSelectedCoach({
-              uid: coachId,
-              name: coachData.name || 'Coach',
-              initials: (coachData.name || 'C').charAt(0),
-              photoURL: coachData.photoURL || '',
-              status: coachData.status || '',
-            });
-          }
+        if (athleteDocSnap.exists()) {
+          const athleteData = athleteDocSnap.data();
+          const coachId = athleteData.connectedCoachId;
+          console.log("Fetched athlete's connectedCoachId:", coachId); // For debugging
+          setAthleteConnectedCoachId(coachId);
+        } else {
+          console.warn(`Athlete document with ID ${currentAthlete.uid} not found.`);
+          setAthleteConnectedCoachId(null);
+          setSelectedCoach(null);
         }
       } catch (err) {
-        console.error('🔥 Error fetching coach:', err);
+        console.error('🔥 Error fetching athlete document:', err);
+        setAthleteConnectedCoachId(null);
+        setSelectedCoach(null);
       }
     };
 
-    fetchCoach();
-  }, [currentAthlete?.uid]);
+    fetchAthleteDoc();
+  }, [currentAthlete?.uid]); // Re-run when currentAthlete.uid changes
+
+  // 🎯 NEW LOGIC: Fetch the connected coach details using the athleteConnectedCoachId
+  useEffect(() => {
+    if (!athleteConnectedCoachId) {
+      setSelectedCoach(null);
+      return;
+    }
+
+    const fetchConnectedCoachDetails = async () => {
+      try {
+        const coachRef = doc(db, 'users', athleteConnectedCoachId);
+        const coachSnap = await getDoc(coachRef);
+
+        if (coachSnap.exists()) {
+          const coachData = coachSnap.data();
+          console.log("Fetched connected coach data:", coachData); // For debugging
+          setSelectedCoach({
+            uid: athleteConnectedCoachId,
+            name: coachData.name || 'Coach',
+            initials: (coachData.name || 'C').charAt(0).toUpperCase(),
+            photoURL: coachData.photoURL || '',
+            status: coachData.status || '',
+          });
+        } else {
+          console.warn(`Coach document with ID ${athleteConnectedCoachId} not found.`);
+          setSelectedCoach(null);
+        }
+      } catch (err) {
+        console.error('🔥 Error fetching connected coach details:', err);
+        setSelectedCoach(null);
+      }
+    };
+
+    fetchConnectedCoachDetails();
+  }, [athleteConnectedCoachId]); // Re-run when athleteConnectedCoachId changes
 
   // 💬 Load messages
   useEffect(() => {
@@ -200,12 +233,12 @@ const Message = () => {
   const handleOpenChat = (coach) => {
     setSelectedCoach(coach);
     if (isMobileView) {
-      setShowChatList(false); // Hide chat list on mobile
+      setShowChatList(false);
     }
   };
 
   const handleBackToChatList = () => {
-    setShowChatList(true); // Show chat list on mobile
+    setShowChatList(true);
   };
 
   return (
@@ -239,7 +272,8 @@ const Message = () => {
                     </h3>
                   </div>
                   <div className='p-3'>
-                    {selectedCoach ? ( // Display the coach in the list
+                    {/* Displaying only the single selectedCoach */}
+                    {selectedCoach ? (
                       <div
                         className='flex items-center gap-3 cursor-pointer hover:bg-khelverse-purple/10 p-2 rounded-lg transition-colors'
                         onClick={() => handleOpenChat(selectedCoach)}
@@ -335,7 +369,6 @@ const Message = () => {
                           </div>
                         </div>
                         {msg.senderId === currentAthlete.uid && (
-                          // Athlete's own avatar can be dynamically pulled if available
                           <Avatar className='h-8 w-8 bg-khelverse-purple text-white'>
                             <AvatarFallback>{currentAthlete.initials}</AvatarFallback>
                           </Avatar>

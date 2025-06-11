@@ -7,11 +7,25 @@ import CTASection from '@/components/landingPage/CTASection';
 import ContactSection from '@/components/landingPage/ContactSection';
 
 export const metadata = {
-  title: 'Khelverse',
+  title: 'Khelverse | Athlete Performance Tracking System',
+  description: 'Khelverse is a cutting-edge platform that empowers athletes and coaches with personalized training plans, performance analytics, injury assessments, and real-time collaboration tools — all in one place.',
   icons: {
     icon: '/favicon.png',
   },
-  description: 'An Athlete Performance Tracking System',
+  keywords: [
+    'Khelverse',
+    'Athlete Tracking',
+    'Performance Analytics',
+    'Sports Coaching Platform',
+    'Training Plans',
+    'Injury Assessment',
+    'Google Meet Sessions',
+    'Fitness Monitoring',
+    'Coach Athlete Platform',
+    'Sports Tech India'
+  ],
+  // viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no',
+  viewport: 'width=device-width, initial-scale=1.0',
 };
 
 export default function Home() {

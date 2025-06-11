@@ -74,9 +74,10 @@ const AthletesOverview = () => {
           </p>
         </div>
       ) : (
-        <div className="flex gap-6 overflow-x-auto pb-2">
-          {filteredAthletes.map((athlete) => (
-            <div key={athlete.id} className="min-w-[50%] md:min-w-[20%]">
+        // <div className="flex gap-6 pb-2 overflow-x-scroll">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredAthletes.slice(0, 3).map((athlete) => (
+            <div key={athlete.id} className="">
               <AthleteCard
                 key={athlete.id} // ✅ Use athlete ID as key
                 athlete={{
