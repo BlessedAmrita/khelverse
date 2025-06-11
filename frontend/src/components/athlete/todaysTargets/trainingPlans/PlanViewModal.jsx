@@ -18,39 +18,64 @@ export const PlanViewModal = ({
     isOpen,
     onOpenChange,
     plan,
-    hasCoach, // This prop seems related to athlete context, not strictly needed for coach actions
+    hasCoach,
     userRole,
     onRevise,
     onApprove,
     onReject,
-    showActions = false // <--- NEW PROP: Controls visibility of coach action buttons
+    showActions = false
 }) => {
     const currentUserData = useSelector((state) => state.user);
 
     if (!plan) return null;
 
+    const parseTime = (timeStr) => {
+        // Handle common time formats like "6AM", "8PM", "10 AM", "12 PM"
+        const timeParts = timeStr.match(/(\d+)(?:\s*)(AM|PM)/i);
+        if (!timeParts) return null;
+
+        let hours = parseInt(timeParts[1], 10);
+        const ampm = timeParts[2].toUpperCase();
+
+        if (ampm === 'PM' && hours < 12) {
+            hours += 12;
+        } else if (ampm === 'AM' && hours === 12) { // Midnight (12 AM)
+            hours = 0;
+        }
+        return hours; // Return hours for comparison
+    };
+
     const renderPlanContent = () => {
         const entries = Object.entries(plan.plan || {});
 
-        const sortedEntries = entries.sort(([a], [b]) => {
-            // Try to extract day number if format is like "Day 1"
+        const sortedEntries = entries.sort(([keyA], [keyB]) => {
+            // Case 1: Day 1, Day 2, etc.
             const dayRegex = /Day\s*(\d+)/i;
-            const aMatch = a.match(dayRegex);
-            const bMatch = b.match(dayRegex);
+            const matchA = keyA.match(dayRegex);
+            const matchB = keyB.match(dayRegex);
 
-            if (aMatch && bMatch) {
-                return parseInt(aMatch[1]) - parseInt(bMatch[1]);
+            if (matchA && matchB) {
+                return parseInt(matchA[1], 10) - parseInt(matchB[1], 10);
             }
+            if (matchA) return -1; // DayX comes before other formats
+            if (matchB) return 1;
 
-            // Try to parse as date
-            const aDate = new Date(a);
-            const bDate = new Date(b);
-            if (!isNaN(aDate) && !isNaN(bDate)) {
-                return aDate - bDate;
+            // Case 2: Time-based (e.g., "6AM", "8PM", "10 AM")
+            const isTimeA = keyA.includes('AM') || keyA.includes('PM');
+            const isTimeB = keyB.includes('AM') || keyB.includes('PM');
+
+            if (isTimeA && isTimeB) {
+                const timeA = parseTime(keyA);
+                const timeB = parseTime(keyB);
+                if (timeA !== null && timeB !== null) {
+                    return timeA - timeB;
+                }
             }
+            if (isTimeA) return -1; // Time comes before other formats (if no DayX)
+            if (isTimeB) return 1;
 
-            // Fallback to string comparison
-            return a.localeCompare(b);
+            // Case 3: Fallback to alphabetical comparison for other keys
+            return keyA.localeCompare(keyB);
         });
 
         return sortedEntries.map(([key, activities]) => (
@@ -86,7 +111,7 @@ export const PlanViewModal = ({
                                     )}
                                     {plan.status && (
                                         <p className="text-sm text-gray-600">
-                                            Status: {plan.status.replace(/_/g, ' ')} {/* Display status nicely */}
+                                            Status: {plan.status.replace(/_/g, ' ')}
                                         </p>
                                     )}
                                     {plan.reviewNotes && plan.reviewNotes !== "" && (
@@ -100,43 +125,41 @@ export const PlanViewModal = ({
                                 </Accordion>
                             </ModalBody>
                             <ModalFooter className="flex flex-col md:flex-row justify-between items-center gap-3">
-                                {/* Conditional rendering based on showActions prop and user role */}
-                                {showActions && userRole === 'coach' && ( // Only show actions if showActions is true AND it's a coach
+                                {showActions && userRole === 'coach' && (
                                     <div className="flex gap-2">
                                         <Button
                                             color="success"
-                                            onPress={() => { console.log("approve please"); onApprove(plan.id); onClose(); }} // Add onClose
+                                            onPress={() => { console.log("approve please"); onApprove(plan.id); onClose(); }}
                                             disabled={plan.status !== 'waiting_for_approval'}
                                         >
                                             Approve
                                         </Button>
                                         <Button
                                             color="warning"
-                                            onPress={() => { onRevise(plan); onClose(); }} // Add onClose
+                                            onPress={() => { onRevise(plan); onClose(); }}
                                         >
                                             Revise
                                         </Button>
                                         <Button
                                             color="danger"
-                                            onPress={() => { onReject(plan.id); onClose(); }} // Add onClose
+                                            onPress={() => { onReject(plan.id); onClose(); }}
                                             disabled={plan.status !== 'waiting_for_approval'}
                                         >
                                             Reject
                                         </Button>
                                     </div>
                                 )}
-                                {/* For athletes not having coaches */}
-                                {userRole === 'athlete' && !hasCoach && (plan.status === 'active' || plan.status == 'waiting_for_approval')  && (
+                                {userRole === 'athlete' && !hasCoach && (plan.status === 'active' || plan.status == 'waiting_for_approval') && (
                                     <div className="flex gap-2">
                                         <Button
                                             color="success"
-                                            onPress={() => onApprove(plan.id)} 
+                                            onPress={() => onApprove(plan.id)}
                                         >
                                             Approve
                                         </Button>
                                         <Button
                                             color="warning"
-                                            onPress={() => onRevise(plan)} 
+                                            onPress={() => onRevise(plan)}
                                         >
                                             Revise
                                         </Button>
@@ -158,4 +181,4 @@ export const PlanViewModal = ({
     );
 };
 
-export default PlanViewModal; // Export as default for consistency
+export default PlanViewModal;

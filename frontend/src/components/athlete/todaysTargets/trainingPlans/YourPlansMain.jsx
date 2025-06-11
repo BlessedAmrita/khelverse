@@ -38,7 +38,8 @@ export const YourPlansMain = () => {
     reviseExistingPlan, 
     updatePlanApprovalStatus,
     restartPlan,
-    fetchPlans
+    fetchPlans,
+    stopPlan,
   } = usePlans();
 
   // Effect to fetch user role and connected coach details from Firestore
@@ -187,6 +188,23 @@ export const YourPlansMain = () => {
     }
   };
 
+   const handleStopPlan = async (planId) => {
+    if (window.confirm("Are you sure you want to stop this plan? It will be marked as 'past plan'.")) {
+      try {
+        const success = await stopPlan(planId);
+        if (success) {
+          toast.success('Plan stopped successfully!');
+          fetchPlans(); // Re-fetch plans to update the list
+        } else {
+          toast.error('Failed to stop plan.');
+        }
+      } catch (err) {
+        console.error("Error stopping plan:", err);
+        toast.error(`Error: ${err.message}`);
+      }
+    }
+  };
+
   // Sort plans by creation date, newest first
   const sortedPlans = [...plans].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -241,6 +259,7 @@ export const YourPlansMain = () => {
               onApprove={handleApprovePlan}
               onReject={handleRejectPlan}
               onRestart={handleRestartPlan}
+              onStop={handleStopPlan}
               userRole={role}
               hasCoach={hasCoach}
               currentUserData={userData} 

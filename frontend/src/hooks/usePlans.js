@@ -150,6 +150,22 @@ export const usePlans = () => {
             setLoading(false);
         }
     };
+    const stopPlan = async (planId) => {
+        setLoading(true);
+        setError(null);
+        try {
+            await updatePlanStatus(planId, 'past_plan'); // Change status to past_plan
+            setPlans((prevPlans) =>
+                prevPlans.map((p) => (p.id === planId ? { ...p, status: 'past_plan' } : p)),
+            );
+            return true;
+        } catch (err) {
+            setError(err.message);
+            return false;
+        } finally {
+            setLoading(false);
+        }
+    };
     return {
         plans,
         loading,
@@ -159,5 +175,6 @@ export const usePlans = () => {
         updatePlanApprovalStatus,
         restartPlan,
         fetchPlans,
+        stopPlan,
     };
 };
