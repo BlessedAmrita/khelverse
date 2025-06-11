@@ -214,7 +214,7 @@ const Index = () => {
                     <CalendarComponent
                       mode="multiple"
                       selected={eventDates}
-                      className="rounded-md border-gray-700 bg-gray-900 text-white"
+                      className="rounded-md border-gray-700 bg-black text-white"
                       classNames={{
                         months: "flex flex-row space-y-4 sm:space-x-4 sm:space-y-0",
                         month: "space-y-4",

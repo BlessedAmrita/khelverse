@@ -57,7 +57,7 @@ function CareerGuidanceMain() { // Renamed from DietMain for clarity
                     insights.
                   </p>
                   <button
-                    className='mt-4 px-6 py-2 rounded-lg shadow-md transition button-primary bg-purple-dark hover:bg-black text-lavender-200 hover:text-lavender flex-1 md:flex-none'
+                    className='mt-4 px-6 py-2 rounded-lg  transition button-primary bg-apts-purple-dark text-white hover:bg-apts-purple  shadow-md flex-1 md:flex-none'
                     onClick={() => router.push('/dashboard/athlete/careerGuidance/aiCareerAdvice')}
                   >
                     Explore Now
@@ -83,7 +83,7 @@ function CareerGuidanceMain() { // Renamed from DietMain for clarity
                     Explore government schemes, job quotas, and resources for your life after sport.
                   </p>
                   <button
-                    className='mt-4 px-6 py-2 rounded-lg shadow-md transition button-primary bg-purple-dark hover:bg-black text-lavender-200 hover:text-lavender flex-1 md:flex-none'
+                    className='mt-4 px-6 py-2 rounded-lg shadow-md transition button-primary bg-apts-purple-dark text-white hover:bg-apts-purple  flex-1 md:flex-none'
                     onClick={() =>
                       router.push('/dashboard/athlete/careerGuidance/RetirementPlanningMain')
                     }

@@ -153,7 +153,7 @@ const TodaysTarget = () => {
 
   return (
     <div className="p-6 rounded-lg shadow-lg text-white min-w-[60%] max-w-full mx-auto flex-1">
-      <h2 className="text-2xl font-bold text-apts-lavender mb-6 font-sprintura">Targets</h2>
+      <h2 className="text-2xl font-bold text-lavender mb-6 font-sprintura">Targets</h2>
 
       {loading ? (
         <div className="flex justify-center items-center h-24">

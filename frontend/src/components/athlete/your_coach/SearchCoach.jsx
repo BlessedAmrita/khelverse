@@ -190,7 +190,7 @@ export default function SearchCoach() {
 
   return (
     <div className="p-4 max-w-full mx-auto">
-      <h2 className="text-xl font-bold mb-4 text-white font-sprintura">Find Your Coach</h2>
+      <h2 className="text-2xl font-bold mb-4 text-white font-sprintura">Find Your Coach</h2>
 
       {connectedCoach ? (
         <div className="w-full mb-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border" style={{ maxWidth: '600px', minWidth: '330px' }}>
@@ -220,7 +220,7 @@ export default function SearchCoach() {
           <input
             type="text"
             placeholder="Search by Name"
-            className="p-2 border rounded w-full mb-2 text-black"
+            className="p-2 border border-white/20 rounded-lg w-full mb-2 text-black bg-transparent backdrop-blur-sm"
             style={{ minWidth: '330px' }}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -228,7 +228,7 @@ export default function SearchCoach() {
           <input
             type="text"
             placeholder="Filter by City"
-            className="p-2 border rounded w-full mb-2 text-black"
+            className="p-2 border border-white/20 rounded-lg w-full mb-2 text-black bg-transparent backdrop-blur-sm"
             style={{ minWidth: '330px' }}
             value={city}
             onChange={(e) => setCity(e.target.value)}
@@ -236,7 +236,7 @@ export default function SearchCoach() {
           <input
             type="text"
             placeholder="Filter by State"
-            className="p-2 border rounded w-full mb-2 text-black"
+            className="p-2 border border-white/20 rounded-lg w-full mb-2 text-black bg-transparent backdrop-blur-sm"
             style={{ minWidth: '330px' }}
             value={state}
             onChange={(e) => setState(e.target.value)}
@@ -267,15 +267,18 @@ export default function SearchCoach() {
             </ul>
           )}
 
+          <div className="w-full mt-2 flex justify-center items-center">
           <button
             onClick={searchCoach}
-            className="w-full bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white py-2 font-semibold rounded transition mb-4"
-            style={{ minWidth: '330px' }}
+            className="w-auto bg-apts-purple-dark hover:bg-apts-purple pulse-btn text-white py-2 font-semibold rounded-xl transition mb-4"
+            style={{ minWidth: '200px' }}
           >
             Search
           </button>
+          </div>
 
-          <ul>
+          {/* Applied the responsive grid classes here */}
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
             {displayList.map((coach) => (
               <li
                 key={coach.id}
@@ -309,3 +312,12 @@ export default function SearchCoach() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+

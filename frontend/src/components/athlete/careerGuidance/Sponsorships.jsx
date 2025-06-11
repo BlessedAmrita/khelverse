@@ -75,7 +75,7 @@ const Sponsorships = () => {
                   <span>{sponsorship.deadline}</span>
                 </div>
                 
-                <button className="text-sm text-purple hover:text-lavender-200 font-medium text-primary flex items-center hover:text-primary/80 transition-colors">
+                <button className="text-sm text-apts-purple hover:text-lavender font-medium flex items-center transition-colors">
                   <span>Apply</span>
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </button>
