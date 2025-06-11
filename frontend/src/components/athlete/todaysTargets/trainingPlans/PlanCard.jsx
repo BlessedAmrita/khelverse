@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, Dna, Target, Clock, Activity } from 'lucide-react';
 import { format } from 'date-fns';
 
-export const PlanCard = ({ plan, onOpenPlan, onRestart, userRole, currentUserData }) => {
+export const PlanCard = ({ plan, onOpenPlan, onRestart,onStop, userRole, currentUserData }) => {
     const getStatusChipColor = (status) => {
         switch (status) {
             case 'active':
@@ -86,6 +86,15 @@ export const PlanCard = ({ plan, onOpenPlan, onRestart, userRole, currentUserDat
                         {/* Restart button */}
                         {(plan.status === 'active' || plan.status === 'past_plan') && (userRole === 'athlete' || (userRole === 'coach' && plan.coachId === currentUserData?.uid)) && (
                             <Button onClick={() => onRestart(plan)} className="bg-apts-lavender hover:bg-apts-lavender/90 text-white rounded-md px-4 py-2">Restart</Button>
+                        )}
+
+                         {plan.status === 'active' && (userRole === 'athlete' || (userRole === 'coach' && plan.coachId === currentUserData?.uid)) && (
+                            <Button
+                                onClick={() => onStop(plan.id)} // Pass plan ID to stop function
+                                className="bg-red-600 hover:bg-red-700 text-white rounded-md px-4 py-2"
+                            >
+                                Stop Plan
+                            </Button>
                         )}
                     </div>
                 </div>
