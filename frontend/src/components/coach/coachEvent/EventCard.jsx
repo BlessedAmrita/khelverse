@@ -33,7 +33,7 @@ const EventCard = ({ event, onViewAthletes }) => {
   }, [event?.id]);
 
   return (
-    <Card className="bg-gray-900 border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
+    <Card className="bg-transparent backdrop-blur-sm border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
       <CardHeader>
         <div className="flex justify-between items-start">
           <CardTitle className="text-white text-xl font-bold">{event.name}</CardTitle>

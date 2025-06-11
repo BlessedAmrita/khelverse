@@ -204,7 +204,14 @@ export default function CareerAdviceResult() {
         }
         title={'Career Advice Form'}
       />
-      <div className="w-full mx-auto p-6 space-y-6 flex flex-col items-center">
+      {/*  */}
+      <div
+    className="min-h-screen bg-repeat bg-left-top"
+    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+  >
+    <div className="min-h-screen bg-black/60"> 
+    <div className="w-full mx-auto p-6 space-y-6 flex flex-col border border-none items-center">
+        
         {/* Career Advice Form */}
         <CareerAdviceForm onSubmit={handleSubmit} />
 
@@ -222,7 +229,7 @@ export default function CareerAdviceResult() {
             <div ref={resultRef} className="space-y-6 w-full">
               {/* Display Career Paths */}
               {responseData.map((advice, index) => (
-                <div key={index} className="p-6 bg-apts-lightdark text-white rounded-lg shadow-md mb-6">
+                <div key={index} className="p-6 bg-transparent backdrop-blur-sm text-white rounded-lg shadow-md mb-6">
                   <h3 className="text-2xl font-semibold text-lavender-400">{advice.career_path}</h3>
                   <p className="mt-2 text-lavender-100">{advice.why_fits}</p>
 
@@ -247,13 +254,15 @@ export default function CareerAdviceResult() {
             {/* Download Button */}
             <button
               onClick={handleDownload}
-              className="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded shadow transition"
+              className="mt-6 bg-apts-purple-dark text-white hover:bg-apts-purple  shadow-md px-5 py-2 rounded transition"
             >
               📄 Download as PDF
             </button>
           </>
         )}
       </div>
+      </div>
+    </div>
     </div>
   );
 }

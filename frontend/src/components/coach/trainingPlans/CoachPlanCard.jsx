@@ -56,7 +56,7 @@ const CoachPlanCard = ({ plan, onOpenPlan, onApprove, onReject, showReviewButton
     const { firstName, lastName, sport, experienceLevel } = plan.athlete_profile || {};
 
     return (
-        <Card className="bg-gradient-to-br from-apts-dark to-apts-lightdark border border-apts-lavender/20 text-white shadow-md hover:shadow-apts-lavender/40 transition-all duration-300 rounded-2xl p-3">
+        <Card className="bg-transparent backdrop-blur-sm border border-apts-lavender/20 text-white shadow-md hover:shadow-apts-lavender/40 transition-all duration-300 rounded-2xl p-3">
             <CardHeader className="pb-3">
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
@@ -103,7 +103,7 @@ const CoachPlanCard = ({ plan, onOpenPlan, onApprove, onReject, showReviewButton
                                 {/* This button will open the PlanViewModal for detailed review */}
                                 <Button
                                     onClick={() => onOpenPlan(plan)}
-                                    className="bg-apts-lavender hover:bg-apts-lavender/90 text-white rounded-md px-4 py-2"
+                                    className="bg-apts-purple-dark text-white hover:bg-apts-purple rounded-md px-4 py-2"
                                 >
                                     Review
                                 </Button>

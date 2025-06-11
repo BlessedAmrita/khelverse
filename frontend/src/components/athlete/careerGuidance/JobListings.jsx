@@ -86,7 +86,7 @@ const JobListings = () => {
               </div>
               
               <div className="flex gap-2 w-full md:w-auto">
-                <button className="button-primary bg-purple-dark text-lavender-100  hover:bg-black hover:text-lavender flex-1 md:flex-none">
+                <button className="button-primary bg-apts-purple-dark text-white rounded-xl hover:bg-apts-purple  shadow-md flex-1 md:flex-none">
                   Apply Now
                 </button>
                 

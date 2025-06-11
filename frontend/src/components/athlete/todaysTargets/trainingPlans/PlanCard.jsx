@@ -41,7 +41,7 @@ export const PlanCard = ({ plan, onOpenPlan, onRestart,onStop, userRole, current
     };
 
     return (
-        <Card className="bg-gradient-to-br from-apts-dark to-apts-lightdark border border-apts-lavender/20 text-white shadow-md hover:shadow-apts-lavender/40 transition-all duration-300 rounded-2xl p-3">
+        <Card className="bg-transparent backdrop-blur-sm border border-apts-lavender/20 text-white shadow-md hover:shadow-apts-lavender/40 transition-all duration-300 rounded-2xl p-3">
             <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
@@ -78,7 +78,7 @@ export const PlanCard = ({ plan, onOpenPlan, onRestart,onStop, userRole, current
                     <div className="flex flex-wrap gap-2"> {/* Container for action buttons */}
                         <Button
                             onClick={() => onOpenPlan(plan)}
-                            className="bg-apts-lavender hover:bg-apts-lavender/90 text-white rounded-md px-4 py-2"
+                            className="bg-apts-purple-dark text-white hover:bg-apts-purple rounded-md px-4 py-2"
                         >
                             Open Plan
                         </Button>

@@ -25,7 +25,7 @@ const EventCalendar = ({ events, onSelectDate }) => {
   };
 
   return (
-    <div className="apts-card ">
+    <div className="bg-black/40 backdrop-blur-sm border-purple-500/20 ">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-white font-bold flex items-center gap-2">
           <CalendarIcon size={18} /> Event Calendar

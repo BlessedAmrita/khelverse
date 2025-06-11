@@ -154,7 +154,7 @@ function RetirementPlanningMain() {
         {/* Hero Section */}
         <div className="bg-transparent py-16 px-8">
           <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-sprintura font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-sprintura font-bold text-lavender-200 mb-4">
               Retirement Planning & Support
             </h1>
             <p className="text-lg text-white/80 font-poppins max-w-2xl mx-auto">

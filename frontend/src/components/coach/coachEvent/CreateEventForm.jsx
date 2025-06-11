@@ -65,7 +65,7 @@ const CreateEventForm = ({ onCreateEvent }) => {
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="bg-gray-900 border-gray-800 text-white focus:border-purple-500"
+                className="bg-transparent backdrop-blur-md border border-white/20 text-white focus:border-purple-500"
                 placeholder="Enter event name"
                 required
               />
@@ -78,7 +78,7 @@ const CreateEventForm = ({ onCreateEvent }) => {
                 id="location"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className="bg-gray-900 border-gray-800 text-white focus:border-purple-500"
+                className="bg-transparent backdrop-blur-md border border-white/20 text-white focus:border-purple-500"
                 placeholder="Enter location"
                 required
               />
@@ -95,7 +95,7 @@ const CreateEventForm = ({ onCreateEvent }) => {
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                className="bg-gray-900 border-gray-800 text-white focus:border-purple-500"
+                className="bg-transparent backdrop-blur-md border border-white/20 text-white focus:border-purple-500"
                 required
               />
             </div>
@@ -108,7 +108,7 @@ const CreateEventForm = ({ onCreateEvent }) => {
                 type="time"
                 value={formData.time}
                 onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                className="bg-gray-900 border-gray-800 text-white focus:border-purple-500"
+                className="bg-transparent backdrop-blur-md border border-white/20 text-white focus:border-purple-500"
                 required
               />
             </div>
@@ -122,18 +122,21 @@ const CreateEventForm = ({ onCreateEvent }) => {
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="bg-gray-900 border-gray-800 text-white focus:border-purple-500"
+              className="bg-transparent backdrop-blur-md border border-white/20 text-white focus:border-purple-500"
               placeholder="Enter event description (optional)"
               rows={3}
             />
           </div>
 
+          <div className='w-full flex items-center justify-center'>
           <Button
             type="submit"
-            className="w-full bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn font-semibold py-2"
+            className="w-[1/2] mx-auto bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn font-semibold py-2"
           >
             Schedule Event
           </Button>
+          </div>
+          
         </form>
       </CardContent>
     </Card>

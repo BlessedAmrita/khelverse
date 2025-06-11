@@ -43,13 +43,13 @@ export const GeneratePlanModal = ({ isOpen, onOpenChange, onGeneratePlan, loadin
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
-      <ModalContent className="bg-background text-foreground border border-apts-purple/20 rounded-xl">
+      <ModalContent className="bg-transparent backdrop-blur-xl text-foreground border border-apts-purple/20 rounded-xl">
         {(onClose) => (
           <>
-            <ModalHeader className="text-lavender font-orbitron text-xl">Generate New Training Plan</ModalHeader>
+            <ModalHeader className="text-lavender mt-3 font-sprintura text-xl">Generate New Training Plan</ModalHeader>
             <ModalBody className="space-y-4">
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Athlete Profile</h3>
+                <h3 className="font-semibold text-gray-300 text-lg mb-2">Athlete Profile</h3>
                 <InputField label="Age" type="number" value={age} onChange={setAge} placeholder="e.g., 20" />
 
                 <Select
@@ -78,7 +78,7 @@ export const GeneratePlanModal = ({ isOpen, onOpenChange, onGeneratePlan, loadin
               </div>
 
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Plan Details</h3>
+                <h3 className="font-semibold text-gray-300 text-lg mb-2">Plan Details</h3>
                 <Select
                   label="Plan Type"
                   placeholder="Select a plan type"
@@ -106,11 +106,11 @@ export const GeneratePlanModal = ({ isOpen, onOpenChange, onGeneratePlan, loadin
             </ModalBody>
 
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose} isDisabled={loading}>
+              <Button color="danger" variant="light" onPress={onClose} isDisabled={loading} className='bg-red-700 text-white hover:bg-red-500 hover:text-white'>
                 Cancel
               </Button>
               <Button
-                className="apts-button"
+                className="bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn"
                 onPress={handleSubmit}
                 isDisabled={loading}
               >

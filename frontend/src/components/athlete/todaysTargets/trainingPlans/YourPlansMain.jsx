@@ -211,9 +211,20 @@ export const YourPlansMain = () => {
   // Display loading states for both auth/coach details and plan fetching
   if (loadingAuth || loading) {
     return (
-      <div className="container mx-auto p-6 bg-apts-dark min-h-screen flex justify-center items-center">
-        <Spinner size="lg" />
-        <div className="ml-3 text-lg text-apts-lavender">{loadingAuth ? <Loader /> : 'Loading plans...'}</div>
+      <div className="min-h-screen w-full flex items-center justify-center bg-apts-black">
+        {/* <Spinner size="lg" />
+        <div className="ml-3 text-lg text-lavender">{loadingAuth ? <Loader /> : 'Loading plans...'}</div> */}
+        {loadingAuth ? 
+       <div className="text-center">
+       <div className="w-16 h-16 border-t-4 border-apts-purple rounded-full animate-spin mx-auto"></div>
+       <p className="mt-4 text-apts-white text-lg font-sprintura">TRACK. TRAIN. TRIUMPH</p>
+     </div>
+        : 
+        <div className="text-center">
+       <div className="w-16 h-16 border-t-4 border-apts-purple rounded-full animate-spin mx-auto"></div>
+       <p className="mt-4 text-apts-white text-lg font-sprintura">Loading plans...</p>
+     </div>
+        }
       </div>
     );
   }
@@ -230,23 +241,28 @@ export const YourPlansMain = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 bg-apts-dark min-h-screen">
-      <h1 className="text-3xl font-bold text-apts-lavender mb-8">Your Training Plans</h1>
+    <div className="container mx-auto p-6 min-h-screen">
+      <div
+        className="min-h-screen bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+      >
+        <div className="min-h-screen bg-black/70">
+      <h1 className="text-3xl mt-2 text-center font-bold text-lavender-200 font-sprintura mb-8">Your Training Plans</h1>
 
-      <div className="flex flex-wrap gap-4 mb-8">
+      <div className="flex flex-wrap  justify-center gap-4 mb-8">
         <Button
           color="primary"
           size="lg"
           onPress={onGenerateModalOpen}
-          className="bg-apts-lightdark text-white hover:bg-apts-darker"
+          className="bg-apts-purple-dark text-white hover:bg-apts-purple pulse-btn"
         >
           Generate a New Plan
         </Button>
       </div>
 
-      <hr className="my-8 border-gray-300" />
+      <hr className="my-8 border-white/20" />
 
-      <h2 className="text-2xl font-semibold text-apts-lavender mb-6">All Your Plans</h2>
+      <h2 className="text-2xl font-semibold  font-sprintura text-lavender-200 mb-6">All Your Plans</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sortedPlans.length > 0 ? (
@@ -266,7 +282,7 @@ export const YourPlansMain = () => {
             />
           ))
         ) : (
-          <p className="text-apts-lavender text-lg col-span-full">No plans generated yet. Click "Generate a New Plan" to create one!</p>
+          <p className="text-gray-400 text-lg col-span-full">No plans generated yet. Click "Generate a New Plan" to create one!</p>
         )}
       </div>
 
@@ -300,6 +316,8 @@ export const YourPlansMain = () => {
         />
       )}
       <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+    </div>
+    </div>
     </div>
   );
 };

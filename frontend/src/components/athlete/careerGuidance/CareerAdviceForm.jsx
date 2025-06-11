@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-
+ 
 // List of Indian languages for selection (can be extended as needed)
 const indianLanguages = [
   'Assamese',
@@ -57,13 +57,13 @@ const CareerAdviceForm = ({ onSubmit }) => {
   });
 
   return (
-    <div className="animate-slide-in-up w-full max-w-3xl bg-black">
-      <Card className=" bg-apts-dark text-white">
-        <CardContent className="p-6">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <div className="animate-slide-in-up border border-none w-full max-w-3xl bg-black">
+      <Card className="bg-transparent backdrop-blur-sm text-white">
+        <CardContent className="p-6 border border-none">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 border border-none">
             {/* Sport & Experience */}
             <div className="space-y-4">
-              <h3 className="font-medium text-xl text-lavender-300">Sport & Experience</h3>
+              <h3 className="font-medium text-xl text-lavender-300 font-sprintura ">Sport & Experience</h3>
 
               <div>
                 <label className="block font-medium">What sport do you play?</label>
@@ -134,10 +134,12 @@ const CareerAdviceForm = ({ onSubmit }) => {
                 </SelectContent>
               </Select>
             </div>
-
-            <Button type="submit" className="w-full bg-purple-dark text-lavender-200 hover:bg-black hover:text-lavender transition-all duration-500">
+            <div className='w-full flex items-center justify-center'>
+            <Button type="submit" className="w-[1/2] mx-auto bg-apts-purple-dark text-white rounded-xl hover:bg-apts-purple transition-all duration-500">
               Generate Career Advice
             </Button>
+            </div>
+           
           </form>
         </CardContent>
       </Card>
