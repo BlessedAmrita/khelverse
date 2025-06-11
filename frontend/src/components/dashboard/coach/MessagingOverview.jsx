@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { MessageSquare, Send, Check, CheckCheck } from 'lucide-react';
+import { MessageSquare, Send, Check, CheckCheck, ChevronLeft } from 'lucide-react'; // Import ChevronLeft
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import {
   DialogTrigger,
   DialogTitle,
   DialogDescription,
+  DialogOverlay, // <--- Added DialogOverlay import
 } from '@/components/ui/dialog';
 import { useSelector } from 'react-redux';
 import {
@@ -38,11 +39,23 @@ const ChatInterface = React.memo(({
   handleSendMessage,
   handleKeyDown,
   messagesEndRef,
+  onBackButtonClick, // New prop for back button
+  isMobileView, // New prop to indicate mobile view
 }) => (
-  <div className="flex h-[80vh] max-h-[700px] overflow-hidden rounded-xl bg-black shadow-lg">
+  <div className="flex flex-col h-full overflow-hidden rounded-xl bg-black shadow-lg"> {/* Changed to h-full */}
     <div className="flex-1 flex flex-col">
       {/* Chat Header */}
       <div className="border-b border-khelverse-purple/10 p-3 flex items-center gap-2 bg-black">
+        {isMobileView && ( // Conditionally render back button on mobile
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onBackButtonClick}
+            className="text-white hover:bg-white/10 mr-2"
+          >
+            <ChevronLeft size={20} />
+          </Button>
+        )}
         <Avatar className="h-8 w-8 ring-1 ring-khelverse-purple/20">
           {selectedAthlete?.photoURL ? (
             <img src={selectedAthlete.photoURL} alt={selectedAthlete.name} className="rounded-full" />
@@ -51,7 +64,6 @@ const ChatInterface = React.memo(({
           )}
         </Avatar>
         <div>
-          {/* <h3 className="text-white text-sm font-medium">{selectedAthlete?.name}</h3> */}
           <h3 className="text-white text-sm font-medium">
             {`${selectedAthlete?.firstName || ''} ${selectedAthlete?.lastName || selectedAthlete?.name || ''}`.trim()}
           </h3>
@@ -118,6 +130,19 @@ const MessagingOverview = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
+  const [showChatList, setShowChatList] = useState(true); // New state to control chat list visibility
+  const [isMobile, setIsMobile] = useState(false); // State to detect mobile view
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Adjust breakpoint as needed (md: breakpoint in Tailwind)
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial value
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (!currentCoach?.uid) return;
@@ -153,9 +178,10 @@ const MessagingOverview = () => {
               ...others,
               {
                 id: athleteId,
-                // name: userData.name,
                 name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
-                initials: userData.name?.charAt(0) || 'A',
+                firstName: userData.firstName || '',
+                lastName: userData.lastName || '',
+                initials: (userData.firstName?.charAt(0) || userData.name?.charAt(0) || 'A').toUpperCase(),
                 photoURL: userData.photoURL || '',
                 lastMessage: chatData.lastMessage || '',
                 time: chatData.lastMessageTimestamp?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '',
@@ -164,15 +190,8 @@ const MessagingOverview = () => {
             ].sort((a, b) => a.name.localeCompare(b.name)); // optional sort
           });
 
-          // Auto-select first athlete if none selected
-          // setSelectedAthlete((prev) => prev || {
-          //   id: athleteId,
-          //   // name: userData.name,
-          //   name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
-          //   initials: userData.name?.charAt(0) || 'A',
-          //   photoURL: userData.photoURL || '',
-          //   status: userData.status || '',
-          // });
+          // This logic ensures that if selectedAthlete is null, it defaults to the first available chat.
+          // You might want to adjust this if you prefer no athlete selected by default.
           setSelectedAthlete((prev) => prev || {
             id: athleteId,
             name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
@@ -265,6 +284,18 @@ const MessagingOverview = () => {
     }
   };
 
+  const handleSelectAthlete = (athlete) => {
+    setSelectedAthlete(athlete);
+    if (isMobile) {
+      setShowChatList(false); // Hide chat list on mobile when an athlete is selected
+    }
+  };
+
+  const handleBackToChatList = () => {
+    setShowChatList(true); // Show chat list again on mobile
+    setSelectedAthlete(null); // Deselect athlete
+  };
+
   return (
     <div className='glass-card bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md rounded-xl p-4 border border-khelverse-purple/10'>
       <div className='flex justify-between mb-4'>
@@ -272,59 +303,65 @@ const MessagingOverview = () => {
           <MessageSquare size={20} className='text-khelverse-purple' />
           Messages
         </h3>
-        <Dialog modal={false}>
+        <Dialog modal={true}> {/* Changed modal to true */}
           <DialogTrigger asChild>
-            <Button variant='outline' className='text-khelverse-purple border-khelverse-purple/20 bg-black/30 hover:bg-black/40'>
+            <Button variant='outline' className='text-khelverse-purple border-khelverse-purple/20 bg-black/30 hover:apts-p'>
               Open Messenger
             </Button>
           </DialogTrigger>
-          <DialogContent className='sm:max-w-[1000px] w-full p-0 bg-transparent border-khelverse-purple/20'>
+
+          {/* Custom DialogOverlay for the blur effect */}
+          <DialogOverlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" />
+
+          {/* Apply backdrop-blur to DialogContent (removed as overlay handles it now) */}
+          <DialogContent className='sm:max-w-[1000px] w-full p-0 bg-transparent border-khelverse-purple/20 z-50'>
             <DialogTitle className='sr-only'>Coach Messaging</DialogTitle>
             <DialogDescription className='sr-only'>Coach chat with assigned athletes</DialogDescription>
 
             <div className='flex flex-col md:flex-row h-[80vh] max-h-[700px] w-full overflow-hidden rounded-xl'>
-              {/* Sidebar */}
-              <div className="md:w-72 w-full md:max-w-sm flex-shrink-0 border-r border-khelverse-purple/10 bg-[#111111] flex flex-col">
-                <div className='p-3 border-b border-khelverse-purple/10'>
-                  <h3 className='text-white font-medium flex items-center gap-2 font-sprintura'>
-                    <MessageSquare size={25} className='text-khelverse-purple' />
-                    Messages
-                  </h3>
-                </div>
-                <div className='flex-1'>
-                  {chatSummaries.map((chat) => (
-                    <div
-                      key={`chat_${chat.id}`}
-                      onClick={() => {
-                        if (selectedAthlete?.id !== chat.id) setSelectedAthlete(chat);
-                      }}
-                      className={`p-3 border-b border-khelverse-purple/10 cursor-pointer hover:bg-[#1a1a1a] transition-all ${selectedAthlete?.id === chat.id ? 'bg-[#1f1f1f]' : ''
-                        }`}
-                    >
-                      <div className='flex items-center gap-3'>
-                        <Avatar className='h-10 w-10 ring-1 ring-khelverse-purple/20'>
-                          {chat.photoURL ? (
-                            <img src={chat.photoURL} alt={chat.name} className='rounded-full' />
-                          ) : (
-                            <AvatarFallback>{chat.initials}</AvatarFallback>
-                          )}
-                        </Avatar>
-                        <div className='flex-1 min-w-0'>
-                          <div className='flex justify-between items-center'>
-                            <span className='text-sm font-semibold text-white truncate'>{chat.name}</span>
-                            <span className='text-xs text-muted-foreground'>{chat.time}</span>
+              {/* Sidebar - Conditional rendering for mobile */}
+              {(showChatList || !isMobile) && (
+                <div className="md:w-72 w-full md:max-w-sm flex-shrink-0 border-r border-khelverse-purple/10 bg-[#111111] flex flex-col">
+                  <div className='p-3 border-b border-khelverse-purple/10'>
+                    <h3 className='text-white font-medium flex items-center gap-2 font-sprintura'>
+                      <MessageSquare size={25} className='text-khelverse-purple' />
+                      Messages
+                    </h3>
+                  </div>
+                  {/* flex-1 to make this div take remaining height */}
+                  <div className='flex-1 overflow-y-auto'>
+                    {chatSummaries.map((chat) => (
+                      <div
+                        key={`chat_${chat.id}`}
+                        onClick={() => handleSelectAthlete(chat)} // Use new handler
+                        className={`p-3 border-b border-khelverse-purple/10 cursor-pointer hover:bg-[#1a1a1a] transition-all ${selectedAthlete?.id === chat.id ? 'bg-[#1f1f1f]' : ''
+                          }`}
+                      >
+                        <div className='flex items-center gap-3'>
+                          <Avatar className='h-10 w-10 ring-1 ring-khelverse-purple/20'>
+                            {chat.photoURL ? (
+                              <img src={chat.photoURL} alt={chat.name} className='rounded-full' />
+                            ) : (
+                              <AvatarFallback>{chat.initials}</AvatarFallback>
+                            )}
+                          </Avatar>
+                          <div className='flex-1 min-w-0'>
+                            <div className='flex justify-between items-center'>
+                              <span className='text-sm font-semibold text-white truncate'>{chat.name}</span>
+                              <span className='text-xs text-muted-foreground'>{chat.time}</span>
+                            </div>
+                            <p className='text-xs text-muted-foreground truncate w-full'>{chat.lastMessage || 'No messages yet.'}</p>
                           </div>
-                          <p className='text-xs text-muted-foreground truncate w-full'>{chat.lastMessage || 'No messages yet.'}</p>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Chat Interface */}
-              <div className='flex-1'>
-                {selectedAthlete && (
+              {/* Chat Interface - Conditional rendering for mobile */}
+              {(selectedAthlete && (!isMobile || !showChatList)) ? ( // Added check for selectedAthlete
+                <div className='flex-1'>
                   <ChatInterface
                     currentCoach={currentCoach}
                     selectedAthlete={selectedAthlete}
@@ -334,9 +371,16 @@ const MessagingOverview = () => {
                     handleSendMessage={handleSendMessage}
                     handleKeyDown={handleKeyDown}
                     messagesEndRef={messagesEndRef}
+                    onBackButtonClick={handleBackToChatList} // Pass handler to child
+                    isMobileView={isMobile} // Pass mobile view status
                   />
-                )}
-              </div>
+                </div>
+              ) : (
+                // Placeholder for when no athlete is selected or on mobile with chat list hidden
+                <div className='flex-1 flex items-center justify-center bg-black text-white/50'>
+                  {isMobile && showChatList ? 'Select a chat to start messaging.' : 'Select an athlete to start chatting.'}
+                </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>

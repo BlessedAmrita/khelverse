@@ -60,8 +60,8 @@ const Heatmap = () => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center min-h-[150px] h-auto py-2">
-      <div className="p-4 w-full h-full shadow-md rounded-lg bg-black">
+    <div className="w-full flex items-center justify-center  h-auto py-2">
+      <div className="sm:p-4 w-full h-full shadow-md rounded-lg bg-black">
         <CalendarHeatmap
           startDate={startDate}
           endDate={today}

@@ -66,7 +66,7 @@ function AthleteBody() {
       </div>
 
       <div className='h-auto flex flex-col gap-5'>
-        <div className='flex gap-5 flex-wrap justify-evenly'>
+      <div className='flex flex-wrap gap-5 justify-center sm:justify-evenly md:justify-around lg:justify-between'>
           {cards.map((card, index) => (
             <AthleteCard key={index} {...card} />
           ))}

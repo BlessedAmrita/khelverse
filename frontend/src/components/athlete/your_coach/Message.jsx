@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { MessageSquare, Send, Check, CheckCheck } from 'lucide-react';
+import { MessageSquare, Send, Check, CheckCheck, ChevronLeft } from 'lucide-react'; // Added ChevronLeft
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -41,6 +41,8 @@ const Message = () => {
   const [lastMessage, setLastMessage] = useState('');
   const [lastMessageTime, setLastMessageTime] = useState('');
   const messagesEndRef = useRef(null);
+  const [isMobileView, setIsMobileView] = useState(false); // New state for mobile view
+  const [showChatList, setShowChatList] = useState(true); // New state to control chat list visibility on mobile
 
   const currentAthlete = user?.uid
     ? {
@@ -49,6 +51,18 @@ const Message = () => {
         initials: (user.name || user.displayName || 'A').charAt(0).toUpperCase(),
       }
     : null;
+
+  // 📐 Hook to detect screen size for responsive layout
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 768); // Tailwind's 'md' breakpoint is 768px
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call on mount to set initial state
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     monitorAuthState();
@@ -183,6 +197,17 @@ const Message = () => {
     }
   };
 
+  const handleOpenChat = (coach) => {
+    setSelectedCoach(coach);
+    if (isMobileView) {
+      setShowChatList(false); // Hide chat list on mobile
+    }
+  };
+
+  const handleBackToChatList = () => {
+    setShowChatList(true); // Show chat list on mobile
+  };
+
   return (
     <div className='glass-card bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md rounded-xl p-4 border border-khelverse-purple/10 w-full'>
       <div className='flex justify-between mb-4'>
@@ -194,7 +219,7 @@ const Message = () => {
           <DialogTrigger asChild>
             <Button
               variant='outline'
-              className='ml-4 text-khelverse-purple border-khelverse-purple/20 bg-black/30 hover:bg-black/40'
+              className='ml-4 text-khelverse-purple border-khelverse-purple/20 bg-black/30 hover:bg-apts-purple-light'
             >
               Open Messenger
             </Button>
@@ -204,50 +229,67 @@ const Message = () => {
             <DialogDescription className='sr-only'>Chat interface</DialogDescription>
 
             <div className='flex flex-col md:flex-row h-[80vh] max-h-[700px] w-full overflow-hidden rounded-xl'>
-              {/* Sidebar */}
-              <div className='md:w-72 w-full flex-shrink-0 border-r border-khelverse-purple/10 bg-[#111111]'>
-                <div className='p-3 border-b border-khelverse-purple/10'>
-                  <h3 className='text-white font-medium flex items-center gap-2 font-sprintura'>
-                    <MessageSquare size={25} className='text-khelverse-purple' />
-                    Messages
-                  </h3>
-                </div>
-                <div className='p-3'>
-                  {selectedCoach && (
-                    <div className='flex items-center gap-3'>
-                      <Avatar className='h-10 w-10 ring-1 ring-khelverse-purple/20'>
-                        {selectedCoach.photoURL ? (
-                          <img
-                            src={selectedCoach.photoURL}
-                            alt='Coach'
-                            className='rounded-full object-cover h-full w-full'
-                          />
-                        ) : (
-                          <AvatarFallback>{selectedCoach.initials}</AvatarFallback>
-                        )}
-                      </Avatar>
+              {/* Sidebar - Conditionally rendered based on isMobileView and showChatList */}
+              {(isMobileView && showChatList) || !isMobileView ? (
+                <div className='md:w-72 w-full flex-shrink-0 border-r border-khelverse-purple/10 bg-[#111111]'>
+                  <div className='p-3 border-b border-khelverse-purple/10'>
+                    <h3 className='text-white font-medium flex items-center gap-2 font-sprintura'>
+                      <MessageSquare size={25} className='text-khelverse-purple' />
+                      Messages
+                    </h3>
+                  </div>
+                  <div className='p-3'>
+                    {selectedCoach ? ( // Display the coach in the list
+                      <div
+                        className='flex items-center gap-3 cursor-pointer hover:bg-khelverse-purple/10 p-2 rounded-lg transition-colors'
+                        onClick={() => handleOpenChat(selectedCoach)}
+                      >
+                        <Avatar className='h-10 w-10 ring-1 ring-khelverse-purple/20'>
+                          {selectedCoach.photoURL ? (
+                            <img
+                              src={selectedCoach.photoURL}
+                              alt='Coach'
+                              className='rounded-full object-cover h-full w-full'
+                            />
+                          ) : (
+                            <AvatarFallback>{selectedCoach.initials}</AvatarFallback>
+                          )}
+                        </Avatar>
 
-                      <div className='flex-1 min-w-0'>
-                        <div className='flex justify-between items-center'>
-                          <span className='text-sm font-semibold text-white truncate'>
-                            {selectedCoach.name}
-                          </span>
-                          <span className='text-xs text-muted-foreground'>{lastMessageTime}</span>
+                        <div className='flex-1 min-w-0'>
+                          <div className='flex justify-between items-center'>
+                            <span className='text-sm font-semibold text-white truncate'>
+                              {selectedCoach.name}
+                            </span>
+                            <span className='text-xs text-muted-foreground'>{lastMessageTime}</span>
+                          </div>
+                          <p className='text-xs text-muted-foreground truncate w-full'>
+                            {lastMessage || 'No messages yet.'}
+                          </p>
                         </div>
-                        <p className='text-xs text-muted-foreground truncate w-full'>
-                          {lastMessage || 'No messages yet.'}
-                        </p>
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <p className='text-sm text-gray-400'>No assigned coach found.</p>
+                    )}
+                  </div>
                 </div>
-              </div>
+              ) : null}
 
-              {/* Main Chat */}
-              <div className='flex-1 bg-black flex flex-col'>
-                {/* Chat Header */}
-                {selectedCoach && (
-                  <div className='border-b border-khelverse-purple/10 p-3 flex items-center gap-2 bg-black'>
+              {/* Main Chat - Conditionally rendered based on isMobileView and showChatList */}
+              {(!isMobileView || (isMobileView && !showChatList)) && selectedCoach && (
+                <div className='flex-1 bg-black flex flex-col'>
+                  {/* Chat Header */}
+                  <div className='border-b border-khelverse-purple/30 p-3 flex items-center gap-2 bg-black'>
+                    {isMobileView && (
+                      <Button
+                        variant='ghost'
+                        size='icon'
+                        onClick={handleBackToChatList}
+                        className='text-white hover:bg-khelverse-purple/20'
+                      >
+                        <ChevronLeft size={24} />
+                      </Button>
+                    )}
                     <Avatar className='h-8 w-8 ring-1 ring-khelverse-purple/20'>
                       {selectedCoach.photoURL ? (
                         <img
@@ -265,62 +307,77 @@ const Message = () => {
                       <span className='text-xs text-emerald-500'>{selectedCoach.status}</span>
                     </div>
                   </div>
-                )}
 
-                {/* Messages */}
-                <div className='overflow-y-auto flex-1 p-4 space-y-4'>
-                  {messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`flex gap-2 ${msg.senderId === currentAthlete.uid ? 'justify-end' : 'justify-start'}`}
-                    >
-                      {msg.senderId !== currentAthlete.uid && (
-                        <Avatar className='h-8 w-8 ring-1 ring-khelverse-purple/20'>
-                          <AvatarFallback>{msg.senderInitials}</AvatarFallback>
-                        </Avatar>
-                      )}
+                  {/* Messages */}
+                  <div className='overflow-y-auto flex-1 p-4 space-y-4'>
+                    {messages.map((msg) => (
                       <div
-                        className={`max-w-[70%] p-3 text-sm rounded-2xl relative ${
-                          msg.senderId === currentAthlete.uid
-                            ? 'bg-gradient-to-r from-apts-purple-dark to-black/20 text-white rounded-br-none'
-                            : 'bg-gradient-to-r from-black to-apts-purple-dark text-white rounded-bl-none'
-                        }`}
+                        key={msg.id}
+                        className={`flex gap-2 ${msg.senderId === currentAthlete.uid ? 'justify-end' : 'justify-start'}`}
                       >
-                        {msg.text}
-                        <div className='flex justify-end items-center gap-1 mt-1 text-white/70 text-xs'>
-                          {msg.time}
-                          {msg.senderId === currentAthlete.uid &&
-                            (msg.seen ? <CheckCheck size={14} /> : <Check size={14} />)}
+                        {msg.senderId !== currentAthlete.uid && (
+                          <Avatar className='h-8 w-8 ring-1 ring-khelverse-purple/20'>
+                            <AvatarFallback>{msg.senderInitials}</AvatarFallback>
+                          </Avatar>
+                        )}
+                        <div
+                          className={`max-w-[70%] p-3 text-sm rounded-2xl relative ${
+                            msg.senderId === currentAthlete.uid
+                              ? 'bg-gradient-to-r from-apts-purple-dark to-black/20 text-white rounded-br-none'
+                              : 'bg-gradient-to-r from-black to-apts-purple-dark text-white rounded-bl-none'
+                          }`}
+                        >
+                          {msg.text}
+                          <div className='flex justify-end items-center gap-1 mt-1 text-white/70 text-xs'>
+                            {msg.time}
+                            {msg.senderId === currentAthlete.uid &&
+                              (msg.seen ? <CheckCheck size={14} /> : <Check size={14} />)}
+                          </div>
                         </div>
+                        {msg.senderId === currentAthlete.uid && (
+                          // Athlete's own avatar can be dynamically pulled if available
+                          <Avatar className='h-8 w-8 bg-khelverse-purple text-white'>
+                            <AvatarFallback>{currentAthlete.initials}</AvatarFallback>
+                          </Avatar>
+                        )}
                       </div>
-                      {msg.senderId === currentAthlete.uid && (
-                        <Avatar className='h-8 w-8 bg-khelverse-purple text-white' />
-                      )}
-                    </div>
-                  ))}
-                  <div ref={messagesEndRef} />
-                </div>
+                    ))}
+                    <div ref={messagesEndRef} />
+                  </div>
 
-                {/* Input */}
-                <div className='p-3 bg-black'>
-                  <div className='flex gap-2 items-center'>
-                    <Input
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder='Type a message...'
-                      className='bg-[#1a1a1a] border-khelverse-purple/10 text-white rounded-full'
-                    />
-                    <button
-                      onClick={handleSendMessage}
-                      disabled={!newMessage.trim()}
-                      className='p-2 bg-khelverse-purple text-white rounded-full hover:opacity-90 disabled:opacity-50'
-                    >
-                      <Send size={18} />
-                    </button>
+                  {/* Input */}
+                  <div className='p-3 bg-black'>
+                    <div className='flex gap-2 items-center'>
+                      <Input
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        placeholder='Type a message...'
+                        className='bg-[#1a1a1a] border-khelverse-purple/10 text-white rounded-full'
+                      />
+                      <button
+                        onClick={handleSendMessage}
+                        disabled={!newMessage.trim()}
+                        className='p-2 bg-khelverse-purple text-white rounded-full hover:opacity-90 disabled:opacity-50'
+                      >
+                        <Send size={18} />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
+              {/* Message for no coach selected on mobile when chat list is hidden */}
+              {isMobileView && !selectedCoach && !showChatList && (
+                <div className='flex-1 bg-black flex items-center justify-center text-gray-400'>
+                  Select a chat to start messaging.
+                </div>
+              )}
+              {/* Message for no coach found at all */}
+              {!selectedCoach && !isMobileView && (
+                <div className='flex-1 bg-black flex items-center justify-center text-gray-400'>
+                  No assigned coach found.
+                </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>

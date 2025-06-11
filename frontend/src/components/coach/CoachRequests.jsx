@@ -104,45 +104,55 @@ export default function CoachRequests() {
             return (
               <li
                 key={req.id}
-                className="my-2 mx-auto w-2/3 items-center gap-4 text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
-                hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"
-                style={{ }} 
+                className="my-2 mx-auto w-full sm:w-2/3 items-center text-white glass-card bg-black/80 border-white/20 overflow-hidden p-5 rounded-xl border cursor-pointer
+                            hover:shadow-[0_10px_30px_-10px_rgba(155,135,245,0.2)] transition-shadow duration-300"
+                style={{}}
               >
                 {athlete ? (
                   <>
-                  <div className="flex gap-4 mx-auto mb-4 justify-end items-center">
-                    <img
-                      src={athlete.photoURL || "/default-profile.png"}
-                      alt={athlete.name}
-                      className="w-14 h-14 rounded-full object-cover"
-                    />
-                    <div className="flex-grow">
-                      <p className="text-lg font-semibold">
-                        {athlete.firstName} {athlete.lastName}
-                      </p>
-                      <p className="text-white/70">Sport: <span className="text-white ">{athlete.sport || "N/A"}</span></p>
-                      <p className="text-white/70">Experience: <span className="text-white ">{athlete.experienceLevel || "N/A"}</span></p>
-                      <p className="text-white/70">Gender: <span className="text-white ">{athlete.gender}</span></p>
-                      <p className="text-white/70">
-                        Achievements: <span className="text-white ">{athlete.achievements || "None"}</span>
-                      </p>
-                      <div className="flex mt-4 gap-2 ">
-                      <button
-                        onClick={() => acceptRequest(req)}
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-                      >
-                        Accept
-                      </button>
-                      <button
-                        onClick={() => rejectRequest(req)}
-                        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-                      >
-                        Reject
-                      </button>
+                    {/* Changed this div for better responsiveness */}
+                    <div className="flex flex-col sm:flex-row gap-4 mb-4 items-center sm:items-start">
+                      <img
+                        src={athlete.photoURL || "/default-profile.png"}
+                        alt={athlete.name}
+                        className="w-16 h-16 rounded-full object-cover flex-shrink-0" /* Increased size slightly and added flex-shrink-0 */
+                      />
+                      <div className="flex-grow text-center sm:text-left">
+                        <p className="text-lg font-semibold">
+                          {athlete.firstName} {athlete.lastName}
+                        </p>
+                        <p className="text-white/70">
+                          Sport: <span className="text-white ">{athlete.sport || "N/A"}</span>
+                        </p>
+                        <p className="text-white/70">
+                          Experience:{" "}
+                          <span className="text-white ">{athlete.experienceLevel || "N/A"}</span>
+                        </p>
+                        <p className="text-white/70">
+                          Gender: <span className="text-white ">{athlete.gender}</span>
+                        </p>
+                        <p className="text-white/70">
+                          Achievements:{" "}
+                          <span className="text-white ">{athlete.achievements || "None"}</span>
+                        </p>
+                        <div className="flex mt-4 gap-2 justify-center sm:justify-start">
+                          {" "}
+                          {/* Centered buttons on small screens */}
+                          <button
+                            onClick={() => acceptRequest(req)}
+                            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={() => rejectRequest(req)}
+                            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    </div>
-                    </div>
-                    
                   </>
                 ) : (
                   <span className="text-red-500">Athlete data unavailable</span>

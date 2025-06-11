@@ -13,6 +13,7 @@ export default function ClientWrapper({ children }) {
   return (
     <Provider store={store}>
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
+      
       <div className="min-h-screen w-full flex flex-col ">
         <div className="flex flex-grow">
           <Sidebar />

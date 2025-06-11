@@ -30,6 +30,11 @@ function CareerGuidanceMain() { // Renamed from DietMain for clarity
   return (
     <div className='w-full'>
       <FeatureHero title={'Career Guidance'} />
+      <div
+        className="min-h-screen bg-repeat bg-left-top"
+        style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+      >
+        <div className="min-h-screen bg-black/55">
       <div className='flex flex-col gap-[30px] px-[40px] py-[30px]'>
         {/* Container for the two main feature boxes */}
         {/* Added flex-wrap for responsiveness: they stack on small screens, side-by-side on larger */}
@@ -94,6 +99,8 @@ function CareerGuidanceMain() { // Renamed from DietMain for clarity
         <JobListings />
         <Sponsorships />
       </div>
+    </div>
+    </div>
     </div>
   );
 }
