@@ -1,6 +1,6 @@
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
 import tailwindAnimate from 'tailwindcss-animate';
-
+import { heroui } from '@heroui/react';
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [
@@ -8,6 +8,7 @@ const config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{ts,tsx}',
+    './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
   theme: {
@@ -270,7 +271,7 @@ const config = {
 			},
     },
   },
-  plugins: [addVariablesForColors, tailwindAnimate],
+  plugins: [addVariablesForColors, tailwindAnimate,heroui()],
 };
 
 function addVariablesForColors({ addBase, theme }) {

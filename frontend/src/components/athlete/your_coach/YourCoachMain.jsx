@@ -24,15 +24,15 @@ export default function YourCoachMain() {
     try {
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
-      console.log("User snapshot:", userSnap.exists(), userSnap.data());
+      // console.log("User snapshot:", userSnap.exists(), userSnap.data());
 
       if (userSnap.exists()) {
         const userData = userSnap.data();
         if (userData.connectedCoachId) {
-          console.log("Fetching connected coach with ID:", userData.connectedCoachId);
+          // console.log("Fetching connected coach with ID:", userData.connectedCoachId);
           const coachRef = doc(db, "users", userData.connectedCoachId);
           const coachSnap = await getDoc(coachRef);
-          console.log("Coach snapshot:", coachSnap.exists(), coachSnap.data());
+          // console.log("Coach snapshot:", coachSnap.exists(), coachSnap.data());
           if (coachSnap.exists()) {
             setConnectedCoach({ id: coachSnap.id, ...coachSnap.data() });
           }

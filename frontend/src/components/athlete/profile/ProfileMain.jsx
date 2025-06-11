@@ -38,24 +38,24 @@ function ProfileMain({ athlete, readOnly = false }) {
   };
 
   useEffect(() => {
-  if (readOnly && athlete?.uid) {
-    fetchAchievements(athlete.uid); // fetch using athlete UID
-  } else if (activeUid && !readOnly) {
-    fetchAchievements(activeUid);
-  }
-}, [activeUid, readOnly, athlete]);
+    if (readOnly && athlete?.uid) {
+      fetchAchievements(athlete.uid); // fetch using athlete UID
+    } else if (activeUid && !readOnly) {
+      fetchAchievements(activeUid);
+    }
+  }, [activeUid, readOnly, athlete]);
 
 
 
   const fetchAchievements = async (uid) => {
-  try {
-    const snapshot = await getDocs(collection(db, "users", uid, "achievements"));
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setAchievements(data);
-  } catch (err) {
-    console.error("Failed to fetch achievements:", err);
-  }
-};
+    try {
+      const snapshot = await getDocs(collection(db, "users", uid, "achievements"));
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setAchievements(data);
+    } catch (err) {
+      console.error("Failed to fetch achievements:", err);
+    }
+  };
 
 
   const dob = activeUser?.dob;
@@ -89,38 +89,39 @@ function ProfileMain({ athlete, readOnly = false }) {
       alert("Failed to update. Try again.");
     }
   };
- 
+
   if (!activeUser) return <div className="text-white p-4">Loading profile...</div>;
-
   return (
-    <div className="min-h-screen w-full bg-black text-white py-8 px-4 md:px-8">
-      <div className="max-w-7xl mx-auto relative">
-      <div
-    className="min-h-screen bg-repeat bg-left-top"
-    style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
-  >
-      <div className="min-h-screen bg-black/55">
-        <ProfileHero athlete={activeUser} />
+    <div className="min-h-screen w-full bg-black text-white">
+      <div className="mx-auto relative">
+        <div
+          className="min-h-screen bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('https://res.cloudinary.com/dgj1gzq0l/image/upload/v1747821491/new_bg_bz1uqj.svg')" }}
+        >
+          <div className="min-h-screen bg-black/55">
+            <div className="max-w-7xl mx-auto py-8 px-4 md:px-8 ">
+              <ProfileHero athlete={activeUser} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-          <StatCard title="Age" value={calculateAge(dob)} icon="user" delay={1} editable={!readOnly} onEdit={() => handleEditField("dob")} />
-          <StatCard title="Height" value={height !== 'N/A' ? `${height} cm` : height} icon="arrow-up" delay={2} editable={!readOnly} onEdit={() => handleEditField("height")} />
-          <StatCard title="Weight" value={weight !== 'N/A' ? `${weight} kg` : weight} icon="activity" delay={3} editable={!readOnly} onEdit={() => handleEditField("weight")} />
-        </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                <StatCard title="Age" value={calculateAge(dob)} icon="user" delay={1} editable={!readOnly} onEdit={() => handleEditField("dob")} />
+                <StatCard title="Height" value={height !== 'N/A' ? `${height} cm` : height} icon="arrow-up" delay={2} editable={!readOnly} onEdit={() => handleEditField("height")} />
+                <StatCard title="Weight" value={weight !== 'N/A' ? `${weight} kg` : weight} icon="activity" delay={3} editable={!readOnly} onEdit={() => handleEditField("weight")} />
+              </div>
 
-        <div className="mt-10 relative">
-          <StreakCounter streak={streak} />
-          <AchievementTimeline achievements={achievements} userId={activeUid} refreshAchievements={fetchAchievements} readOnly={readOnly} />
-          <MedicalRecords uid={activeUid} readOnly={readOnly} />
-          <ExerciseHeatmap
-            uid={readOnly ? athlete?.uid : undefined}
-            setStreak={setStreak}
-          />
+              <div className="mt-10 relative">
+                <StreakCounter streak={streak} />
+                <AchievementTimeline achievements={achievements} userId={activeUid} refreshAchievements={fetchAchievements} readOnly={readOnly} />
+                <MedicalRecords uid={activeUid} readOnly={readOnly} />
+                <ExerciseHeatmap
+                  uid={readOnly ? athlete?.uid : undefined}
+                  setStreak={setStreak}
+                />
 
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
     </div>
   );
 }
