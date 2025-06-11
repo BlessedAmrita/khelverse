@@ -213,7 +213,7 @@ export const YourPlansMain = () => {
     return (
       <div className="container mx-auto p-6 bg-apts-dark min-h-screen flex justify-center items-center">
         <Spinner size="lg" />
-        <p className="ml-3 text-lg text-apts-lavender">{loadingAuth ? <Loader /> : 'Loading plans...'}</p>
+        <div className="ml-3 text-lg text-apts-lavender">{loadingAuth ? <Loader /> : 'Loading plans...'}</div>
       </div>
     );
   }

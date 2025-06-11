@@ -12,7 +12,7 @@ import {
   Spinner,
 } from '@heroui/react';
 import { toast } from 'sonner';
-
+import { sportsList } from '@/content/sportsList'; 
 export const GeneratePlanModal = ({ isOpen, onOpenChange, onGeneratePlan, loading, error, hasCoach }) => {
   const [age, setAge] = useState('');
   const [sport, setSport] = useState('');
@@ -51,7 +51,29 @@ export const GeneratePlanModal = ({ isOpen, onOpenChange, onGeneratePlan, loadin
               <div>
                 <h3 className="font-semibold text-foreground mb-2">Athlete Profile</h3>
                 <InputField label="Age" type="number" value={age} onChange={setAge} placeholder="e.g., 20" />
-                <InputField label="Sport" value={sport} onChange={setSport} placeholder="e.g., squash, running" />
+
+                <Select
+                  label="Sport"
+                  placeholder="Select a sport"
+                  selectedKeys={sport ? [sport] : []}
+                  onSelectionChange={(keys) => setSport(Array.from(keys)[0])}
+                  variant="bordered"
+                  fullWidth
+                  className="mb-4"
+                  classNames={{
+                    trigger: 'bg-input border-border hover:bg-input-hover data-[hover=true]:border-lavender',
+                    label: 'text-foreground',
+                    value: 'text-foreground',
+                    popoverContent: 'bg-card border border-border', 
+                    listbox: 'text-foreground', 
+                  }}
+                >
+                  {sportsList.map((s) => (
+                    <SelectItem key={s} value={s} className="bg-card text-foreground">
+                      {s}
+                    </SelectItem>
+                  ))}
+                </Select>
                 <InputField label="Goal" value={goal} onChange={setGoal} placeholder="e.g., build endurance" />
               </div>
 
@@ -69,10 +91,12 @@ export const GeneratePlanModal = ({ isOpen, onOpenChange, onGeneratePlan, loadin
                     trigger: 'bg-input border-border hover:bg-input-hover data-[hover=true]:border-lavender',
                     label: 'text-foreground',
                     value: 'text-foreground',
+                    popoverContent: 'bg-card border border-border', 
+                    listbox: 'text-foreground', 
                   }}
                 >
-                  <SelectItem key="weekly" className="bg-card text-foreground">Weekly</SelectItem>
-                  <SelectItem key="daily" className="bg-card text-foreground">Daily</SelectItem>
+                  <SelectItem key="weekly" value="weekly" className="bg-card text-foreground">Weekly</SelectItem>
+                  <SelectItem key="daily" value="daily" className="bg-card text-foreground">Daily</SelectItem>
                 </Select>
                 <InputField label="Focus" value={focus} onChange={setFocus} placeholder="e.g., overall fitness" />
                 <InputField label="Time to Achieve" value={timeToAchieve} onChange={setTimeToAchieve} placeholder="e.g., 6 weeks" />
