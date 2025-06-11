@@ -45,13 +45,32 @@ const Message = () => {
   const [showChatList, setShowChatList] = useState(true);
   const [athleteConnectedCoachId, setAthleteConnectedCoachId] = useState(null); // New state for connectedCoachId from Firestore
 
+  // Helper function to derive full name and initials
+  const getFullNameAndInitials = (userData, defaultName) => {
+    let fullName = '';
+    if (userData?.firstName && userData?.lastName) {
+      fullName = `${userData.firstName} ${userData.lastName}`;
+    } else if (userData?.name) {
+      fullName = userData.name;
+    } else if (userData?.displayName) { // For user coming from Redux (Auth data)
+      fullName = userData.displayName;
+    } else {
+      fullName = defaultName;
+    }
+
+    const initials = (fullName || defaultName).split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+    return { fullName, initials };
+  };
+
   // currentAthlete now uses data directly from the user (Redux) for basic info
   // but connectedCoachId will be fetched separately from the athlete's Firestore doc.
+  const { fullName: athleteFullName, initials: athleteInitials } = getFullNameAndInitials(user, 'Athlete');
+
   const currentAthlete = user?.uid
     ? {
         uid: user.uid,
-        name: user.name || user.displayName || 'Athlete',
-        initials: (user.name || user.displayName || 'A').charAt(0).toUpperCase(),
+        name: athleteFullName,
+        initials: athleteInitials,
       }
     : null;
 
@@ -74,7 +93,7 @@ const Message = () => {
   }, [user.uid, user.name, dispatch]);
 
 
-  // 🎯 NEW LOGIC: Fetch the athlete's document to get the connectedCoachId
+  // 🎯 Logic to fetch the athlete's document to get the connectedCoachId
   useEffect(() => {
     if (!currentAthlete?.uid) {
       setAthleteConnectedCoachId(null);
@@ -107,7 +126,7 @@ const Message = () => {
     fetchAthleteDoc();
   }, [currentAthlete?.uid]); // Re-run when currentAthlete.uid changes
 
-  // 🎯 NEW LOGIC: Fetch the connected coach details using the athleteConnectedCoachId
+  // 🎯 Logic to fetch the connected coach details using the athleteConnectedCoachId
   useEffect(() => {
     if (!athleteConnectedCoachId) {
       setSelectedCoach(null);
@@ -122,10 +141,13 @@ const Message = () => {
         if (coachSnap.exists()) {
           const coachData = coachSnap.data();
           console.log("Fetched connected coach data:", coachData); // For debugging
+
+          const { fullName: coachFullName, initials: coachInitials } = getFullNameAndInitials(coachData, 'Coach');
+
           setSelectedCoach({
             uid: athleteConnectedCoachId,
-            name: coachData.name || 'Coach',
-            initials: (coachData.name || 'C').charAt(0).toUpperCase(),
+            name: coachFullName,
+            initials: coachInitials,
             photoURL: coachData.photoURL || '',
             status: coachData.status || '',
           });
@@ -209,8 +231,8 @@ const Message = () => {
 
       await addDoc(collection(db, 'chats', chatId, 'messages'), {
         senderId: currentAthlete.uid,
-        senderName: currentAthlete.name,
-        senderInitials: currentAthlete.initials,
+        senderName: currentAthlete.name, // Will now use the derived full name
+        senderInitials: currentAthlete.initials, // Will now use the derived initials
         text: newMessage,
         timestamp: serverTimestamp(),
         seen: false,
@@ -272,7 +294,6 @@ const Message = () => {
                     </h3>
                   </div>
                   <div className='p-3'>
-                    {/* Displaying only the single selectedCoach */}
                     {selectedCoach ? (
                       <div
                         className='flex items-center gap-3 cursor-pointer hover:bg-khelverse-purple/10 p-2 rounded-lg transition-colors'

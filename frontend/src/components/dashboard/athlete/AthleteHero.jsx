@@ -25,7 +25,9 @@ function AthleteHero() {
     >
       <h1 className='text-xl font-semibold font-sprintura tracking-widest'>Hey Champ!</h1>
       <div className='flex gap-[20px] items-center'>
-        <p className='text-md font-semibold font-poppins tracking-wider'>{today}</p>
+        <p className="hidden sm:block text-md font-semibold font-poppins tracking-wider">
+          {today}
+        </p>
         <div
           className='w-[60px] h-[60px] rounded-full bg-white bg-cover bg-center bg-no-repeat'
           style={{ backgroundImage: `url('${profileImage}')` }}
