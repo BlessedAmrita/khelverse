@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter, Montserrat, Poppins } from 'next/font/google'
 import localFont from 'next/font/local';
 import ClientWrapper from '@/components/ClientWrapper';
 import { HeroUIProvider } from '@heroui/react';
+import DynamicHelpButton from '@/components/shared/DynamicHelpButton';
 
 export const metadata = {
   title: 'Khelverse',
@@ -64,7 +65,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${poppins.variable} ${montserrat.variable} ${sprintura.variable} ${thuast.variable} ${mindglow.variable} ${onfarming.variable} antialiased`}
       >
         <HeroUIProvider>
-          <ClientWrapper>{children}</ClientWrapper>
+          <ClientWrapper>{children}
+            <DynamicHelpButton/>
+          </ClientWrapper>
         </HeroUIProvider>
       </body>
     </html>
